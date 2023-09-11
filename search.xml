@@ -72,11 +72,11 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> Docker </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> Linux </tag>
             
             <tag> Shell </tag>
             
@@ -128,9 +128,9 @@
       
         <tags>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -150,6 +150,27 @@
         <tags>
             
             <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>OpenStack平台镜像优化</title>
+      <link href="/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/"/>
+      <url>/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/</url>
+      
+        <content type="html"><![CDATA[<h4 id="OpenStack平台镜像优化"><a href="#OpenStack平台镜像优化" class="headerlink" title="OpenStack平台镜像优化"></a>OpenStack平台镜像优化</h4><p>在使用打快照方式制作镜像后，镜像的大小会变得非常大，比如一个基础的CentOS镜像大小为400M左右，但是使用打快照方式制作的镜像大小会有1个G左右，具体的大小还要根据安装的东西来实际情况实际分析。</p><p>qemu-img命令中提供一个可用于镜像转换与压缩的选项，即qemu-img convert。接下来使用该命令，对已经打快照完成的镜像进行压缩操作。</p><p>使用提供的镜像CentOS7.5-compress.qcow2，上传至controller节点的/root目录下，查看镜像的大小，命令如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress.qcow2</span>892MCentOS7.5-compress.qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>可以看到当前的镜像大小为892M，接下来使用命令，对镜像进行压缩，命令如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># qemu-img convert -c -O qcow2 CentOS7.5-compress.qcow2 CentOS7.5-compress2.qcow2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>该命令参数的解释如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-c</span>  压缩<span class="token parameter variable">-O</span>  qcow2 输出格式为 qcow2CentOS7.5-compress.qcow2   被压缩的文件CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>等待一小段时间后，压缩完成，查看当前目录下CentOS7.5-compress2.qcow2镜像文件的大小，命令如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress2.qcow2 </span>405MCentOS7.5-compress2.qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>可以看到镜像大概被压缩到了一半的大小。使用qemu-img convert命令可以压缩qcow2镜像，在日常的工作中，经常会用到此命令进行镜像压缩。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> Openstack </tag>
             
         </tags>
       
@@ -190,27 +211,6 @@
             <tag> Linux </tag>
             
             <tag> OpenStack </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>OpenStack平台镜像优化</title>
-      <link href="/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/"/>
-      <url>/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/</url>
-      
-        <content type="html"><![CDATA[<h4 id="OpenStack平台镜像优化"><a href="#OpenStack平台镜像优化" class="headerlink" title="OpenStack平台镜像优化"></a>OpenStack平台镜像优化</h4><p>在使用打快照方式制作镜像后，镜像的大小会变得非常大，比如一个基础的CentOS镜像大小为400M左右，但是使用打快照方式制作的镜像大小会有1个G左右，具体的大小还要根据安装的东西来实际情况实际分析。</p><p>qemu-img命令中提供一个可用于镜像转换与压缩的选项，即qemu-img convert。接下来使用该命令，对已经打快照完成的镜像进行压缩操作。</p><p>使用提供的镜像CentOS7.5-compress.qcow2，上传至controller节点的/root目录下，查看镜像的大小，命令如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress.qcow2</span>892MCentOS7.5-compress.qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>可以看到当前的镜像大小为892M，接下来使用命令，对镜像进行压缩，命令如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># qemu-img convert -c -O qcow2 CentOS7.5-compress.qcow2 CentOS7.5-compress2.qcow2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>该命令参数的解释如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-c</span>  压缩<span class="token parameter variable">-O</span>  qcow2 输出格式为 qcow2CentOS7.5-compress.qcow2   被压缩的文件CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p>等待一小段时间后，压缩完成，查看当前目录下CentOS7.5-compress2.qcow2镜像文件的大小，命令如下：</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress2.qcow2 </span>405MCentOS7.5-compress2.qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>可以看到镜像大概被压缩到了一半的大小。使用qemu-img convert命令可以压缩qcow2镜像，在日常的工作中，经常会用到此命令进行镜像压缩。</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Linux </tag>
-            
-            <tag> Openstack </tag>
             
         </tags>
       

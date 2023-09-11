@@ -205,10 +205,12 @@ body.DarkMode .aplayer {
 }
 body.DarkMode .aplayer .aplayer-list ol li.aplayer-list-light {
     background: #666666;
+    color: black;
 }
+
 body.DarkMode .aplayer .aplayer-list ol li:hover {
     background-color: #666666;
-    color: #42b983;
+    color: #89CFF0;
 }
 
 body.DarkMode .aplayer .aplayer-body {
