@@ -353,7 +353,7 @@ Dock">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-08
+                    2023-09-12
                 </div>
                 
 
@@ -665,8 +665,9 @@ kube-system    kube-scheduler-k8s                <span class="token number">1</s
 
 <h4 id="3、kubectl命令补全"><a href="#3、kubectl命令补全" class="headerlink" title="3、kubectl命令补全"></a>3、kubectl命令补全</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
 
+<span class="token builtin class-name">source</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span>kubectl completion <span class="token function">bash</span><span class="token punctuation">)</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span>
-complete <span class="token parameter variable">-F</span> __start_kubectl k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+complete <span class="token parameter variable">-F</span> __start_kubectl k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
