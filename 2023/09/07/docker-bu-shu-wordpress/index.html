@@ -268,6 +268,19 @@
 </header>
 
     
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
 
 
 
@@ -336,14 +349,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-11
+                    2023-09-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    143
+                    147
                 </div>
                 
 
@@ -392,7 +405,7 @@ mysql <span class="token parameter variable">-uroot</span> <span class="token pa
 <span class="token comment">#创建用户及对用户赋权</span>
 create user <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span>
 create database wordpress<span class="token punctuation">;</span>
-grant all on wordpress.* to <span class="token string">'wp'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="启动Wordpress容器"><a href="#启动Wordpress容器" class="headerlink" title="启动Wordpress容器"></a>启动Wordpress容器</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--name</span> wordpress <span class="token parameter variable">-itd</span> <span class="token punctuation">\</span>
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">WORDPRESS_DB_NAME</span><span class="token operator">=</span>wordpress <span class="token punctuation">\</span>        
@@ -824,7 +837,7 @@ grant all on wordpress.* to <span class="token string">'wp'</span>@<span class="
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">13.6k</span>
+                        class="white-color">31.4k</span>
             
             
             

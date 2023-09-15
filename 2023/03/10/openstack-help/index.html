@@ -268,6 +268,19 @@
 </header>
 
     
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
 
 
 
@@ -751,19 +764,19 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/10/io-diao-du-ce-lue-xiu-gai/">
+                <a href="/2023/03/10/2023-yun-ji-suan-ji-neng-da-sai-si-you-yun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="I/O调度策略修改">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="2023云计算技能大赛-私有云">
                         
-                        <span class="card-title">I/O调度策略修改</span>
+                        <span class="card-title">2023云计算技能大赛-私有云</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            I/O调度策略修改
+                            2023年云计算技能大赛私有云，记录本次比赛所有赛题及解答
                         
                     </div>
                     <div class="publish-info">
@@ -772,8 +785,12 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            IW
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CloudComputing/" class="post-category">
+                                    CloudComputing
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -783,6 +800,38 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Openstack/">
+                        <span class="chip bg-color">Openstack</span>
+                    </a>
+                    
+                    <a href="/tags/Ansible/">
+                        <span class="chip bg-color">Ansible</span>
+                    </a>
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/SQL/">
+                        <span class="chip bg-color">SQL</span>
+                    </a>
+                    
+                    <a href="/tags/Elasticsearch/">
+                        <span class="chip bg-color">Elasticsearch</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                    <a href="/tags/Skywalking/">
+                        <span class="chip bg-color">Skywalking</span>
+                    </a>
+                    
+                    <a href="/tags/JumpServer/">
+                        <span class="chip bg-color">JumpServer</span>
                     </a>
                     
                 </div>
@@ -796,19 +845,19 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/10/linux-xi-tong-ju-bing-you-hua/">
+                <a href="/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Linux系统句柄优化">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="OpenStack平台镜像优化">
                         
-                        <span class="card-title">Linux系统句柄优化</span>
+                        <span class="card-title">OpenStack平台镜像优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Linux系统优化
+                            OpenStack镜像在制作出来的时候较大，通过一些方法可以将镜像优化小
                         
                     </div>
                     <div class="publish-info">
@@ -828,6 +877,10 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Openstack/">
+                        <span class="chip bg-color">Openstack</span>
                     </a>
                     
                 </div>
@@ -1027,7 +1080,7 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">13.6k</span>
+                        class="white-color">31.4k</span>
             
             
             
