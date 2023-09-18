@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux系统句柄优化, IW&#39;S BLOG">
-    <meta name="description" content="Linux系统优化">
+    <meta name="keywords" content="2023云计算技能大赛容器云, IW&#39;S BLOG">
+    <meta name="description" content="2023年重庆市云计算技能大赛容器云环境部署">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Linux系统句柄优化 | IW&#39;S BLOG</title>
+    <title>2023云计算技能大赛容器云 | IW&#39;S BLOG</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -271,7 +271,7 @@
 <script src="/libs/cryptojs/crypto-js.min.js"></script>
 <script>
     (function() {
-        let pwd = '';
+        let pwd = '6f33c18f95545b451087174678aad86a0b3f90c602aea4daaaa69d1c44e2a0d4';
         if (pwd && pwd.length > 0) {
             if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
                 alert('密码错误，将返回主页！');
@@ -284,12 +284,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux系统句柄优化</h1>
+                    <h1 class="description center-align post-title">2023云计算技能大赛容器云</h1>
                 </div>
             </div>
         </div>
@@ -317,10 +317,27 @@
                                 <span class="chip bg-color">Linux</span>
                             </a>
                         
+                            <a href="/tags/Kubernetes/">
+                                <span class="chip bg-color">Kubernetes</span>
+                            </a>
+                        
+                            <a href="/tags/Deploy/">
+                                <span class="chip bg-color">Deploy</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/deploy/" class="post-category">
+                                deploy
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -336,21 +353,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-08
+                    2023-09-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    488
+                    914
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -378,33 +395,140 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Linux系统句柄优化"><a href="#Linux系统句柄优化" class="headerlink" title="Linux系统句柄优化"></a>Linux系统句柄优化</h3><h4 id="（1）查看当前的句柄数"><a href="#（1）查看当前的句柄数" class="headerlink" title="（1）查看当前的句柄数"></a>（1）查看当前的句柄数</h4><p>使用CRT等远程连接工具，连接至192.168.200.21，查看当前系统默认的文件句柄数量，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
-<span class="token number">1024</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h1 id="容器云部署"><a href="#容器云部署" class="headerlink" title="容器云部署"></a>容器云部署</h1><h2 id="一-前期准备"><a href="#一-前期准备" class="headerlink" title="一.前期准备"></a>一.前期准备</h2><h3 id="1-准备虚拟机"><a href="#1-准备虚拟机" class="headerlink" title="1.准备虚拟机"></a>1.准备虚拟机</h3><p>使用Centos_7.9.2009镜像创建两台虚拟机，配置好网络IP，关闭防火墙，将chinaskills_cloud_paas_v2.0.2.iso镜像上传至root目录下，将root密码设置为<code>000000</code></p>
+<table>
+<thead>
+<tr>
+<th>节点IP</th>
+<th>角色</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192.168.200.10</td>
+<td>Master</td>
+<td>Kubernetes 集群 master 节点、Harbor 仓库节点</td>
+</tr>
+<tr>
+<td>192.168.200.20</td>
+<td>Worker</td>
+<td>Kubernetes 集群 node 节点</td>
+</tr>
+</tbody></table>
+<h3 id="2-基础环境准备"><a href="#2-基础环境准备" class="headerlink" title="2.基础环境准备"></a>2.基础环境准备</h3><p>将上传在root目录的安装包(<code>chinaskills_cloud_paas_v2.0.2.iso</code>)中的文件提取到/opt目录</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mount</span> /root/chinaskills_cloud_paas_v2.0.2.iso /mnt/
+<span class="token function">cp</span> <span class="token parameter variable">-rf</span> /mnt/* /opt
+<span class="token function">umount</span> /root/chinaskills_cloud_paas_v2.0.2.iso
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>可以看到当前的系统默认限制是1024。</p>
-<h4 id="（2）修改句柄数"><a href="#（2）修改句柄数" class="headerlink" title="（2）修改句柄数."></a>（2）修改句柄数.</h4><p>修改Linux系统的句柄数限制有两种方法，一种是使用ulimit命令临时生效，另外一种是修改配置文件，永久生效。此处使用修改配置文件的方式。</p>
-<p><strong>注意：</strong>如果使用命令临时生效句柄限制，root用户可以调大或者调小句柄的限制，而非root用户一旦设定了值，就只能调小这个限制，不能调大，不然会报“bash: ulimit: open files: cannot modify limit: Operation not permitted”的错误。</p>
-<p>修改配置文件调整句柄限制为65535，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* soft nofile 65535"  &gt;&gt; /etc/security/limits.conf</span>
-<span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* hard nofile 65535"  &gt;&gt; /etc/security/limits.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="3-安装kubeeasy"><a href="#3-安装kubeeasy" class="headerlink" title="3.安装kubeeasy"></a>3.安装kubeeasy</h3><p>kubeeasy 为 Kubernetes 集群专业部署工具，极大的简化了部署流程。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mv</span> /opt/kubeeasy /usr/bin/kubeeasy
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>添加配置的解释如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">*       <span class="token comment">#代表所有用户</span>
-soft    <span class="token comment">#超过文件句柄数时，仅提示</span>
-hard    <span class="token comment">#超过文件句柄数时，直接限制</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-安装依赖包"><a href="#4-安装依赖包" class="headerlink" title="4.安装依赖包"></a>4.安装依赖包</h3><p>此步骤主要完成 docker-ce、git、unzip、vim、wget 等工具的安装。</p>
+<p>可通过命令 <code>tail -f /var/log/kubeinstall.log</code> 查看安装详情或排查错误</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> depend <span class="token punctuation">\</span> 
+<span class="token parameter variable">--host</span> <span class="token number">192.168</span>.200.10,192.168.200.20 <span class="token punctuation">\</span> <span class="token comment"># 所有主机节点 IP</span>
+<span class="token parameter variable">--user</span> root <span class="token punctuation">\</span>  <span class="token comment"># 主机登录用户，默认为root</span>
+<span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> <span class="token comment"># 主机登录密码，所有节点需保持密码一致</span>
+--offline-file /opt/dependencies/base-rpms.tar.gz <span class="token comment"># 离线安装包路径</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>修改完之后，不需要重启系统即会生效，但是需要重新登录。退出重新登录该云主机，查看当前的句柄限制，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># logout</span>
+<h3 id="5-配置SSH免密"><a href="#5-配置SSH免密" class="headerlink" title="5.配置SSH免密"></a>5.配置SSH免密</h3><p>(1) 在master节点，检测集群节点连通性</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy check <span class="token function">ssh</span> <span class="token punctuation">\</span> 
+<span class="token parameter variable">--host</span> <span class="token number">192.168</span>.200.10,192.168.200.20 <span class="token punctuation">\</span> 
+<span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
+<span class="token parameter variable">--password</span> 000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-Connection closed.
-Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="token number">2022</span> from <span class="token number">192.168</span>.0.70
-<span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
-<span class="token number">65535</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(2)在master节点，完成所有节点间的免密</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy create ssh-keygen <span class="token punctuation">\</span>
+<span class="token parameter variable">--master</span> <span class="token number">192.168</span>.200.10 <span class="token punctuation">\</span> <span class="token comment"># master节点</span>
+<span class="token parameter variable">--worker</span> <span class="token number">192.168</span>.200.20 <span class="token punctuation">\</span> <span class="token comment"># 所有worker节点</span>
+<span class="token parameter variable">--user</span> root 
+<span class="token parameter variable">--password</span> 000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>可以看到当前的限制为65535。</p>
-<p>至此，Linux系统文件句柄优化配置结束。在生产环境中，系统默认的1024远远不够，会导致系统报“too many open files”的错误。所以优化句柄数量限制是很有必要的。此案例默认使用的root用户进行修改，如果使用非root用户，在修改句柄限制的时候，会有比较多的限制，感兴趣的读者，可以自行查找资料学习。</p>
+<h2 id="二-部署Kubernetes-集群-K8s"><a href="#二-部署Kubernetes-集群-K8s" class="headerlink" title="二.部署Kubernetes 集群(K8s)"></a>二.部署Kubernetes 集群(K8s)</h2><h3 id="1-Kubernetes-集群"><a href="#1-Kubernetes-集群" class="headerlink" title="1.Kubernetes 集群"></a>1.Kubernetes 集群</h3><p>(1) 本次安装的 Kubernetes 版本为 v1.22.1,在 master 节点执行以下命令部署 Kubernetes 集群</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> kubernetes <span class="token punctuation">\</span> 
+<span class="token parameter variable">--master</span> <span class="token number">192.168</span>.200.10 <span class="token punctuation">\</span> 
+<span class="token parameter variable">--worker</span> <span class="token number">192.168</span>.200.20 <span class="token punctuation">\</span> 
+<span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
+<span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> 
+<span class="token parameter variable">--version</span> <span class="token number">1.22</span>.1 <span class="token punctuation">\</span> <span class="token comment"># Kubernetes 版本，此处只能为 1.22.1</span>
+--offline-file /opt/kubernetes.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>(2) 部署完成后查看集群状态 :<code>kubectl cluster-info</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Kubernetes control plane is running at https://apiserver.cluster.local:6443 
+CoreDNS is running at 
+
+https://apiserver.cluster.local:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy To further debug and diagnose cluster problems, 
+
+use <span class="token string">'kubectl cluster-info dump'</span><span class="token builtin class-name">.</span>
+<span class="token comment"># 若在node节点无法查看，需要将master节点的.kube发放到node节点</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(3) 查看节点负载情况：<code>kubectl top nodes --use-protocol-buffers</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">NAME CPU<span class="token punctuation">(</span>cores<span class="token punctuation">)</span>    CPU%   MEMORY<span class="token punctuation">(</span>bytes<span class="token punctuation">)</span>  MEMORY% 
+k8s-master-node1   389m     <span class="token number">4</span>% 6926Mi      <span class="token number">43</span>% 
+k8s-worker-node1   875m    <span class="token number">10</span>% 3365Mi      <span class="token number">21</span>%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>(4) 登录一道云云开发平台</p>
+<p>在浏览器访问<a target="_blank" rel="noopener" href="http://master_ip:30080/">http://master_IP:30080</a>, 设置admin用户密码为(00000000),并登录平台</p>
+<p><img src="https://s2.loli.net/2023/09/18/BbUMValjR3ku9Lt.png" alt="容器云登录界面"></p>
+<h2 id="三-部署-KubeVirt-集群"><a href="#三-部署-KubeVirt-集群" class="headerlink" title="三.部署 KubeVirt 集群"></a>三.部署 KubeVirt 集群</h2><p>在 master 节点执行以下命令安装 KubeVirt：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--virt</span> kubevirt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查看 Pod：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl <span class="token parameter variable">-n</span> kubevirt get pods
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2023/09/18/xrPh8TESVvm53lf.png" alt="容器云kubevirt"></p>
+<h2 id="四-部署-Istio"><a href="#四-部署-Istio" class="headerlink" title="四.部署 Istio"></a>四.部署 Istio</h2><p>在 master 节点执行以下命令安装 istio：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--istio</span> istio
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查看Pod</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl <span class="token parameter variable">-n</span> istio-system get pods
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2023/09/18/AmwMRazQcH9EIq7.png" alt="容器云istio"></p>
+<p>查看 Istio 版本信息：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">istioctl version
+<span class="token comment"># 结果如下</span>
+client version: <span class="token number">1.12</span>.0 
+control plane version: <span class="token number">1.12</span>.0 
+data plane version: <span class="token number">1.12</span>.0 <span class="token punctuation">(</span><span class="token number">2</span> proxies<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>相关的可视化界面</p>
+<pre class="line-numbers language-none"><code class="language-none">Grafans http://master_ip:33000
+Prometheus http://master_ip:30090
+Jaeger http://master_ip:30686
+kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="五-部署Harbor仓库"><a href="#五-部署Harbor仓库" class="headerlink" title="五.部署Harbor仓库"></a>五.部署Harbor仓库</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--registry</span> harbor
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>部署完成后查看 Harbor 仓库状态</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status harbor
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在浏览器通过<a target="_blank" rel="noopener" href="http://master_ip/">http://master_ip</a> 访问harbor 管理员账户(admin/Harbor12345)</p>
+<p>到此，搭建完成</p>
+<h2 id="六-基础运维"><a href="#六-基础运维" class="headerlink" title="六.基础运维"></a>六.基础运维</h2><h3 id="1-重置集群"><a href="#1-重置集群" class="headerlink" title="1.重置集群"></a>1.重置集群</h3><p>若集群部署失败或出现故障，可重置集群重新部署，重置命令如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy reset  <span class="token comment">#重置完成后,从安装依赖重新开始</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="2-添加节点"><a href="#2-添加节点" class="headerlink" title="2.添加节点"></a>2.添加节点</h3><p>(1)在 master 节点执行以下命令,给新节点安装依赖包：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> depend <span class="token punctuation">\</span>
+<span class="token parameter variable">--host</span> <span class="token number">10.24</span>.2.12 <span class="token punctuation">\</span> <span class="token comment"># 10.24.2.12 为新增节点的 IP 地址</span>
+<span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
+<span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> 
+--offline-file /opt/dependencies/base-rpms.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(2)在 master 节点执行以下命令,将新节点加入集群：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token punctuation">\</span> 
+<span class="token parameter variable">--worker</span> <span class="token number">10.24</span>.2.12<span class="token punctuation">\</span> <span class="token comment"># 10.24.2.12 为新增节点的 IP 地址</span>
+<span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
+<span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> 
+--offline-file /opt/kubernetes.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -420,7 +544,7 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">IW</a>
+                    <a href="/about" rel="external nofollow noreferrer">I W</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -430,7 +554,7 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://iwhig.github.io/2023/03/10/linux-xi-tong-ju-bing-you-hua/">https://iwhig.github.io/2023/03/10/linux-xi-tong-ju-bing-you-hua/</a>
+                    <a href="https://iwhig.github.io/2023/03/10/rong-qi-yun-bu-shu/">https://iwhig.github.io/2023/03/10/rong-qi-yun-bu-shu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -443,7 +567,7 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">IW</a>
+                    <a href="/about" target="_blank">I W</a>
                     !
                 </span>
             </div>
@@ -470,6 +594,14 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                             
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/Kubernetes/">
+                                    <span class="chip bg-color">Kubernetes</span>
+                                </a>
+                            
+                                <a href="/tags/Deploy/">
+                                    <span class="chip bg-color">Deploy</span>
                                 </a>
                             
                         </div>
@@ -519,106 +651,25 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/10/2023-yun-ji-suan-ji-neng-da-sai-si-you-yun/">
+                <a href="/2023/03/10/openstack-help/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="2023云计算技能大赛-私有云">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="OpenStack Help">
                         
-                        <span class="card-title">2023云计算技能大赛-私有云</span>
+                        <span class="card-title">OpenStack Help</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            2023年云计算技能大赛私有云，记录本次比赛所有赛题及解答
+                            OpenStack Help
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="far fa-clock fa-fw icon-date"></i>2023-03-10
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CloudComputing/" class="post-category">
-                                    CloudComputing
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/Openstack/">
-                        <span class="chip bg-color">Openstack</span>
-                    </a>
-                    
-                    <a href="/tags/Ansible/">
-                        <span class="chip bg-color">Ansible</span>
-                    </a>
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/SQL/">
-                        <span class="chip bg-color">SQL</span>
-                    </a>
-                    
-                    <a href="/tags/Elasticsearch/">
-                        <span class="chip bg-color">Elasticsearch</span>
-                    </a>
-                    
-                    <a href="/tags/JumpServer/">
-                        <span class="chip bg-color">JumpServer</span>
-                    </a>
-                    
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
-                    </a>
-                    
-                    <a href="/tags/Skywalking/">
-                        <span class="chip bg-color">Skywalking</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="OpenStack平台镜像优化">
-                        
-                        <span class="card-title">OpenStack平台镜像优化</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            OpenStack镜像在制作出来的时候较大，通过一些方法可以将镜像优化小
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-10
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -634,8 +685,61 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Openstack/">
-                        <span class="chip bg-color">Openstack</span>
+                    <a href="/tags/OpenStack/">
+                        <span class="chip bg-color">OpenStack</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/02/06/rabbitmq-de-you-hua/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="RabbitMQ优化">
+                        
+                        <span class="card-title">RabbitMQ优化</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            RabbitMQ连接数默认过小，在连接量比较大的时候服务会崩溃，这里对其进行简单优化
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/RabbitMQ/">
+                        <span class="chip bg-color">RabbitMQ</span>
                     </a>
                     
                 </div>
