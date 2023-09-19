@@ -271,7 +271,7 @@
 <script src="/libs/cryptojs/crypto-js.min.js"></script>
 <script>
     (function() {
-        let pwd = '6f33c18f95545b451087174678aad86a0b3f90c602aea4daaaa69d1c44e2a0d4';
+        let pwd = 'd7efd0effc358c795886dbe41681c9590cf3082b5fc3e21857f34a34c63f725b';
         if (pwd && pwd.length > 0) {
             if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
                 alert('密码错误，将返回主页！');
@@ -377,7 +377,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-15
+                    2023-09-19
                 </div>
                 
 
@@ -712,7 +712,7 @@ max_allowed_packet <span class="token operator">=</span> 30M
 <h3 id="【题目-6】Keystone-服务安装与使用-0-5-分"><a href="#【题目-6】Keystone-服务安装与使用-0-5-分" class="headerlink" title="【题目 6】Keystone 服务安装与使用[0.5 分]"></a>【题目 6】Keystone 服务安装与使用[0.5 分]</h3><p>在 controller 节点上使用 iaas-install-keystone.sh 脚本安装 Keystone 服务。安装完成后， 使用相关命令，创建用户 chinaskill，密码为 000000。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-keystone.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain huhy --password 000000 chinaskill</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain iwhig --password 000000 chinaskill</span>
 +---------------------+----------------------------------+
 <span class="token operator">|</span> Field               <span class="token operator">|</span> Value                            <span class="token operator">|</span>
 +---------------------+----------------------------------+
@@ -1175,7 +1175,7 @@ net.ipv4.tcp_syn_retries <span class="token operator">=</span> <span class="toke
 +----------------------------------+---------+---------+--------------------+
 <span class="token operator">|</span> ID                               <span class="token operator">|</span> Name    <span class="token operator">|</span> Enabled <span class="token operator">|</span> Description        <span class="token operator">|</span>
 +----------------------------------+---------+---------+--------------------+
-<span class="token operator">|</span> 7fc907bd4a6e471aa6d714ff66646d2a <span class="token operator">|</span> huhy    <span class="token operator">|</span> True    <span class="token operator">|</span> Default Domain     <span class="token operator">|</span>
+<span class="token operator">|</span> 7fc907bd4a6e471aa6d714ff66646d2a <span class="token operator">|</span> iwhig    <span class="token operator">|</span> True    <span class="token operator">|</span> Default Domain     <span class="token operator">|</span>
 <span class="token operator">|</span> default                          <span class="token operator">|</span> Default <span class="token operator">|</span> True    <span class="token operator">|</span> The default domain <span class="token operator">|</span>
 +----------------------------------+---------+---------+--------------------+
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
