@@ -418,15 +418,16 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>在使用Qemu&amp;KVM的时候，除了能通过下载正常ISO镜像自己制作qcow2格式镜像外，还可以通过官方给出的网站直接下载qcow2的镜像，但是qcow2镜像的密码在使用前需要修改一下，否则无法登陆系统</p>
-<h2 id="一、下载镜像"><a href="#一、下载镜像" class="headerlink" title="一、下载镜像"></a>一、下载镜像</h2><p>通过镜像网站下载合适镜像，这里给大家提供一个镜像网站</p>
+<h3 id="一、下载镜像"><a href="#一、下载镜像" class="headerlink" title="一、下载镜像"></a>一、下载镜像</h3><p>通过镜像网站下载合适镜像，这里给大家提供一个镜像网站</p>
 <pre class="line-numbers language-http" data-language="http"><code class="language-http"><span class="token header"><span class="token header-name keyword">https</span><span class="token punctuation">:</span><span class="token header-value">//mirrors.ustc.edu.cn/</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="二、安装guestfish相关软件"><a href="#二、安装guestfish相关软件" class="headerlink" title="二、安装guestfish相关软件"></a>二、安装guestfish相关软件</h2><pre class="line-numbers language-none"><code class="language-none">apt-get install guestfish libguestfs-tools -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="二、安装guestfish相关软件"><a href="#二、安装guestfish相关软件" class="headerlink" title="二、安装guestfish相关软件"></a>二、安装guestfish相关软件</h3><pre class="line-numbers language-none"><code class="language-none">apt-get install guestfish libguestfs-tools -y<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="三、用openssl生成密码的哈希值，这里假设用户密码为123456"><a href="#三、用openssl生成密码的哈希值，这里假设用户密码为123456" class="headerlink" title="三、用openssl生成密码的哈希值，这里假设用户密码为123456"></a>三、用openssl生成密码的哈希值，这里假设用户密码为123456</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@controller:~<span class="token comment"># openssl passwd -1 123456</span>
+<h3 id="三、用openssl生成密码的哈希值"><a href="#三、用openssl生成密码的哈希值" class="headerlink" title="三、用openssl生成密码的哈希值"></a>三、用openssl生成密码的哈希值</h3><p><strong>这里假设用户密码为123456</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@controller:~<span class="token comment"># openssl passwd -1 123456</span>
 <span class="token variable">$1</span><span class="token variable">$fyhDdJd5</span><span class="token variable">$j5ul5YBIiskv8eVtUZhXO</span><span class="token builtin class-name">.</span> <span class="token comment">#这是生成的密码哈希值，复制后一会儿替换到shadow文件中</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h2 id="四、挂载运行需改密码的镜像"><a href="#四、挂载运行需改密码的镜像" class="headerlink" title="四、挂载运行需改密码的镜像"></a>四、挂载运行需改密码的镜像</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@controller:~<span class="token comment"># guestfish --rw -a exam.qcow2</span>
+<h3 id="四、挂载运行需改密码的镜像"><a href="#四、挂载运行需改密码的镜像" class="headerlink" title="四、挂载运行需改密码的镜像"></a>四、挂载运行需改密码的镜像</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@controller:~<span class="token comment"># guestfish --rw -a exam.qcow2</span>
 
 Welcome to guestfish, the guest filesystem shell <span class="token keyword">for</span>
 editing virtual machine filesystems and disk images.
@@ -444,7 +445,7 @@ Type: ‘help’ <span class="token keyword">for</span> <span class="token built
 <span class="token operator">&gt;</span><span class="token operator">&lt;</span>fs<span class="token operator">&gt;</span> quit <span class="token comment">#保存退出，该镜像现在的root用户登录密码为123456</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://s2.loli.net/2023/09/20/nEsgF5CiNVTcZ4p.png" alt="更换密码哈希值"></p>
-<h2 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h2><p>将修改后的镜像上传到Openstack平台或使用KVM进行验证，下面以Openstack平台进行验证</p>
+<h3 id="五、验证"><a href="#五、验证" class="headerlink" title="五、验证"></a>五、验证</h3><p>将修改后的镜像上传到Openstack平台或使用KVM进行验证，下面以Openstack平台进行验证</p>
 <h4 id="1、上传镜像"><a href="#1、上传镜像" class="headerlink" title="1、上传镜像"></a>1、上传镜像</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">glance image-create <span class="token parameter variable">--name</span> exam <span class="token punctuation">\</span>
 --disk-format qcow2 --container-format bare <span class="token punctuation">\</span>
 <span class="token parameter variable">--progress</span> <span class="token operator">&lt;</span>./exam.qcow2
@@ -742,12 +743,12 @@ Type: ‘help’ <span class="token keyword">for</span> <span class="token built
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Shell/">
-                        <span class="chip bg-color">Shell</span>
-                    </a>
-                    
                     <a href="/tags/Openstack/">
                         <span class="chip bg-color">Openstack</span>
+                    </a>
+                    
+                    <a href="/tags/Shell/">
+                        <span class="chip bg-color">Shell</span>
                     </a>
                     
                 </div>
@@ -947,7 +948,7 @@ Type: ‘help’ <span class="token keyword">for</span> <span class="token built
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">36.4k</span>
+                        class="white-color">39.6k</span>
             
             
             
