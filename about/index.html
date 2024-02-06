@@ -360,7 +360,7 @@
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
                         
 <div class="statis">
-    <span class="count"><a href="/">17</a></span>
+    <span class="count"><a href="/">18</a></span>
     <span class="name">文章</span>
 </div>
 
@@ -374,7 +374,7 @@
 
 
 <div class="statis">
-    <span class="count"><a href="/tags">22</a></span>
+    <span class="count"><a href="/tags">23</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -390,7 +390,7 @@
                                 <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
                                     
 <div class="statis">
-    <span class="count"><a href="/">17</a></span>
+    <span class="count"><a href="/">18</a></span>
     <span class="name">文章</span>
 </div>
 
@@ -404,7 +404,7 @@
 
 
 <div class="statis">
-    <span class="count"><a href="/tags">22</a></span>
+    <span class="count"><a href="/tags">23</a></span>
     <span class="name">标签</span>
 </div>
 
@@ -530,7 +530,7 @@
         },
         xAxis: {
             type: 'category',
-            data: ["2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10"]
+            data: ["2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02"]
         },
         yAxis: {
             type: 'value',
@@ -540,7 +540,7 @@
                 name: '文章篇数',
                 type: 'line',
                 color: ['#6772e5'],
-                data: [0,1,1,0,1,7,1,2,0,0,0,4,0],
+                data: [1,7,1,2,0,0,0,4,0,0,0,0,1],
                 markPoint: {
                     symbolSize: 45,
                     color: ['#fa755a','#3ecf8e','#82d3f4'],
@@ -582,7 +582,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [{"name":"deploy","value":4},{"name":"CloudComputing","value":1},{"name":"K8s","value":1},{"name":"Linux","value":2},{"name":"Markdown","value":1},{"name":"Qemu","value":1}],
+                data: [{"name":"deploy","value":5},{"name":"K8s","value":1},{"name":"CloudComputing","value":1},{"name":"Markdown","value":1},{"name":"Linux","value":2},{"name":"Qemu","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -606,7 +606,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ["Linux","Openstack","OpenStack","Shell","Kubernetes","Ansible","Docker","Ubuntu","Mysql","Python"]
+                data: ["Linux","Openstack","Docker","OpenStack","Shell","Kubernetes","Deploy","Ansible","Ubuntu","Container"]
             }
         ],
         yAxis: [
@@ -619,7 +619,7 @@
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth : 18,
-                data: [15,4,3,3,3,2,2,2,1,1],
+                data: [15,4,3,3,3,3,2,2,2,1],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
@@ -737,6 +737,24 @@
         <div class="tag-chips center-align">
             
             
+            <a href="/tags/Deploy/">
+                <span class="chip center-align waves-effect waves-light chip-default">Deploy</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Docker/">
+                <span class="chip center-align waves-effect waves-light chip-default">Docker</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Container/">
+                <span class="chip center-align waves-effect waves-light chip-default">Container</span>
+            </a>
+            
+            
+            
             <a href="/tags/Linux/">
                 <span class="chip center-align waves-effect waves-light chip-default">Linux</span>
             </a>
@@ -751,48 +769,6 @@
             
             <a href="/tags/OpenStack/">
                 <span class="chip center-align waves-effect waves-light chip-default">OpenStack</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Mysql/">
-                <span class="chip center-align waves-effect waves-light chip-default">Mysql</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Docker/">
-                <span class="chip center-align waves-effect waves-light chip-default">Docker</span>
-            </a>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <a href="/tags/Elasticsearch/">
-                <span class="chip center-align waves-effect waves-light chip-default">Elasticsearch</span>
-            </a>
-            
-            
-            
-            <a href="/tags/JumpServer/">
-                <span class="chip center-align waves-effect waves-light chip-default">JumpServer</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Redis/">
-                <span class="chip center-align waves-effect waves-light chip-default">Redis</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Skywalking/">
-                <span class="chip center-align waves-effect waves-light chip-default">Skywalking</span>
             </a>
             
             
@@ -817,14 +793,56 @@
             
             
             
-            <a href="/tags/RabbitMQ/">
-                <span class="chip center-align waves-effect waves-light chip-default">RabbitMQ</span>
+            <a href="/tags/Mysql/">
+                <span class="chip center-align waves-effect waves-light chip-default">Mysql</span>
+            </a>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <a href="/tags/Elasticsearch/">
+                <span class="chip center-align waves-effect waves-light chip-default">Elasticsearch</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Jumpserver/">
+                <span class="chip center-align waves-effect waves-light chip-default">Jumpserver</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Redis/">
+                <span class="chip center-align waves-effect waves-light chip-default">Redis</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Skywalking/">
+                <span class="chip center-align waves-effect waves-light chip-default">Skywalking</span>
             </a>
             
             
             
             <a href="/tags/Markdown/">
                 <span class="chip center-align waves-effect waves-light chip-default">Markdown</span>
+            </a>
+            
+            
+            
+            <a href="/tags/RabbitMQ/">
+                <span class="chip center-align waves-effect waves-light chip-default">RabbitMQ</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Qemu/">
+                <span class="chip center-align waves-effect waves-light chip-default">Qemu</span>
             </a>
             
             
@@ -837,18 +855,6 @@
             
             <a href="/tags/Centos/">
                 <span class="chip center-align waves-effect waves-light chip-default">Centos</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Deploy/">
-                <span class="chip center-align waves-effect waves-light chip-default">Deploy</span>
-            </a>
-            
-            
-            
-            <a href="/tags/Qemu/">
-                <span class="chip center-align waves-effect waves-light chip-default">Qemu</span>
             </a>
             
             
@@ -974,7 +980,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023</span>
+                <span id="year">2023-2024</span>
             
             <a href="/about" target="_blank">I W</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -985,7 +991,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">39.6k</span>
+                        class="white-color">41.5k</span>
             
             
             

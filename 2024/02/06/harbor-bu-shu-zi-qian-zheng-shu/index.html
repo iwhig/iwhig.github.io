@@ -1,0 +1,1367 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Harbor部署及自签证书, IW&#39;S BLOG">
+    <meta name="description" content="容器镜像仓库部署，证书自签避免docker登录仓库时提示仓库不安全">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Harbor部署及自签证书 | IW&#39;S BLOG</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">IW&#39;S BLOG</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="https://iwhig.github.io/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://cloudzzjm-my.sharepoint.com/" class="waves-effect waves-light">
+      
+      <i class="far fa-hdd" style="zoom: 0.6;"></i>
+      
+      <span>Cloud</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">IW&#39;S BLOG</div>
+        <div class="logo-desc">
+            
+            当你的能力还驾驭不了你的目标时，就应该沉下心来，历练
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="https://iwhig.github.io/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://cloudzzjm-my.sharepoint.com/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw far fa-hdd"></i>
+			
+			Cloud
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Harbor部署及自签证书</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Deploy/">
+                                <span class="chip bg-color">Deploy</span>
+                            </a>
+                        
+                            <a href="/tags/Docker/">
+                                <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/Container/">
+                                <span class="chip bg-color">Container</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/deploy/" class="post-category">
+                                deploy
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-02-06
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-02-06
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>​		通常我们在使用Docker后会产生很多容器镜像，在这里我们搭建一个Harbor镜像仓库来存放容器镜像，使得拉取镜像时速度更快，更方便，这里会自签证书，在局域网内登录时可以避免登录显示不安全，从而减少编辑/etc/daemon.json文件</p>
+<h2 id="一、基础配置"><a href="#一、基础配置" class="headerlink" title="一、基础配置"></a>一、基础配置</h2><h3 id="1、更换软件源"><a href="#1、更换软件源" class="headerlink" title="1、更换软件源"></a>1、更换软件源</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
+<span class="token comment">#备份源文件</span>
+<span class="token function">mkdir</span> /etc/yum.repos.d/bak
+<span class="token function">mv</span> /etc/yum.repos.d/* /etc/yum.repos.d/bak/ <span class="token operator">&gt;&gt;</span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span>
+<span class="token comment">#下载源文件</span>
+<span class="token function">curl</span> <span class="token parameter variable">-L</span> http://mirrors.aliyun.com/repo/Centos-7.repo <span class="token parameter variable">-o</span> /etc/yum.repos.d/CentOS-Base.repo
+<span class="token comment">#清楚缓存并创建元数据</span>
+yum clean all <span class="token operator">&amp;&amp;</span> yum makecache<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2、安装基础软件"><a href="#2、安装基础软件" class="headerlink" title="2、安装基础软件"></a>2、安装基础软件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token function">vim</span> epel-release.noarch yum-utils device-mapper-persistent-data lvm2 bash-completion <span class="token function">wget</span> tree <span class="token parameter variable">-y</span>
+<span class="token comment">#设置hostname</span>
+hostnamectl set-hostname server
+<span class="token builtin class-name">exec</span> <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="3、安装Docker"><a href="#3、安装Docker" class="headerlink" title="3、安装Docker"></a>3、安装Docker</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#添加Docker软件源</span>
+yum-config-manager --add-repo<span class="token operator">=</span>http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+<span class="token comment">#安装Docker</span>
+yum <span class="token function">install</span> docker-ce docker-ce-cli <span class="token parameter variable">-y</span>
+systemctl start <span class="token function">docker</span>
+systemctl <span class="token builtin class-name">enable</span> <span class="token function">docker</span> <span class="token parameter variable">--now</span>
+<span class="token comment">#验证是否安装成功</span>
+<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># docker info</span>
+Client: Docker Engine - Community
+ Version:    <span class="token number">25.0</span>.2
+ Context:    default
+ Debug Mode: <span class="token boolean">false</span>
+ Plugins:
+  buildx: Docker Buildx <span class="token punctuation">(</span>Docker Inc.<span class="token punctuation">)</span>
+    Version:  v0.12.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose <span class="token punctuation">(</span>Docker Inc.<span class="token punctuation">)</span>
+    Version:  v2.24.5
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+
+Server:
+ Containers: <span class="token number">0</span>
+  Running: <span class="token number">0</span>
+  Paused: <span class="token number">0</span>
+  Stopped: <span class="token number">0</span>
+ Images: <span class="token number">0</span>
+ Server Version: <span class="token number">25.0</span>.2
+ Storage Driver: overlay2
+  Backing Filesystem: xfs
+  Supports d_type: <span class="token boolean">true</span>
+  Using metacopy: <span class="token boolean">false</span>
+  Native Overlay Diff: <span class="token boolean">true</span>
+  userxattr: <span class="token boolean">false</span>
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Cgroup Version: <span class="token number">1</span>
+ Plugins:
+  Volume: <span class="token builtin class-name">local</span>
+  Network: bridge <span class="token function">host</span> ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file <span class="token builtin class-name">local</span> splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: ae07eda36dd25f8a1b98dfbf587313b99c0190bb
+ runc version: v1.1.12-0-g51d5e94
+ init version: de40ad0
+ Security Options:
+  seccomp
+   Profile: <span class="token builtin class-name">builtin</span>
+ Kernel Version: <span class="token number">3.10</span>.0-862.el7.x86_64
+ Operating System: CentOS Linux <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+ OSType: linux
+ Architecture: x86_64
+ CPUs: <span class="token number">4</span>
+ Total Memory: <span class="token number">3</span>.685GiB
+ Name: localhost.localdomain
+ ID: 3e8c1b2a-50e1-473c-b280-764df30bf4ec
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: <span class="token boolean">false</span>
+ Experimental: <span class="token boolean">false</span>
+ Insecure Registries:
+  <span class="token number">127.0</span>.0.0/8
+ Live Restore Enabled: <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="4、安装docker-compose"><a href="#4、安装docker-compose" class="headerlink" title="4、安装docker-compose"></a>4、安装docker-compose</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span>  <span class="token string">"https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-s</span><span class="token variable">)</span></span>-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-m</span><span class="token variable">)</span></span>"</span> <span class="token parameter variable">-O</span> /usr/local/bin/docker-compose
+<span class="token comment">#增加执行权限</span>
+<span class="token function">chmod</span> a+x /usr/local/bin/docker-compose 
+<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># docker-compose version</span>
+Docker Compose version v2.24.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="5、内核升级"><a href="#5、内核升级" class="headerlink" title="5、内核升级"></a>5、内核升级</h3><p>​		我这里为了后续软件支持需要升级内核，如不想升级内核可直接跳过此步</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看内核</span>
+<span class="token function">uname</span> <span class="token parameter variable">-sr</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h5 id="1、导入公钥"><a href="#1、导入公钥" class="headerlink" title="1、导入公钥"></a>1、导入公钥</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">--import</span> https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+<span class="token function">rpm</span> <span class="token parameter variable">-Uvh</span> https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h5 id="2、加载elrepo-kernel元数据"><a href="#2、加载elrepo-kernel元数据" class="headerlink" title="2、加载elrepo-kernel元数据"></a>2、加载elrepo-kernel元数据</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">--disablerepo</span><span class="token operator">=</span><span class="token string">"*"</span> <span class="token parameter variable">--enablerepo</span><span class="token operator">=</span><span class="token string">"elrepo-kernel"</span> repolist<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<blockquote>
+<p><code>kernel-lt</code> 和 <code>kernel-ml</code> 二者的区别：</p>
+<ul>
+<li><code>kernel-ml</code>软件包是根据<code>Linux Kernel Archives</code>的主线稳定分支提供的源构建的。 内核配置基于默认的<code>RHEL-7</code>配置，并根据需要启用了添加的功能。 这些软件包有意命名为<code>kernel-ml</code>，以免与<code>RHEL-7</code>内核发生冲突，因此，它们可以与常规内核一起安装和更新。</li>
+<li><code>kernel-lt</code>包是从<code>Linux Kernel Archives</code>提供的源代码构建的，就像<code>kernel-ml</code>软件包一样。 不同之处在于<code>kernel-lt</code>基于长期支持分支，而<code>kernel-ml</code>基于主线稳定分支。</li>
+</ul>
+<p>在 <code>ELRepo</code>中有两个内核选项，一个是<code>kernel-lt</code>（长期支持版），一个是 <code>kernel-ml</code>（主线最新版本），采用长期支持版本（<code>kernel-lt</code>），会更加稳定。</p>
+</blockquote>
+<h5 id="3、查看可用内核版本"><a href="#3、查看可用内核版本" class="headerlink" title="3、查看可用内核版本"></a>3、查看可用内核版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment">#  yum --disablerepo="*" --enablerepo="elrepo-kernel" list available | sort -c</span>
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * elrepo-kernel: hkg.mirror.rackspace.com
+Available Packages
+kernel-ml.x86_64                        <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-ml-tools.x86_64                  <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-ml-tools-libs.x86_64             <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-ml-tools-libs-devel.x86_64       <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-ml-headers.x86_64                <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-ml-doc.noarch                    <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-ml-devel.x86_64                  <span class="token number">6.7</span>.3-1.el7.elrepo         elrepo-kernel
+kernel-lt-tools.x86_64                  <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+kernel-lt-tools-libs.x86_64             <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+kernel-lt-tools-libs-devel.x86_64       <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+kernel-lt-headers.x86_64                <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+kernel-lt-doc.noarch                    <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+kernel-lt-devel.x86_64                  <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+perf.x86_64                             <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
+python-perf.x86_64                      <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="4、安装长期支持版本"><a href="#4、安装长期支持版本" class="headerlink" title="4、安装长期支持版本"></a>4、安装长期支持版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">--enablerepo</span><span class="token operator">=</span><span class="token string">"elrepo-kernel"</span> <span class="token function">install</span> kernel-lt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​		查看当前系统下可用内核</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg</span>
+CentOS Linux <span class="token punctuation">(</span><span class="token number">5.4</span>.268-1.el7.elrepo.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+CentOS Linux <span class="token punctuation">(</span><span class="token number">3.10</span>.0-862.el7.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
+CentOS Linux <span class="token punctuation">(</span><span class="token number">0</span>-rescue-4e37109fc2c64b78804e7b0263d94b67<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="5、创建内核配置"><a href="#5、创建内核配置" class="headerlink" title="5、创建内核配置"></a>5、创建内核配置</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># grub2-mkconfig -o /boot/grub2/grub.cfg</span>
+Generating grub configuration <span class="token function">file</span> <span class="token punctuation">..</span>.
+Found linux image: /boot/vmlinuz-5.4.268-1.el7.elrepo.x86_64
+Found initrd image: /boot/initramfs-5.4.268-1.el7.elrepo.x86_64.img
+Found linux image: /boot/vmlinuz-3.10.0-862.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-862.el7.x86_64.img
+Found linux image: /boot/vmlinuz-0-rescue-4e37109fc2c64b78804e7b0263d94b67
+Found initrd image: /boot/initramfs-0-rescue-4e37109fc2c64b78804e7b0263d94b67.img
+<span class="token keyword">done</span>
+<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="6、设置开机加载新内核"><a href="#6、设置开机加载新内核" class="headerlink" title="6、设置开机加载新内核"></a>6、设置开机加载新内核</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">grub2-set-default <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>​		重启并验证</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">reboot</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2024/02/06/vDIp9es8aflERAu.png" alt="启动内核顺序.png"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># uname -sr</span>
+Linux <span class="token number">5.4</span>.268-1.el7.elrepo.x86_64
+<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="二、自签证书"><a href="#二、自签证书" class="headerlink" title="二、自签证书"></a>二、自签证书</h2><p>​		以下用到域名的地方自行替换成自己的域名我的域名是：iw.harbor</p>
+<h3 id="1、创建ca证书私钥"><a href="#1、创建ca证书私钥" class="headerlink" title="1、创建ca证书私钥"></a>1、创建ca证书私钥</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server /<span class="token punctuation">]</span><span class="token comment"># mkdir /data/cert &amp;&amp; cd /data/cert</span>
+<span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl genrsa -out ca.key 4096</span>
+Generating RSA private key, <span class="token number">4096</span> bit long modulus
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>++
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>++
+e is <span class="token number">65537</span> <span class="token punctuation">(</span>0x10001<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2、创建ca证书"><a href="#2、创建ca证书" class="headerlink" title="2、创建ca证书"></a>2、创建ca证书</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl req <span class="token parameter variable">-x509</span> <span class="token parameter variable">-new</span> <span class="token parameter variable">-sha512</span> <span class="token parameter variable">-days</span> <span class="token number">3650</span> <span class="token parameter variable">-subj</span> <span class="token string">"/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=iw.harbor"</span> <span class="token parameter variable">-key</span> ca.key <span class="token parameter variable">-out</span> ca.crt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="3、生出域名证书"><a href="#3、生出域名证书" class="headerlink" title="3、生出域名证书"></a>3、生出域名证书</h3><h6 id="1、生成私钥"><a href="#1、生成私钥" class="headerlink" title="1、生成私钥"></a>1、生成私钥</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl genrsa -out iw.harbor.key 4096</span>
+Generating RSA private key, <span class="token number">4096</span> bit long modulus
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.++
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.++
+e is <span class="token number">65537</span> <span class="token punctuation">(</span>0x10001<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="2、生成证书签名请求（CSR）"><a href="#2、生成证书签名请求（CSR）" class="headerlink" title="2、生成证书签名请求（CSR）"></a>2、生成证书签名请求（CSR）</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl req <span class="token parameter variable">-sha512</span> <span class="token parameter variable">-new</span> <span class="token parameter variable">-subj</span> <span class="token string">"/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=iw.harbor"</span> <span class="token parameter variable">-key</span> iw.harbor.key <span class="token parameter variable">-out</span> iw.harbor.csr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h6 id="3、生成x509-v3扩展文件"><a href="#3、生成x509-v3扩展文件" class="headerlink" title="3、生成x509 v3扩展文件"></a>3、生成x509 v3扩展文件</h6><p>​		这里有两种方式，如果是域名则选择第一种，IP则选择第二种</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">################################</span>
+<span class="token comment">#域名访问，注意修改域名等信息</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span> v3.ext <span class="token operator">&lt;&lt;-</span><span class="token string">EOF
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1=iw.harbor  #xxxx.yourdomain 加上二级域名
+DNS.2=harbor     #yourdomain
+DNS.3=server     #hostname
+EOF</span>
+
+<span class="token comment">################################</span>
+<span class="token comment">#下面是第二种（IP访问）注意IP更换为自己的服务器IP</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span> v3.ext <span class="token operator">&lt;&lt;-</span><span class="token string">EOF
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = IP:192.168.200.147
+EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="4、生成主机证书"><a href="#4、生成主机证书" class="headerlink" title="4、生成主机证书"></a>4、生成主机证书</h3><p>​		使用上面生出的v3.ext证书生出harbor主机证书</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl x509 -req -sha512 -days 3650 -extfile v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in iw.harbor.csr -out iw.harbor.crt</span>
+Signature ok
+<span class="token assign-left variable">subject</span><span class="token operator">=</span>/C<span class="token operator">=</span>CN/ST<span class="token operator">=</span>Beijing/L<span class="token operator">=</span>Beijing/O<span class="token operator">=</span>example/OU<span class="token operator">=</span>Personal/CN<span class="token operator">=</span>iw.harbor
+Getting CA Private Key<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="5、提供证书给Harbor和Docker"><a href="#5、提供证书给Harbor和Docker" class="headerlink" title="5、提供证书给Harbor和Docker"></a>5、提供证书给Harbor和Docker</h3><h6 id="1、转换crt为cert，提供给Docker守护进程"><a href="#1、转换crt为cert，提供给Docker守护进程" class="headerlink" title="1、转换crt为cert，提供给Docker守护进程"></a>1、转换crt为cert，提供给Docker守护进程</h6><p>​		Docker守护进程会将.crt文件解释为CA证书，并将.cert文件解释为客户端证书</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl x509 <span class="token parameter variable">-inform</span> PEM <span class="token parameter variable">-in</span> iw.harbor.crt <span class="token parameter variable">-out</span> iw.harbor.cert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> iw.harbor.crt /etc/pki/ca-trust/source/anchors/iw.harbor.crt <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h6 id="2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker-certificate文件夹中"><a href="#2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker-certificate文件夹中" class="headerlink" title="2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker certificate文件夹中"></a>2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker certificate文件夹中</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/docker/certs.d/iw.harbor/
+<span class="token function">cp</span> iw.harbor.cert iw.harbor.key ca.crt /etc/docker/certs.d/iw.harbor/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>​		最终Docker目录结构如下</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># tree /etc/docker/certs.d/</span>
+/etc/docker/certs.d/
+└── iw.harbor
+    ├── ca.crt
+    ├── iw.harbor.cert
+    └── iw.harbor.key
+
+<span class="token number">1</span> directory, <span class="token number">3</span> files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="3、重启Docker"><a href="#3、重启Docker" class="headerlink" title="3、重启Docker"></a>3、重启Docker</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="三、部署Harbor"><a href="#三、部署Harbor" class="headerlink" title="三、部署Harbor"></a>三、部署Harbor</h2><h3 id="1、下载harbor离线安装包"><a href="#1、下载harbor离线安装包" class="headerlink" title="1、下载harbor离线安装包"></a>1、下载harbor离线安装包</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://github.com/goharbor/harbor/releases/download/v2.10.0/harbor-offline-installer-v2.10.0.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="1、解压文件"><a href="#1、解压文件" class="headerlink" title="1、解压文件"></a>1、解压文件</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> harbor-offline-installer-v2.10.0.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="2、修改Harbor配置文件"><a href="#2、修改Harbor配置文件" class="headerlink" title="2、修改Harbor配置文件"></a>2、修改Harbor配置文件</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> harbor/
+<span class="token comment">#复制配置文件</span>
+<span class="token function">cp</span> harbor.yml.tmpl harbor.yml
+<span class="token function">vim</span> harbor.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://s2.loli.net/2024/02/06/lhIGe3tyvHYEgDu.png" alt="Harbor配置文件修改.png"></p>
+<h5 id="3、运行脚本部署harbor"><a href="#3、运行脚本部署harbor" class="headerlink" title="3、运行脚本部署harbor"></a>3、运行脚本部署harbor</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./install.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>完成后出现以下界面</p>
+<p><img src="https://s2.loli.net/2024/02/06/Bz9isAMopfYcOm7.png" alt="部署完成.png"></p>
+<p>用浏览器访问还是会出现不安全提示，可以把CA证书下载到需要访问该仓库的服务器手动导入浏览器</p>
+<p>可以看到导入证书后，浏览器url左侧不再提示不安全等字样</p>
+<p><img src="https://s2.loli.net/2024/02/06/h4VdK1W2QOs6FYD.png" alt="CA证书导入.png"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">IW</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://iwhig.github.io/2024/02/06/harbor-bu-shu-zi-qian-zheng-shu/">https://iwhig.github.io/2024/02/06/harbor-bu-shu-zi-qian-zheng-shu/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">IW</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Deploy/">
+                                    <span class="chip bg-color">Deploy</span>
+                                </a>
+                            
+                                <a href="/tags/Docker/">
+                                    <span class="chip bg-color">Docker</span>
+                                </a>
+                            
+                                <a href="/tags/Container/">
+                                    <span class="chip bg-color">Container</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2024/02/06/harbor-bu-shu-zi-qian-zheng-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Harbor部署及自签证书">
+                        
+                        <span class="card-title">Harbor部署及自签证书</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            容器镜像仓库部署，证书自签避免docker登录仓库时提示仓库不安全
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deploy/" class="post-category">
+                                    deploy
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Deploy/">
+                        <span class="chip bg-color">Deploy</span>
+                    </a>
+                    
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/Container/">
+                        <span class="chip bg-color">Container</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/09/20/qcow2-ge-shi-jing-xiang-mi-ma-chong-zhi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="qcow2格式镜像密码重置">
+                        
+                        <span class="card-title">qcow2格式镜像密码重置</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            qcow2格式的Linux镜像密码忘记可以通过此方法重置密码
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Qemu/" class="post-category">
+                                    Qemu
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Openstack/">
+                        <span class="chip bg-color">Openstack</span>
+                    </a>
+                    
+                    <a href="/tags/Qemu/">
+                        <span class="chip bg-color">Qemu</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023-2024</span>
+            
+            <a href="/about" target="_blank">I W</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">41.5k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/iwhig" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:zzjmcloud@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2632440423" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2632440423" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://iwhig.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

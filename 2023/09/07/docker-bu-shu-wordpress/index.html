@@ -335,12 +335,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Mysql/">
-                                <span class="chip bg-color">Mysql</span>
-                            </a>
-                        
                             <a href="/tags/Docker/">
                                 <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/Mysql/">
+                                <span class="chip bg-color">Mysql</span>
                             </a>
                         
                     </div>
@@ -371,14 +371,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-20
+                    2024-01-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    157
+                    174
                 </div>
                 
 
@@ -427,7 +427,8 @@ mysql <span class="token parameter variable">-uroot</span> <span class="token pa
 <span class="token comment">#创建用户及对用户赋权</span>
 create user <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span>
 create database wordpress<span class="token punctuation">;</span>
-grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span>
+<span class="token comment">#8.0以上版本去掉结尾identified by 'wordpress'换成with grant option</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="启动Wordpress容器"><a href="#启动Wordpress容器" class="headerlink" title="启动Wordpress容器"></a>启动Wordpress容器</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--name</span> wordpress <span class="token parameter variable">-itd</span> <span class="token punctuation">\</span>
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">WORDPRESS_DB_NAME</span><span class="token operator">=</span>wordpress <span class="token punctuation">\</span>        
@@ -500,12 +501,12 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Mysql/">
-                                    <span class="chip bg-color">Mysql</span>
-                                </a>
-                            
                                 <a href="/tags/Docker/">
                                     <span class="chip bg-color">Docker</span>
+                                </a>
+                            
+                                <a href="/tags/Mysql/">
+                                    <span class="chip bg-color">Mysql</span>
                                 </a>
                             
                         </div>
@@ -638,12 +639,12 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
-                    </a>
-                    
                     <a href="/tags/Docker/">
                         <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                     <a href="/tags/Ubuntu/">
@@ -848,7 +849,7 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023</span>
+                <span id="year">2023-2024</span>
             
             <a href="/about" target="_blank">I W</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -859,7 +860,7 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">39.6k</span>
+                        class="white-color">41.5k</span>
             
             
             

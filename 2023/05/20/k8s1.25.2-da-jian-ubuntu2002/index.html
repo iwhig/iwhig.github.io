@@ -336,12 +336,12 @@ Kubernetes这个名字源于希">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Linux/">
-                                <span class="chip bg-color">Linux</span>
-                            </a>
-                        
                             <a href="/tags/Docker/">
                                 <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
                             </a>
                         
                             <a href="/tags/Ubuntu/">
@@ -388,7 +388,7 @@ Kubernetes这个名字源于希">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-19
+                    2024-01-15
                 </div>
                 
 
@@ -698,9 +698,11 @@ kube-system    kube-scheduler-k8s                <span class="token number">1</s
 
 <h4 id="1、查ca证书she256编码hash值"><a href="#1、查ca证书she256编码hash值" class="headerlink" title="1、查ca证书she256编码hash值"></a>1、查ca证书she256编码hash值</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl x509 <span class="token parameter variable">-pubkey</span> <span class="token parameter variable">-in</span> /etc/kubernetes/pki/ca.crt <span class="token operator">|</span> openssl rsa <span class="token parameter variable">-pubin</span> <span class="token parameter variable">-outform</span> der <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> <span class="token parameter variable">-hex</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/^.* //'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="2、节点加入集群"><a href="#2、节点加入集群" class="headerlink" title="2、节点加入集群"></a>2、节点加入集群</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm <span class="token function">join</span> <span class="token number">192.168</span>.31.127:6443 <span class="token parameter variable">--token</span> <span class="token punctuation">..</span>. --discovery-token-ca-cert-hash <span class="token punctuation">..</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="2、控制节点加入集群"><a href="#2、控制节点加入集群" class="headerlink" title="2、控制节点加入集群"></a>2、控制节点加入集群</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm token create --print-join-command --certificate-key <span class="token variable"><span class="token variable">`</span>openssl x509 <span class="token parameter variable">-pubkey</span> <span class="token parameter variable">-in</span> /etc/kubernetes/pki/ca.crt <span class="token operator">|</span> openssl rsa <span class="token parameter variable">-pubin</span> <span class="token parameter variable">-outform</span> der <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> <span class="token parameter variable">-hex</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/^.* //'</span><span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h4 id="3、kubectl命令补全"><a href="#3、kubectl命令补全" class="headerlink" title="3、kubectl命令补全"></a>3、kubectl命令补全</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
+<h4 id="3、节点加入集群"><a href="#3、节点加入集群" class="headerlink" title="3、节点加入集群"></a>3、节点加入集群</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm <span class="token function">join</span> <span class="token number">192.168</span>.31.127:6443 <span class="token parameter variable">--token</span> <span class="token punctuation">..</span>. --discovery-token-ca-cert-hash <span class="token punctuation">..</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="4、kubectl命令补全"><a href="#4、kubectl命令补全" class="headerlink" title="4、kubectl命令补全"></a>4、kubectl命令补全</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
 
 <span class="token builtin class-name">source</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span>kubectl completion <span class="token function">bash</span><span class="token punctuation">)</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span>
@@ -770,12 +772,12 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
                                 <a href="/tags/Docker/">
                                     <span class="chip bg-color">Docker</span>
+                                </a>
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                                 <a href="/tags/Ubuntu/">
@@ -875,12 +877,12 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Mysql/">
-                        <span class="chip bg-color">Mysql</span>
-                    </a>
-                    
                     <a href="/tags/Docker/">
                         <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/Mysql/">
+                        <span class="chip bg-color">Mysql</span>
                     </a>
                     
                 </div>
@@ -1118,7 +1120,7 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023</span>
+                <span id="year">2023-2024</span>
             
             <a href="/about" target="_blank">I W</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -1129,7 +1131,7 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">39.6k</span>
+                        class="white-color">41.5k</span>
             
             
             
