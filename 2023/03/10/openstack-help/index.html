@@ -404,27 +404,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> /etc/keystone/admin-openrc.sh 
-openstack console url show exam <span class="token comment">#无需打开dashboard获取实例exam的vnc链接</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> /etc/keystone/admin-openrc.sh 
+openstack console url show exam <span class="token comment">#无需打开dashboard获取实例exam的vnc链接</span></code></pre>
 
 
 
-<h3 id="glance"><a href="#glance" class="headerlink" title="glance"></a>glance</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建cirros镜像</span>
+<h3 id="glance"><a href="#glance" class="headerlink" title="glance"></a>glance</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建cirros镜像</span>
 openstack image create “centos” <span class="token punctuation">\</span>
 --disk-format qcow2 <span class="token punctuation">\</span>
 --container-format bare <span class="token punctuation">\</span>
 <span class="token parameter variable">--shared</span> <span class="token operator">&lt;</span>./cirros-0.3.5-x86_64-disk.img <span class="token comment">#创建cirros镜像</span>
 glance image-create <span class="token parameter variable">--name</span> cirros <span class="token punctuation">\</span>
 --disk-format qcow2 --container-format bare <span class="token punctuation">\</span>
-<span class="token parameter variable">--progress</span>  <span class="token operator">&lt;</span>./cirros-0.3.5-x86_64-disk.img <span class="token comment">#创建cirros镜像</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">--progress</span>  <span class="token operator">&lt;</span>./cirros-0.3.5-x86_64-disk.img <span class="token comment">#创建cirros镜像</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#删除镜像</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#删除镜像</span>
 openstack image delete <span class="token operator">&lt;</span>name<span class="token operator">&gt;</span> 
-glance image-delete <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+glance image-delete <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">file</span> <span class="token operator">&lt;</span>文件名<span class="token operator">&gt;</span> <span class="token comment">#查看某文件信息</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">file</span> <span class="token operator">&lt;</span>文件名<span class="token operator">&gt;</span> <span class="token comment">#查看某文件信息</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack image <span class="token builtin class-name">set</span> --min-disk<span class="token operator">=</span><span class="token number">1</span> cirros <span class="token comment">#更新镜像信息</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack image <span class="token builtin class-name">set</span> --min-disk<span class="token operator">=</span><span class="token number">1</span> cirros <span class="token comment">#更新镜像信息</span>
 glance image-update --min-disk<span class="token operator">=</span><span class="token number">0</span> ad741236-5183-4751-8327-b088512c85f3 <span class="token comment">#更新镜像信息</span>
 --min-disk <span class="token comment">#镜像启动最小硬盘大小</span>
 <span class="token parameter variable">--name</span> <span class="token comment">#镜像名称</span>
@@ -432,18 +432,18 @@ glance image-update --min-disk<span class="token operator">=</span><span class="
 --min-ram <span class="token comment">#镜像启动最小内存大小</span>
 --container-format <span class="token comment">#镜像在项目中可见性</span>
 openstack image show <span class="token operator">&lt;</span>name<span class="token operator">&gt;</span>or<span class="token operator">&lt;</span>id<span class="token operator">&gt;</span> <span class="token comment"># 查看镜像详细信息</span>
-glance image-show <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span> <span class="token comment">#查看镜像详细信息</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+glance image-show <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span> <span class="token comment">#查看镜像详细信息</span></code></pre>
 
-<h3 id="glance对接Swift作后端存储"><a href="#glance对接Swift作后端存储" class="headerlink" title="glance对接Swift作后端存储"></a>glance对接Swift作后端存储</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_container glance
+<h3 id="glance对接Swift作后端存储"><a href="#glance对接Swift作后端存储" class="headerlink" title="glance对接Swift作后端存储"></a>glance对接Swift作后端存储</h3><pre class="language-bash" data-language="bash"><code class="language-bash">crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_container glance
 crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_create_container_on_put <span class="token boolean">true</span>
 crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_multi_tenant <span class="token boolean">true</span>
 crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_admin_tenant <span class="token function">service</span>
 crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_user 000000
 crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store swift_store_key 000000
 crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store stores swift
-crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store default_store swift<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+crudini <span class="token parameter variable">--set</span> /etc/glance/glance-api.conf glance_store default_store swift</code></pre>
 
-<h3 id="glance对接cinder作后端存储"><a href="#glance对接cinder作后端存储" class="headerlink" title="glance对接cinder作后端存储"></a>glance对接cinder作后端存储</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">################</span>
+<h3 id="glance对接cinder作后端存储"><a href="#glance对接cinder作后端存储" class="headerlink" title="glance对接cinder作后端存储"></a>glance对接cinder作后端存储</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">################</span>
 glance配置
 <span class="token function">vim</span> /etc/glance/glance-api.conf
 <span class="token builtin class-name">.</span>
@@ -471,9 +471,9 @@ allowed_direct_url_schemes <span class="token operator">=</span> cinder
 image_upload_use_cinder_backend <span class="token operator">=</span> <span class="token boolean">true</span>
 image_upload_use_internal_tenant <span class="token operator">=</span> <span class="token boolean">true</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart openstack-cinder*</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
-<h3 id="glance对接nfs作后端存储"><a href="#glance对接nfs作后端存储" class="headerlink" title="glance对接nfs作后端存储"></a>glance对接nfs作后端存储</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nfs-server配置
+<h3 id="glance对接nfs作后端存储"><a href="#glance对接nfs作后端存储" class="headerlink" title="glance对接nfs作后端存储"></a>glance对接nfs作后端存储</h3><pre class="language-bash" data-language="bash"><code class="language-bash">nfs-server配置
 <span class="token comment">#############</span>
 <span class="token punctuation">[</span>root@nfs-server ~<span class="token punctuation">]</span><span class="token comment"># yum install rpcbind nfs-utils -y</span>
 <span class="token punctuation">[</span>root@nfs-server ~<span class="token punctuation">]</span><span class="token comment"># mkdir -p /nfs/share</span>
@@ -562,67 +562,67 @@ vmhgfs-fuse                fuse.vmhgfs-fuse   72G   53G   19G  <span class="toke
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ls /var/lib/glance/images/</span>
 a3aa4889-522e-4e4c-a9fc-e2a4a98d7ab7
 <span class="token punctuation">[</span>root@nfs-server ~<span class="token punctuation">]</span><span class="token comment"># ls /nfs/share/</span>
-a3aa4889-522e-4e4c-a9fc-e2a4a98d7ab7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+a3aa4889-522e-4e4c-a9fc-e2a4a98d7ab7</code></pre>
 
 
 
-<h3 id="nova"><a href="#nova" class="headerlink" title="nova"></a>nova</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">crudini <span class="token parameter variable">--set</span> /etc/nova/nova.conf libvirt virt_type qemu <span class="token comment">#在虚拟机环境下需设置</span>
-systemctl restart openstack-nova-compute <span class="token comment">#重启nova服务</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="nova"><a href="#nova" class="headerlink" title="nova"></a>nova</h3><pre class="language-bash" data-language="bash"><code class="language-bash">crudini <span class="token parameter variable">--set</span> /etc/nova/nova.conf libvirt virt_type qemu <span class="token comment">#在虚拟机环境下需设置</span>
+systemctl restart openstack-nova-compute <span class="token comment">#重启nova服务</span></code></pre>
 
 
 
-<h3 id="neutron"><a href="#neutron" class="headerlink" title="neutron"></a>neutron</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack network create ext-net <span class="token punctuation">\</span>
+<h3 id="neutron"><a href="#neutron" class="headerlink" title="neutron"></a>neutron</h3><pre class="language-bash" data-language="bash"><code class="language-bash">openstack network create ext-net <span class="token punctuation">\</span>
 --provider-netowrk-type vlan <span class="token punctuation">\</span>
 --provider-physical-network provider <span class="token punctuation">\</span>
 --provider-segment <span class="token number">200</span> 
-<span class="token comment">#创建网络</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#创建网络</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack subnet create ext-subnet <span class="token punctuation">\</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack subnet create ext-subnet <span class="token punctuation">\</span>
 --ext-net <span class="token punctuation">\</span>
 --allocation-poll <span class="token assign-left variable">start</span><span class="token operator">=</span><span class="token number">192.168</span>.200.X,end<span class="token operator">=</span><span class="token number">192.168</span>.200.X <span class="token punctuation">\</span>
 <span class="token parameter variable">--gateway</span> <span class="token number">192.168</span>.200.1 <span class="token punctuation">\</span>
 --subnet-range <span class="token number">192.168</span>.200.0/24 
-<span class="token comment">#创建子网并绑定网络</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#创建子网并绑定网络</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack network list <span class="token comment">#列出所有网络</span>
-openstack subnet list <span class="token comment">#列出所有子网</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack network list <span class="token comment">#列出所有网络</span>
+openstack subnet list <span class="token comment">#列出所有子网</span></code></pre>
 
 
 
-<h3 id="cinder"><a href="#cinder" class="headerlink" title="cinder"></a>cinder</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack volume create <span class="token parameter variable">--size</span> <span class="token number">2</span> volume <span class="token comment">#创建一个大小2G的卷volume</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="cinder"><a href="#cinder" class="headerlink" title="cinder"></a>cinder</h3><pre class="language-bash" data-language="bash"><code class="language-bash">openstack volume create <span class="token parameter variable">--size</span> <span class="token number">2</span> volume <span class="token comment">#创建一个大小2G的卷volume</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack volume list <span class="token comment"># 列出所有卷的信息</span>
-openstack volume show volume <span class="token comment"># 列出名称为volume的卷的详细信息</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack volume list <span class="token comment"># 列出所有卷的信息</span>
+openstack volume show volume <span class="token comment"># 列出名称为volume的卷的详细信息</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack server <span class="token function">add</span> volume exam volume <span class="token comment">#为exam实例挂载卷volume</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack server <span class="token function">add</span> volume exam volume <span class="token comment">#为exam实例挂载卷volume</span>
 openstack server remove volume exam volume <span class="token comment">#卸载exam的volume卷</span>
-openstack volume <span class="token builtin class-name">set</span> <span class="token parameter variable">--size</span> <span class="token number">3</span> volume <span class="token comment">#设置volume卷的大小为3G</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+openstack volume <span class="token builtin class-name">set</span> <span class="token parameter variable">--size</span> <span class="token number">3</span> volume <span class="token comment">#设置volume卷的大小为3G</span></code></pre>
 
-<h3 id="flavor"><a href="#flavor" class="headerlink" title="flavor"></a>flavor</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack flavor create m1 <span class="token punctuation">\</span>
-<span class="token parameter variable">--disk</span> <span class="token number">10</span> <span class="token parameter variable">--ram</span> <span class="token number">512</span> <span class="token parameter variable">--vcpus</span> <span class="token number">1</span> <span class="token parameter variable">--id</span> <span class="token number">10</span> <span class="token comment">#创建实例类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="flavor"><a href="#flavor" class="headerlink" title="flavor"></a>flavor</h3><pre class="language-bash" data-language="bash"><code class="language-bash">openstack flavor create m1 <span class="token punctuation">\</span>
+<span class="token parameter variable">--disk</span> <span class="token number">10</span> <span class="token parameter variable">--ram</span> <span class="token number">512</span> <span class="token parameter variable">--vcpus</span> <span class="token number">1</span> <span class="token parameter variable">--id</span> <span class="token number">10</span> <span class="token comment">#创建实例类型</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack flavor list <span class="token comment">#列出所有实例类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack flavor list <span class="token comment">#列出所有实例类型</span></code></pre>
 
-<h3 id="Security-Group"><a href="#Security-Group" class="headerlink" title="Security Group"></a>Security Group</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack security group list <span class="token comment">#列出所有安全组</span>
+<h3 id="Security-Group"><a href="#Security-Group" class="headerlink" title="Security Group"></a>Security Group</h3><pre class="language-bash" data-language="bash"><code class="language-bash">openstack security group list <span class="token comment">#列出所有安全组</span>
 openstack security group rule list  <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span> <span class="token comment">#列出此安全组所有规则</span>
 openstack security group rule show <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span> <span class="token comment">#列出此规则详细信息</span>
 openstack security group create <span class="token builtin class-name">test</span> <span class="token comment">#创建test安全组</span>
 openstack security group delete <span class="token builtin class-name">test</span> <span class="token comment">#删除test安全组</span>
 openstack security group rule create <span class="token parameter variable">--protocol</span> icmp <span class="token parameter variable">--ingress</span> <span class="token builtin class-name">test</span> <span class="token comment">#添加入口ICMP全部通过规则到test安全组</span>
-openstack security group rule create <span class="token parameter variable">--protocol</span> icmp <span class="token parameter variable">--egress</span> <span class="token builtin class-name">test</span> <span class="token comment">#添加出口ICMP全部通过规则到test安全组</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+openstack security group rule create <span class="token parameter variable">--protocol</span> icmp <span class="token parameter variable">--egress</span> <span class="token builtin class-name">test</span> <span class="token comment">#添加出口ICMP全部通过规则到test安全组</span></code></pre>
 
-<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack server list <span class="token comment">#列出所有实例</span>
+<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><pre class="language-bash" data-language="bash"><code class="language-bash">openstack server list <span class="token comment">#列出所有实例</span>
 openstack server stop <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span>	or<span class="token operator">&lt;</span>name<span class="token operator">&gt;</span> <span class="token comment">#实例暂停</span>
 openstack server start <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span>or<span class="token operator">&lt;</span>name<span class="token operator">&gt;</span> <span class="token comment">#实例开机</span>
-openstack server <span class="token function">reboot</span> <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span>or<span class="token operator">&lt;</span>name<span class="token operator">&gt;</span> <span class="token comment">#实例重启</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+openstack server <span class="token function">reboot</span> <span class="token operator">&lt;</span>id<span class="token operator">&gt;</span>or<span class="token operator">&lt;</span>name<span class="token operator">&gt;</span> <span class="token comment">#实例重启</span></code></pre>
 
-<h3 id="swift"><a href="#swift" class="headerlink" title="swift"></a>swift</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">swift <span class="token function">stat</span> <span class="token comment">#查看Swift组件</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="swift"><a href="#swift" class="headerlink" title="swift"></a>swift</h3><pre class="language-bash" data-language="bash"><code class="language-bash">swift <span class="token function">stat</span> <span class="token comment">#查看Swift组件</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack container create swift-test <span class="token comment">#创建swift-test容器</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack container create swift-test <span class="token comment">#创建swift-test容器</span>
 openstack container list <span class="token comment">#列出所有容器</span>
-openstack container show swift-test <span class="token comment">#查看swift-test容器详细信息</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+openstack container show swift-test <span class="token comment">#查看swift-test容器详细信息</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建object前需将上传后的目录结构在本地创建，这里在本地创建名为“test”的目录“/root/test”,将/root/anaconda-ks.cfg文件复制到“/root/test”目录中</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建object前需将上传后的目录结构在本地创建，这里在本地创建名为“test”的目录“/root/test”,将/root/anaconda-ks.cfg文件复制到“/root/test”目录中</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># mkdir test</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cp anaconda-ks.cfg test/</span>
 openstack object create swift-test test/anaconda-ks.cfg <span class="token comment">#创建对象</span>
@@ -633,9 +633,9 @@ openstack object show swift-test test/anaconda-ks.cfg <span class="token comment
 <span class="token punctuation">[</span>root@controller opt<span class="token punctuation">]</span><span class="token comment"># ls test/</span>
 anaconda-ks.cfg  <span class="token comment">#下载对象test/anaconda-ks.cfg到opt目录下</span>
 openstack object delete swift-test test/anaconda-ks.cfg <span class="token comment">#删除test/anaconda-ks.cfg对象</span>
-openstack container delete swift-test <span class="token comment">#删除swfit-test容器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+openstack container delete swift-test <span class="token comment">#删除swfit-test容器</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift post test #创建容器test</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift post test #创建容器test</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift stat test #查看容器test</span>
                Account: AUTH_50cec6526baa4ce58bc228f43cd84a70
              Container: <span class="token builtin class-name">test</span>
@@ -656,16 +656,16 @@ X-Openstack-Request-Id: txcb18528f6f174e10ac794-00636f6aa8
 swift upload <span class="token builtin class-name">test</span> <span class="token parameter variable">-S</span> <span class="token number">10000000</span> cirros-0.3.5-x86_64-disk.img <span class="token comment">#上传cirros镜像到test容器并分片存储 每个片段大小为10M</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># swift list test_segments #查看存储路径中的数据片可看到单个存储片大小为10M，镜像大小为13M左右，所以分成了两片</span>
 cirros-0.3.5-x86_64-disk.img/1647249152.000000/13267968/10000000/00000000
-cirros-0.3.5-x86_64-disk.img/1647249152.000000/13267968/10000000/00000001<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+cirros-0.3.5-x86_64-disk.img/1647249152.000000/13267968/10000000/00000001</code></pre>
 
 <p>2022/11/12</p>
-<h3 id="Barbican"><a href="#Barbican" class="headerlink" title="Barbican"></a>Barbican</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Barbican是openstack的key管理组件，定位在提供REST API 来安全存储、提供和管理“秘密”<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="Barbican"><a href="#Barbican" class="headerlink" title="Barbican"></a>Barbican</h3><pre class="language-bash" data-language="bash"><code class="language-bash">Barbican是openstack的key管理组件，定位在提供REST API 来安全存储、提供和管理“秘密”</code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openstack secret store <span class="token parameter variable">--name</span> secret01 <span class="token parameter variable">--payload</span> secretkey <span class="token comment">#创建secret01密钥</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openstack secret store <span class="token parameter variable">--name</span> secret01 <span class="token parameter variable">--payload</span> secretkey <span class="token comment">#创建secret01密钥</span>
 openstack secret list <span class="token comment">#列出所有密钥</span>
 openstack secret get <span class="token operator">&lt;</span>secret href<span class="token operator">&gt;</span> <span class="token comment">#获取密钥元数据</span>
 openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-fc6f81da54a1 <span class="token parameter variable">--payload</span> <span class="token comment">#查看secret01密钥负载</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 
                 
@@ -1066,7 +1066,7 @@ openstack secret get http://controller:9311/v1/secrets/70df933c-6987-4ea6-b87b-f
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

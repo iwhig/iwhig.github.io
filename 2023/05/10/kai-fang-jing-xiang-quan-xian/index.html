@@ -405,7 +405,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="（1）创建租户"><a href="#（1）创建租户" class="headerlink" title="（1）创建租户"></a>（1）创建租户</h2><p>登录OpenStack平台，创建租户depA和depB，并且在这两个租户下各创一个用户userA和userB的普通用户，创建完之后（创建过程不再赘述），使用命令查看，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh </span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh </span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack project list</span>
 +----------------------------------+---------+
 <span class="token operator">|</span> ID                               <span class="token operator">|</span> Name    <span class="token operator">|</span>
@@ -435,11 +435,11 @@
 <span class="token operator">|</span> d6fdd1e5e1a348e0b6c5b8c7f33ba5fa <span class="token operator">|</span> placement         <span class="token operator">|</span>
 <span class="token operator">|</span> d957a578fed2452ab91bc651f2f1fb97 <span class="token operator">|</span> heat_domain_admin <span class="token operator">|</span>
 <span class="token operator">|</span> e91070fa751e49689963b566db999bee <span class="token operator">|</span> gnocchi           <span class="token operator">|</span>
-+----------------------------------+-------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
++----------------------------------+-------------------+</code></pre>
 
 <p>可以看见租户与用户均已存在。</p>
 <h2 id="（2）上传镜像"><a href="#（2）上传镜像" class="headerlink" title="（2）上传镜像"></a>（2）上传镜像</h2><p>使用cirros-0.3.4-x86_64-disk.img上传至控制节点的/root目录下，并上传至云平台中，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># glance image-create --name cirros --disk-format qcow2 --container-format bare --progress ] 100%</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># glance image-create --name cirros --disk-format qcow2 --container-format bare --progress ] 100%</span>
 +------------------+--------------------------------------+
 <span class="token operator">|</span> Property         <span class="token operator">|</span> Value                                <span class="token operator">|</span>
 +------------------+--------------------------------------+
@@ -459,24 +459,24 @@
 <span class="token operator">|</span> updated_at       <span class="token operator">|</span> <span class="token number">2022</span>-02-10T05:31:49Z                 <span class="token operator">|</span>
 <span class="token operator">|</span> virtual_size     <span class="token operator">|</span> None                                 <span class="token operator">|</span>
 <span class="token operator">|</span> visibility       <span class="token operator">|</span> shared                               <span class="token operator">|</span>
-+------------------+--------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
++------------------+--------------------------------------+</code></pre>
 
 <p>上传镜像后，userA和userB都不能看到该镜像。接下来做相关配置，使得A租户中的用户可以看到该镜像。</p>
 <h2 id="（3）权限配置"><a href="#（3）权限配置" class="headerlink" title="（3）权限配置"></a>（3）权限配置</h2><p>首先将镜像共享给A租户，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># glance member-create 1fa9cbfe-392f-437e-ad18-f00987415b15 df58511d2c914690b48e89f1e512ae6b</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># glance member-create 1fa9cbfe-392f-437e-ad18-f00987415b15 df58511d2c914690b48e89f1e512ae6b</span>
 +--------------------------------------+----------------------------------+---------+
 <span class="token operator">|</span> Image ID                             <span class="token operator">|</span> Member ID                        <span class="token operator">|</span> Status  <span class="token operator">|</span>
 +--------------------------------------+----------------------------------+---------+
 <span class="token operator">|</span> 1fa9cbfe-392f-437e-ad18-f00987415b15 <span class="token operator">|</span> df58511d2c914690b48e89f1e512ae6b <span class="token operator">|</span> pending <span class="token operator">|</span>
-+--------------------------------------+----------------------------------+---------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
++--------------------------------------+----------------------------------+---------+</code></pre>
 
 <p>在共享之后，镜像的状态是pending状态，此时还需要激活镜像，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@openstack ~<span class="token punctuation">]</span><span class="token comment"># glance member-update 1fa9cbfe-392f-437e-ad18-f00987415b15 df58511d2c914690b48e89f1e512ae6b accepted</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@openstack ~<span class="token punctuation">]</span><span class="token comment"># glance member-update 1fa9cbfe-392f-437e-ad18-f00987415b15 df58511d2c914690b48e89f1e512ae6b accepted</span>
 +--------------------------------------+----------------------------------+----------+
 <span class="token operator">|</span> Image ID                             <span class="token operator">|</span> Member ID                        <span class="token operator">|</span> Status   <span class="token operator">|</span>
 +--------------------------------------+----------------------------------+----------+
 <span class="token operator">|</span> 1fa9cbfe-392f-437e-ad18-f00987415b15 <span class="token operator">|</span> df58511d2c914690b48e89f1e512ae6b <span class="token operator">|</span> accepted <span class="token operator">|</span>
-+--------------------------------------+----------------------------------+----------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
++--------------------------------------+----------------------------------+----------+</code></pre>
 
 <p>此时镜像的状态就变为了accepted，可以在dashboard界面登录userA用户，查看是否可以看到cirros镜像（也可以登录userB用户，查看是否能看到镜像），如图3-1所示：<br><img src="https://ydy-resources-prod.obs.cn-north-4.myhuaweicloud.com/resource_13-1000-20220531163949522-qMDsl/wKggBmIga4KAPahqAAAg5-sMDtE487.png" alt="图31.png"></p>
 <p><img src="https://s2.loli.net/2023/09/11/DGW8XV2BSc6nIQh.png" alt="开放镜像权限.png"></p>
@@ -643,6 +643,10 @@
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
+                    <a href="/tags/Container/">
+                        <span class="chip bg-color">Container</span>
+                    </a>
+                    
                     <a href="/tags/Ubuntu/">
                         <span class="chip bg-color">Ubuntu</span>
                     </a>
@@ -653,10 +657,6 @@
                     
                     <a href="/tags/Kubernetes/">
                         <span class="chip bg-color">Kubernetes</span>
-                    </a>
-                    
-                    <a href="/tags/Containerd/">
-                        <span class="chip bg-color">Containerd</span>
                     </a>
                     
                 </div>
@@ -909,7 +909,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

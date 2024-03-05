@@ -416,40 +416,40 @@
                 <h2 id="RabbitMQ的优化"><a href="#RabbitMQ的优化" class="headerlink" title="RabbitMQ的优化"></a>RabbitMQ的优化</h2><p>在上面的文章中可以看到，RabbitMQ的连接数是压垮消息队列的一个重要的指标。所以在平时使用OpenStack平台的过程中，如果大量的用户同时创建虚拟机，会导致云平台创建报错，其实就是消息队列服务的崩溃。</p>
 <p>在优化方面，我们首先想到，是将RabbitMQ服务默认的连接数量改大，修改方法如下：</p>
 <h3 id="（1）系统级别修改"><a href="#（1）系统级别修改" class="headerlink" title="（1）系统级别修改"></a>（1）系统级别修改</h3><p>使用CRT等远程工具连接到controller节点，然后修改配置文件，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/sysctl.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/sysctl.conf</span>
 fs.file-max<span class="token operator">=</span><span class="token number">10240</span>
-<span class="token comment">#在sysctl.conf文件的最下方添加一行fs.file-max=10240</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#在sysctl.conf文件的最下方添加一行fs.file-max=10240</span></code></pre>
 
 <p>修改完毕后保存退出并生效配置，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># sysctl -p</span>
-fs.file-max <span class="token operator">=</span> <span class="token number">10240</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># sysctl -p</span>
+fs.file-max <span class="token operator">=</span> <span class="token number">10240</span></code></pre>
 
 <h3 id="（2）用户级别修改"><a href="#（2）用户级别修改" class="headerlink" title="（2）用户级别修改"></a>（2）用户级别修改</h3><p>用户级别修改，编辑/etc/security/limits.conf配置文件，具体命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/security/limits.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/security/limits.conf</span>
 openstack  soft     nofile  <span class="token number">10240</span>
 openstack  hard     nofile  <span class="token number">10240</span>
-<span class="token comment">#在配置文件的最后添加两行内容如上</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#在配置文件的最后添加两行内容如上</span></code></pre>
 
 <p>修改完之后，保存退出。</p>
 <h3 id="（3）修改RabbitMQ配置"><a href="#（3）修改RabbitMQ配置" class="headerlink" title="（3）修改RabbitMQ配置"></a>（3）修改RabbitMQ配置</h3><p>修改RabbitMQ服务的service配置文件rabbitmq-server.service，具体命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /usr/lib/systemd/system/rabbitmq-server.service</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /usr/lib/systemd/system/rabbitmq-server.service</span>
 <span class="token comment">#在[Service]下添加一行参数如下：</span>
-<span class="token assign-left variable">LimitNOFILE</span><span class="token operator">=</span><span class="token number">10240</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token assign-left variable">LimitNOFILE</span><span class="token operator">=</span><span class="token number">10240</span></code></pre>
 
 
 
-<h3 id="（4）重启RabbitMQ服务"><a href="#（4）重启RabbitMQ服务" class="headerlink" title="（4）重启RabbitMQ服务"></a>（4）重启RabbitMQ服务</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl daemon-reload</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart rabbitmq-server</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="（4）重启RabbitMQ服务"><a href="#（4）重启RabbitMQ服务" class="headerlink" title="（4）重启RabbitMQ服务"></a>（4）重启RabbitMQ服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl daemon-reload</span>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart rabbitmq-server</span></code></pre>
 
 <p>重启完毕后，查看RabbitMQ的最大连接数，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># rabbitmqctl status</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># rabbitmqctl status</span>
 Status of <span class="token function">node</span> rabbit@openstack
 <span class="token punctuation">..</span>.忽略输出<span class="token punctuation">..</span>.
  <span class="token punctuation">{</span>file_descriptors,
      <span class="token punctuation">[</span><span class="token punctuation">{</span>total_limit,10140<span class="token punctuation">}</span>,
       <span class="token punctuation">{</span>total_used,53<span class="token punctuation">}</span>,
       <span class="token punctuation">{</span>sockets_limit,9124<span class="token punctuation">}</span>,
-      <span class="token punctuation">{</span>sockets_used,51<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">}</span>,<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token punctuation">{</span>sockets_used,51<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">}</span>,</code></pre>
 
 <p>可以看到当前的RabbitMQ已被修改。</p>
 
@@ -605,12 +605,12 @@ Status of <span class="token function">node</span> rabbit@openstack
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Deploy/">
-                        <span class="chip bg-color">Deploy</span>
-                    </a>
-                    
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Deploy/">
+                        <span class="chip bg-color">Deploy</span>
                     </a>
                     
                     <a href="/tags/Kubernetes/">
@@ -867,7 +867,7 @@ Status of <span class="token function">node</span> rabbit@openstack
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

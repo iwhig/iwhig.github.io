@@ -407,21 +407,21 @@
                 <h4 id="OpenStack平台镜像优化"><a href="#OpenStack平台镜像优化" class="headerlink" title="OpenStack平台镜像优化"></a>OpenStack平台镜像优化</h4><p>在使用打快照方式制作镜像后，镜像的大小会变得非常大，比如一个基础的CentOS镜像大小为400M左右，但是使用打快照方式制作的镜像大小会有1个G左右，具体的大小还要根据安装的东西来实际情况实际分析。</p>
 <p>qemu-img命令中提供一个可用于镜像转换与压缩的选项，即qemu-img convert。接下来使用该命令，对已经打快照完成的镜像进行压缩操作。</p>
 <p>使用提供的镜像CentOS7.5-compress.qcow2，上传至controller节点的/root目录下，查看镜像的大小，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress.qcow2</span>
-892M	CentOS7.5-compress.qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress.qcow2</span>
+892M	CentOS7.5-compress.qcow2</code></pre>
 
 <p>可以看到当前的镜像大小为892M，接下来使用命令，对镜像进行压缩，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># qemu-img convert -c -O qcow2 CentOS7.5-compress.qcow2 CentOS7.5-compress2.qcow2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># qemu-img convert -c -O qcow2 CentOS7.5-compress.qcow2 CentOS7.5-compress2.qcow2</span></code></pre>
 
 <p>该命令参数的解释如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-c</span>  压缩
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-c</span>  压缩
 <span class="token parameter variable">-O</span>  qcow2 输出格式为 qcow2
 CentOS7.5-compress.qcow2   被压缩的文件
-CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+CentOS7.5-compress2.qcow2  压缩完成后文件</code></pre>
 
 <p>等待一小段时间后，压缩完成，查看当前目录下CentOS7.5-compress2.qcow2镜像文件的大小，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress2.qcow2 </span>
-405M	CentOS7.5-compress2.qcow2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress2.qcow2 </span>
+405M	CentOS7.5-compress2.qcow2</code></pre>
 
 <p>可以看到镜像大概被压缩到了一半的大小。使用qemu-img convert命令可以压缩qcow2镜像，在日常的工作中，经常会用到此命令进行镜像压缩。</p>
 
@@ -592,19 +592,19 @@ CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/10/2022-yun-ji-suan-ji-neng-da-sai-si-you-yun/">
+                <a href="/2023/03/10/rong-qi-yun-bu-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="2023 云计算技能大赛-私有云">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="2023云计算技能大赛容器云">
                         
-                        <span class="card-title">2023 云计算技能大赛-私有云</span>
+                        <span class="card-title">2023云计算技能大赛容器云</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            2022年云计算技能大赛私有云场，记录了本次比赛所有赛题以及解答
+                            2023年重庆市云计算技能大赛容器云环境部署
                         
                     </div>
                     <div class="publish-info">
@@ -615,8 +615,8 @@ CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CloudComputing/" class="post-category">
-                                    CloudComputing
+                            <a href="/categories/deploy/" class="post-category">
+                                    deploy
                                 </a>
                             
                             
@@ -630,36 +630,12 @@ CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Ansible/">
-                        <span class="chip bg-color">Ansible</span>
+                    <a href="/tags/Deploy/">
+                        <span class="chip bg-color">Deploy</span>
                     </a>
                     
-                    <a href="/tags/Openstack/">
-                        <span class="chip bg-color">Openstack</span>
-                    </a>
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/SQL/">
-                        <span class="chip bg-color">SQL</span>
-                    </a>
-                    
-                    <a href="/tags/Elasticsearch/">
-                        <span class="chip bg-color">Elasticsearch</span>
-                    </a>
-                    
-                    <a href="/tags/Jumpserver/">
-                        <span class="chip bg-color">Jumpserver</span>
-                    </a>
-                    
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
-                    </a>
-                    
-                    <a href="/tags/Skywalking/">
-                        <span class="chip bg-color">Skywalking</span>
+                    <a href="/tags/Kubernetes/">
+                        <span class="chip bg-color">Kubernetes</span>
                     </a>
                     
                 </div>
@@ -859,7 +835,7 @@ CentOS7.5-compress2.qcow2  压缩完成后文件<span aria-hidden="true" class="
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

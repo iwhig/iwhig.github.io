@@ -335,12 +335,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Deploy/">
-                                <span class="chip bg-color">Deploy</span>
-                            </a>
-                        
                             <a href="/tags/Linux/">
                                 <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                            <a href="/tags/Deploy/">
+                                <span class="chip bg-color">Deploy</span>
                             </a>
                         
                             <a href="/tags/Kubernetes/">
@@ -438,119 +438,119 @@
 </tr>
 </tbody></table>
 <h3 id="2-基础环境准备"><a href="#2-基础环境准备" class="headerlink" title="2.基础环境准备"></a>2.基础环境准备</h3><p>将上传在root目录的安装包(<code>chinaskills_cloud_paas_v2.0.2.iso</code>)中的文件提取到/opt目录</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mount</span> /root/chinaskills_cloud_paas_v2.0.2.iso /mnt/
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mount</span> /root/chinaskills_cloud_paas_v2.0.2.iso /mnt/
 <span class="token function">cp</span> <span class="token parameter variable">-rf</span> /mnt/* /opt
 <span class="token function">umount</span> /root/chinaskills_cloud_paas_v2.0.2.iso
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <h3 id="3-安装kubeeasy"><a href="#3-安装kubeeasy" class="headerlink" title="3.安装kubeeasy"></a>3.安装kubeeasy</h3><p>kubeeasy 为 Kubernetes 集群专业部署工具，极大的简化了部署流程。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mv</span> /opt/kubeeasy /usr/bin/kubeeasy
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mv</span> /opt/kubeeasy /usr/bin/kubeeasy
+</code></pre>
 
 <h3 id="4-安装依赖包"><a href="#4-安装依赖包" class="headerlink" title="4.安装依赖包"></a>4.安装依赖包</h3><p>此步骤主要完成 docker-ce、git、unzip、vim、wget 等工具的安装。</p>
 <p>可通过命令 <code>tail -f /var/log/kubeinstall.log</code> 查看安装详情或排查错误</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> depend <span class="token punctuation">\</span> 
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> depend <span class="token punctuation">\</span> 
 <span class="token parameter variable">--host</span> <span class="token number">192.168</span>.200.10,192.168.200.20 <span class="token punctuation">\</span> <span class="token comment"># 所有主机节点 IP</span>
 <span class="token parameter variable">--user</span> root <span class="token punctuation">\</span>  <span class="token comment"># 主机登录用户，默认为root</span>
 <span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> <span class="token comment"># 主机登录密码，所有节点需保持密码一致</span>
---offline-file /opt/dependencies/base-rpms.tar.gz <span class="token comment"># 离线安装包路径</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+--offline-file /opt/dependencies/base-rpms.tar.gz <span class="token comment"># 离线安装包路径</span></code></pre>
 
 <h3 id="5-配置SSH免密"><a href="#5-配置SSH免密" class="headerlink" title="5.配置SSH免密"></a>5.配置SSH免密</h3><p>(1) 在master节点，检测集群节点连通性</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy check <span class="token function">ssh</span> <span class="token punctuation">\</span> 
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy check <span class="token function">ssh</span> <span class="token punctuation">\</span> 
 <span class="token parameter variable">--host</span> <span class="token number">192.168</span>.200.10,192.168.200.20 <span class="token punctuation">\</span> 
 <span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
-<span class="token parameter variable">--password</span> 000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">--password</span> 000000</code></pre>
 
 <p>(2)在master节点，完成所有节点间的免密</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy create ssh-keygen <span class="token punctuation">\</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy create ssh-keygen <span class="token punctuation">\</span>
 <span class="token parameter variable">--master</span> <span class="token number">192.168</span>.200.10 <span class="token punctuation">\</span> <span class="token comment"># master节点</span>
 <span class="token parameter variable">--worker</span> <span class="token number">192.168</span>.200.20 <span class="token punctuation">\</span> <span class="token comment"># 所有worker节点</span>
 <span class="token parameter variable">--user</span> root 
-<span class="token parameter variable">--password</span> 000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">--password</span> 000000</code></pre>
 
 <h2 id="二-部署Kubernetes-集群-K8s"><a href="#二-部署Kubernetes-集群-K8s" class="headerlink" title="二.部署Kubernetes 集群(K8s)"></a>二.部署Kubernetes 集群(K8s)</h2><h3 id="1-Kubernetes-集群"><a href="#1-Kubernetes-集群" class="headerlink" title="1.Kubernetes 集群"></a>1.Kubernetes 集群</h3><p>(1) 本次安装的 Kubernetes 版本为 v1.22.1,在 master 节点执行以下命令部署 Kubernetes 集群</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> kubernetes <span class="token punctuation">\</span> 
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> kubernetes <span class="token punctuation">\</span> 
 <span class="token parameter variable">--master</span> <span class="token number">192.168</span>.200.10 <span class="token punctuation">\</span> 
 <span class="token parameter variable">--worker</span> <span class="token number">192.168</span>.200.20 <span class="token punctuation">\</span> 
 <span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
 <span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> 
 <span class="token parameter variable">--version</span> <span class="token number">1.22</span>.1 <span class="token punctuation">\</span> <span class="token comment"># Kubernetes 版本，此处只能为 1.22.1</span>
---offline-file /opt/kubernetes.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+--offline-file /opt/kubernetes.tar.gz</code></pre>
 
 <p>(2) 部署完成后查看集群状态 :<code>kubectl cluster-info</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Kubernetes control plane is running at https://apiserver.cluster.local:6443 
+<pre class="language-bash" data-language="bash"><code class="language-bash">Kubernetes control plane is running at https://apiserver.cluster.local:6443 
 CoreDNS is running at 
 
 https://apiserver.cluster.local:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy To further debug and diagnose cluster problems, 
 
 use <span class="token string">'kubectl cluster-info dump'</span><span class="token builtin class-name">.</span>
 <span class="token comment"># 若在node节点无法查看，需要将master节点的.kube发放到node节点</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <p>(3) 查看节点负载情况：<code>kubectl top nodes --use-protocol-buffers</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">NAME CPU<span class="token punctuation">(</span>cores<span class="token punctuation">)</span>    CPU%   MEMORY<span class="token punctuation">(</span>bytes<span class="token punctuation">)</span>  MEMORY% 
+<pre class="language-bash" data-language="bash"><code class="language-bash">NAME CPU<span class="token punctuation">(</span>cores<span class="token punctuation">)</span>    CPU%   MEMORY<span class="token punctuation">(</span>bytes<span class="token punctuation">)</span>  MEMORY% 
 k8s-master-node1   389m     <span class="token number">4</span>% 6926Mi      <span class="token number">43</span>% 
-k8s-worker-node1   875m    <span class="token number">10</span>% 3365Mi      <span class="token number">21</span>%<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+k8s-worker-node1   875m    <span class="token number">10</span>% 3365Mi      <span class="token number">21</span>%</code></pre>
 
 <p>(4) 登录一道云云开发平台</p>
 <p>在浏览器访问<a target="_blank" rel="noopener" href="http://master_ip:30080/">http://master_IP:30080</a>, 设置admin用户密码为(00000000),并登录平台</p>
 <p><img src="https://s2.loli.net/2023/09/18/BbUMValjR3ku9Lt.png" alt="容器云登录界面"></p>
 <h2 id="三-部署-KubeVirt-集群"><a href="#三-部署-KubeVirt-集群" class="headerlink" title="三.部署 KubeVirt 集群"></a>三.部署 KubeVirt 集群</h2><p>在 master 节点执行以下命令安装 KubeVirt：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--virt</span> kubevirt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--virt</span> kubevirt</code></pre>
 
 <p>查看 Pod：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl <span class="token parameter variable">-n</span> kubevirt get pods
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubectl <span class="token parameter variable">-n</span> kubevirt get pods
+</code></pre>
 
 <p><img src="https://s2.loli.net/2023/09/18/xrPh8TESVvm53lf.png" alt="容器云kubevirt"></p>
 <h2 id="四-部署-Istio"><a href="#四-部署-Istio" class="headerlink" title="四.部署 Istio"></a>四.部署 Istio</h2><p>在 master 节点执行以下命令安装 istio：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--istio</span> istio
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--istio</span> istio
+</code></pre>
 
 <p>查看Pod</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl <span class="token parameter variable">-n</span> istio-system get pods
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubectl <span class="token parameter variable">-n</span> istio-system get pods
+</code></pre>
 
 <p><img src="https://s2.loli.net/2023/09/18/AmwMRazQcH9EIq7.png" alt="容器云istio"></p>
 <p>查看 Istio 版本信息：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">istioctl version
+<pre class="language-bash" data-language="bash"><code class="language-bash">istioctl version
 <span class="token comment"># 结果如下</span>
 client version: <span class="token number">1.12</span>.0 
 control plane version: <span class="token number">1.12</span>.0 
-data plane version: <span class="token number">1.12</span>.0 <span class="token punctuation">(</span><span class="token number">2</span> proxies<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+data plane version: <span class="token number">1.12</span>.0 <span class="token punctuation">(</span><span class="token number">2</span> proxies<span class="token punctuation">)</span></code></pre>
 
 <p>相关的可视化界面</p>
-<pre class="line-numbers language-none"><code class="language-none">Grafans http://master_ip:33000
+<pre class="language-none"><code class="language-none">Grafans http://master_ip:33000
 Prometheus http://master_ip:30090
 Jaeger http://master_ip:30686
-kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+kiali  http://master_ip:200001</code></pre>
 
-<h2 id="五-部署Harbor仓库"><a href="#五-部署Harbor仓库" class="headerlink" title="五.部署Harbor仓库"></a>五.部署Harbor仓库</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--registry</span> harbor
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="五-部署Harbor仓库"><a href="#五-部署Harbor仓库" class="headerlink" title="五.部署Harbor仓库"></a>五.部署Harbor仓库</h2><pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token parameter variable">--registry</span> harbor
+</code></pre>
 
 <p>部署完成后查看 Harbor 仓库状态</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl status harbor
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl status harbor
+</code></pre>
 
 <p>在浏览器通过<a target="_blank" rel="noopener" href="http://master_ip/">http://master_ip</a> 访问harbor 管理员账户(admin/Harbor12345)</p>
 <p>到此，搭建完成</p>
 <h2 id="六-基础运维"><a href="#六-基础运维" class="headerlink" title="六.基础运维"></a>六.基础运维</h2><h3 id="1-重置集群"><a href="#1-重置集群" class="headerlink" title="1.重置集群"></a>1.重置集群</h3><p>若集群部署失败或出现故障，可重置集群重新部署，重置命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy reset  <span class="token comment">#重置完成后,从安装依赖重新开始</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy reset  <span class="token comment">#重置完成后,从安装依赖重新开始</span>
+</code></pre>
 
 <h3 id="2-添加节点"><a href="#2-添加节点" class="headerlink" title="2.添加节点"></a>2.添加节点</h3><p>(1)在 master 节点执行以下命令,给新节点安装依赖包：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> depend <span class="token punctuation">\</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">install</span> depend <span class="token punctuation">\</span>
 <span class="token parameter variable">--host</span> <span class="token number">10.24</span>.2.12 <span class="token punctuation">\</span> <span class="token comment"># 10.24.2.12 为新增节点的 IP 地址</span>
 <span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
 <span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> 
---offline-file /opt/dependencies/base-rpms.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+--offline-file /opt/dependencies/base-rpms.tar.gz</code></pre>
 
 <p>(2)在 master 节点执行以下命令,将新节点加入集群：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token punctuation">\</span> 
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeeasy <span class="token function">add</span> <span class="token punctuation">\</span> 
 <span class="token parameter variable">--worker</span> <span class="token number">10.24</span>.2.12<span class="token punctuation">\</span> <span class="token comment"># 10.24.2.12 为新增节点的 IP 地址</span>
 <span class="token parameter variable">--user</span> root <span class="token punctuation">\</span> 
 <span class="token parameter variable">--password</span> 000000 <span class="token punctuation">\</span> 
---offline-file /opt/kubernetes.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+--offline-file /opt/kubernetes.tar.gz</code></pre>
                 
             </div>
             <hr/>
@@ -614,12 +614,12 @@ kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Deploy/">
-                                    <span class="chip bg-color">Deploy</span>
-                                </a>
-                            
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/Deploy/">
+                                    <span class="chip bg-color">Deploy</span>
                                 </a>
                             
                                 <a href="/tags/Kubernetes/">
@@ -673,19 +673,19 @@ kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/10/2022-yun-ji-suan-ji-neng-da-sai-si-you-yun/">
+                <a href="/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="2023 云计算技能大赛-私有云">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="OpenStack平台镜像优化">
                         
-                        <span class="card-title">2023 云计算技能大赛-私有云</span>
+                        <span class="card-title">OpenStack平台镜像优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            2022年云计算技能大赛私有云场，记录了本次比赛所有赛题以及解答
+                            OpenStack镜像在制作出来的时候较大，通过一些方法可以将镜像优化小
                         
                     </div>
                     <div class="publish-info">
@@ -694,12 +694,8 @@ kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CloudComputing/" class="post-category">
-                                    CloudComputing
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            IW
                             
                         </span>
                     </div>
@@ -711,36 +707,8 @@ kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Ansible/">
-                        <span class="chip bg-color">Ansible</span>
-                    </a>
-                    
                     <a href="/tags/Openstack/">
                         <span class="chip bg-color">Openstack</span>
-                    </a>
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/SQL/">
-                        <span class="chip bg-color">SQL</span>
-                    </a>
-                    
-                    <a href="/tags/Elasticsearch/">
-                        <span class="chip bg-color">Elasticsearch</span>
-                    </a>
-                    
-                    <a href="/tags/Jumpserver/">
-                        <span class="chip bg-color">Jumpserver</span>
-                    </a>
-                    
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
-                    </a>
-                    
-                    <a href="/tags/Skywalking/">
-                        <span class="chip bg-color">Skywalking</span>
                     </a>
                     
                 </div>
@@ -993,7 +961,7 @@ kiali  http://master_ip:200001<span aria-hidden="true" class="line-numbers-rows"
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

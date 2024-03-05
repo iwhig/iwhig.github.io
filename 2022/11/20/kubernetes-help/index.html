@@ -417,17 +417,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="kubernetes"><a href="#kubernetes" class="headerlink" title="kubernetes"></a>kubernetes</h2><h3 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h3><pre class="line-numbers language-none"><code class="language-none">missing缺少 invalid无限的 scheduler调度器 unauthenticated未认证 exist存在 already已经 weight权重 match匹配 limit限制 resource资源 ratio比率 duplicate重复 rule规则 role角色 policy策略 support支持 got获取，得到 expect期望 parameters参数 provisioner提供者  annotation 注释 unknow未知 forbidden禁止 storage存储 quota限额 available可用的 guaranteed保障 Qos服务质量<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="kubernetes"><a href="#kubernetes" class="headerlink" title="kubernetes"></a>kubernetes</h2><h3 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h3><pre class="language-none"><code class="language-none">missing缺少 invalid无限的 scheduler调度器 unauthenticated未认证 exist存在 already已经 weight权重 match匹配 limit限制 resource资源 ratio比率 duplicate重复 rule规则 role角色 policy策略 support支持 got获取，得到 expect期望 parameters参数 provisioner提供者  annotation 注释 unknow未知 forbidden禁止 storage存储 quota限额 available可用的 guaranteed保障 Qos服务质量</code></pre>
 
-<h3 id="kubectl命令行操作"><a href="#kubectl命令行操作" class="headerlink" title="kubectl命令行操作"></a>kubectl命令行操作</h3> <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl explain pod <span class="token comment">#查看pod的yaml文件具体参数示例</span>
+<h3 id="kubectl命令行操作"><a href="#kubectl命令行操作" class="headerlink" title="kubectl命令行操作"></a>kubectl命令行操作</h3> <pre class="language-bash" data-language="bash"><code class="language-bash">kubectl explain pod <span class="token comment">#查看pod的yaml文件具体参数示例</span>
 kubectl <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token operator">&lt;</span>pod<span class="token operator">&gt;</span> <span class="token function">bash</span> <span class="token comment">#以bash命令行登录到某pod</span>
 kubectl label nodes k8s-master-node1 <span class="token assign-left variable">exam</span><span class="token operator">=</span>chinaskill <span class="token comment">#给k8s-master-node1节点打上exam=chinaskill的标签</span>
 kubectl taint nodes k8s-master-node1 node-role.kubernetes/master:NoExecute <span class="token comment">#设置k8s-master-node1节点为污点</span>
 kubectl taint nodes k8s-master-node1 node-role.kubernetes/master- <span class="token comment">#删除污点</span>
 kubectl apply <span class="token parameter variable">-f</span> <span class="token operator">&lt;</span>文件名<span class="token operator">&gt;</span> <span class="token comment">#应用文件配置</span>
-kubectll scale deployment nginx-deployment <span class="token parameter variable">--replicas</span><span class="token operator">=</span><span class="token number">5</span> <span class="token comment">#扩容pod的副本数量至5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+kubectll scale deployment nginx-deployment <span class="token parameter variable">--replicas</span><span class="token operator">=</span><span class="token number">5</span> <span class="token comment">#扩容pod的副本数量至5</span></code></pre>
 
-<h2 id="第一套"><a href="#第一套" class="headerlink" title="第一套"></a>第一套</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#检测pod是否健康</span>
+<h2 id="第一套"><a href="#第一套" class="headerlink" title="第一套"></a>第一套</h2><pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#检测pod是否健康</span>
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
@@ -453,9 +453,9 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
         <span class="token punctuation">-</span> cat 
         <span class="token punctuation">-</span> /usr/local/apache2/htdocs/healthz
       <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">15</span>
-      <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span></code></pre>
 
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> httpd
@@ -477,13 +477,13 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
         <span class="token punctuation">-</span> cat 
         <span class="token punctuation">-</span> /usr/local/apache2/htdocs/healthz
       <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">15</span>
-      <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span></code></pre>
 
 <p>4、为master节点打上标签“disktype=ssd”和标签“exam=chinaskill”，然后在master节点/root目录下编写YAML文件deployment.yaml创建Deployment，具体要求如下：</p>
 <p>​	（1）Deployment名称：nginx-deployment;</p>
 <p>​	（2）要求Pod只能调度到具有标签“disktype=ssd”的节点上；</p>
 <p>​	（3）具有标签“exam=chinaskill”的节点优先被调度。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#设置亲和度，选择pod在哪个节点运行</span>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#设置亲和度，选择pod在哪个节点运行</span>
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
@@ -518,11 +518,11 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
               <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> exam
                 <span class="token key atrule">operator</span><span class="token punctuation">:</span> In 
                 <span class="token key atrule">values</span><span class="token punctuation">:</span> 
-                <span class="token punctuation">-</span> chinaskill<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <span class="token punctuation">-</span> chinaskill</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221122174142192.png" alt="image-20221122174142192"></p>
 <p>3、master 节点/root 目求编与YAML 文件 limitrange.yaml ，具体要求如下:<br>    （1）LimitRange 名称: mem-limit-range;<br>    （2）命名空间：default;<br>    （3）容器默认资源请求为 256Mi内存、500m-CPU;<br>    （4）器资源请求上限为 800Mi 内存、3000mCPU;<br>    （5）内存和CPU超售的比率均为 2。<br>完成后使用该 yaml 文件创建 LimitRange.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> LimitRange
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
  <span class="token key atrule">name</span><span class="token punctuation">:</span> mem<span class="token punctuation">-</span>limit<span class="token punctuation">-</span>range
@@ -538,28 +538,28 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
     <span class="token key atrule">defaultRequest</span><span class="token punctuation">:</span>
       <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
       <span class="token key atrule">memory</span><span class="token punctuation">:</span> 256Mi
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container <span class="token comment">#注意资源类型首字母大写</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container <span class="token comment">#注意资源类型首字母大写</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221122185146176.png" alt="image-20221122185146176"></p>
 <p>5、在master节点/root目录下编写YAML文件role.yaml文件创建集群角色，具体要求如下：</p>
 <p>​	（1）集群角色名称：deployment-clusterrole；</p>
 <p>​	（2）该角色拥有对Deployment，Daemonset，StatefulSet的创建权限。</p>
 <p>完成后使用该YAML文件创建角色。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> deployment<span class="token punctuation">-</span>cluterrole
 <span class="token key atrule">rules</span><span class="token punctuation">:</span>
 <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
   <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Delpoyment"</span><span class="token punctuation">,</span><span class="token string">"Daemonset"</span><span class="token punctuation">,</span><span class="token string">"StatefulSet"</span><span class="token punctuation">]</span>
-  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"create"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"create"</span><span class="token punctuation">]</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221123130453429.png" alt="image-20221123130453429"></p>
 <p>6、在master节点/root目录下编写YAML文件network.yaml文件创建网络策略，具体要求如下：</p>
 <p>​	（1）网络策略名称：exam-network；</p>
 <p>​	（2）针对namespace-test下的Pod，只允许相同namespace下的Pod访问，并且可访问Pod的9000端口。</p>
 <p>完成后使用该YAML文件创建网络策略。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> NetworkPolicy
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam<span class="token punctuation">-</span>network
@@ -572,7 +572,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
     <span class="token punctuation">-</span> <span class="token key atrule">podSelector</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
     <span class="token key atrule">ports</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP <span class="token comment">#协议名称注意大写</span>
-      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">9000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">9000</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221123133655016.png" alt="image-20221123133655016"></p>
 <p>7、在master节点/root目录下编写YAML文件pv.yaml创建PV，具体要求如下：</p>
@@ -581,7 +581,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <p>​	（3）访问模式为ReadWriteMany;</p>
 <p>​	（4）volume的类型为hostPath，位置为/src/app-config。</p>
 <p>完成后使用该YAML文件创建PV。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> PersistentVolume
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> app<span class="token punctuation">-</span>pv
@@ -591,11 +591,11 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
   <span class="token key atrule">accessModes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> ReadWriteMany
   <span class="token key atrule">capacity</span><span class="token punctuation">:</span>
-    <span class="token key atrule">storage</span><span class="token punctuation">:</span> 10Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">storage</span><span class="token punctuation">:</span> 10Gi</code></pre>
 
 <h2 id="第二套"><a href="#第二套" class="headerlink" title="第二套"></a>第二套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221123144552782.png" alt="image-20221123144552782"></p>
 <p>1、默认情况下，Pod会占用所有可用计算资源，请设置为系统守护进程kube-reserverd和system-reserverd预留500mCPU、1Gimemory和1Giephemeral-storage计算资源。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">vim /var/lib/kubelet/config.yaml
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">vim /var/lib/kubelet/config.yaml
 
 .
 .
@@ -609,7 +609,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <span class="token key atrule">systemReserved</span><span class="token punctuation">:</span>  <span class="token comment">#配置系统预留资源</span>
   <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
   <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi
-  <span class="token key atrule">ephemeral-storage</span><span class="token punctuation">:</span> 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">ephemeral-storage</span><span class="token punctuation">:</span> 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221123155837058.png" alt="image-20221123155837058"></p>
 <p>2、在master节点/root目录下编写YAML文件init-pod.yaml创建Pod，具体要求如下：</p>
@@ -617,7 +617,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <p>​	（2）镜像：busybox；</p>
 <p>​	（3）添加一个Init-Container，Init-Container的作用是创建一个空文件；</p>
 <p>​	（4）Pod的Container判断文件是否存在，不存在则退出。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -640,7 +640,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
       <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /var
   <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> html
-    <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124133755732.png" alt="image-20221124133755732"></p>
 <p>3、在master节点/root目录下编写YAML文件创建Pod，具体要求如下：</p>
@@ -648,7 +648,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <p>​	（2）镜像：nginx;</p>
 <p>​	（3）Volume名称为cache-volume，将起/data目录改在到宿主机/data目录下。</p>
 <p>完成后使用该YAML文件创建Pod。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam
@@ -664,14 +664,14 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
   <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> cache<span class="token punctuation">-</span>volume
     <span class="token key atrule">hostPath</span><span class="token punctuation">:</span> 
-      <span class="token key atrule">path</span><span class="token punctuation">:</span> /data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">path</span><span class="token punctuation">:</span> /data</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124135506134.png" alt="image-20221124135506134"></p>
 <p>4、在master节点/root目录下编写YAML文件nginx-deployment.yaml创建Deployment，具体要求如下：</p>
 <p>​	（1）Deployment名称：nginx;</p>
 <p>​	（2）保证其副本在每个节点上运行，且不覆盖节点原有的Tolerations。</p>
 <p>完成后使用该YAML文件创建Deployment。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> DaemonSet
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -693,14 +693,14 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
         <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
       <span class="token key atrule">tolerations</span><span class="token punctuation">:</span>
-      <span class="token punctuation">-</span> <span class="token key atrule">operator</span><span class="token punctuation">:</span> Exists<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token punctuation">-</span> <span class="token key atrule">operator</span><span class="token punctuation">:</span> Exists</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124142107438.png" alt="image-20221124142107438"></p>
 <p>5、在master节点/root目录下编写YAML文件nginx-service.yaml为上一题的Deployment创建一个Service，具体要求如下：</p>
 <p>​	（1）Service名称：nginx;</p>
 <p>​	（2）以ClusterIP方式访问服务;</p>
 <p>完成后使用该YAML文件创建Service。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -711,7 +711,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
     <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
     <span class="token key atrule">app</span><span class="token punctuation">:</span> nginx
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP </code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124150657756.png" alt="image-20221124150657756"></p>
 <p>6、在master节点/root目录下编写YAML文件quota.yaml创建StorageQuota，具体要求如下：</p>
@@ -719,7 +719,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <p>​	（2）限制命名空间exam的PVC数目为10;</p>
 <p>​	（3）限制命名空间exam累计存储容量为20Gi;</p>
 <p>完成后使用该YAML文件创建StorageQuota。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ResourceQuota
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> storagequota
@@ -727,7 +727,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <span class="token key atrule">spec</span><span class="token punctuation">:</span>
   <span class="token key atrule">hard</span><span class="token punctuation">:</span>
     <span class="token key atrule">persistentvolumeclaims</span><span class="token punctuation">:</span> <span class="token string">"10"</span>
-    <span class="token key atrule">requests.storage</span><span class="token punctuation">:</span> <span class="token string">"20Gi"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">requests.storage</span><span class="token punctuation">:</span> <span class="token string">"20Gi"</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124153142074.png" alt="image-20221124153142074"></p>
 <p>7、在master节点/root目录下编写YAML文件pv.yaml创建PV，具体要求如下：</p>
@@ -737,7 +737,7 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
 <p>​	（4）挂载路径：node节点/data/k8s/localpv;</p>
 <p>​	（5）卷容量：5G;</p>
 <p>完成后使用该YAML文件创建pv。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> PersistentVolume
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> pv<span class="token punctuation">-</span>local
@@ -756,15 +756,15 @@ kubectll scale deployment nginx-deployment <span class="token parameter variable
   <span class="token key atrule">accessModes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> ReadWriteOnce
   <span class="token key atrule">capacity</span><span class="token punctuation">:</span>
-    <span class="token key atrule">storage</span><span class="token punctuation">:</span> 5Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">storage</span><span class="token punctuation">:</span> 5Gi</code></pre>
 
 <h2 id="第三套"><a href="#第三套" class="headerlink" title="第三套"></a>第三套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124172226238.png" alt="image-20221124172226238"></p>
 <p>1、配置集群节点，要求节点可用内存低于500Mi时，kubelet开始驱逐节点上的Pods。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
-eviction-hard<span class="token operator">=</span>memory.available<span class="token operator">&lt;</span>500M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+eviction-hard<span class="token operator">=</span>memory.available<span class="token operator">&lt;</span>500M</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124172941759.png" alt="image-20221124172941759"></p>
 <p>2、在master节点/root目录下编写YAML文件deployment.yaml创建Deployment，具体要求如下：</p>
@@ -772,7 +772,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>​	（2）包含3个副本;</p>
 <p>​	（3）镜像使用nginx:1.11.9;</p>
 <p>完成后使用该YAML文件创建Deployment，然后通过滚动升级的方式更新镜像版本为1.12.0，并记录这个更新，最后，回滚该更新到之前的1.11.9版本。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> httpd
@@ -801,14 +801,14 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 kubectl apply <span class="token punctuation">-</span>f deployment<span class="token punctuation">-</span>roll.yaml <span class="token punctuation">-</span><span class="token punctuation">-</span>record <span class="token comment">#记录命令</span>
 kubectl rollout history deployment httpd  <span class="token comment">#查看是否记录命令</span>
 kubectl set image <span class="token punctuation">-</span>f deployment<span class="token punctuation">-</span>roll.yaml httpd=192.168.10.131/library/httpd<span class="token punctuation">:</span>v1.2.3 <span class="token comment">#设置更新镜像版本，由于没有新版本镜像这里镜像版本随意填写</span>
-kubectl rollout undo deployment httpd <span class="token punctuation">-</span><span class="token punctuation">-</span>to<span class="token punctuation">-</span>revision=1 <span class="token comment">#回滚pod版本到第一版本</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+kubectl rollout undo deployment httpd <span class="token punctuation">-</span><span class="token punctuation">-</span>to<span class="token punctuation">-</span>revision=1 <span class="token comment">#回滚pod版本到第一版本</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124220513968.png" alt="image-20221124220513968"></p>
 <p>3、在master节点/root目录下编写YAML文件ns.yaml创建命名空间，具体要求如下：</p>
 <p>​	（1）命名空间名称：default-cpu-example;</p>
 <p>​	（2）该namespace内容器默认的CPU请求500m，CPU请求限制为2000m;</p>
 <p>完成后使用该YAML文件创建命名空间。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Namespace
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> default<span class="token punctuation">-</span>cpu<span class="token punctuation">-</span>example
@@ -826,7 +826,7 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
       <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 2000m
     <span class="token key atrule">defaultRequest</span><span class="token punctuation">:</span>
       <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container <span class="token comment">###注意添加类型</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container <span class="token comment">###注意添加类型</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221124222646547.png" alt="image-20221124222646547"></p>
 <p>4．在master节点／root目录下编写YAML文件pod．yaml创建Pod，具体要求如下：</p>
@@ -834,7 +834,7 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
 <p>（2）镜像：nginx：latest；</p>
 <p>（3）要求该Pod以Guaranteed·QoS类运行，其requests值等于limits值．</p>
 <p>完成后使用该YAML文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -850,20 +850,20 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
         <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi
       <span class="token key atrule">requests</span><span class="token punctuation">:</span>
         <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
-        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125134737941.png"><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125140927622.png" alt="image-20221125140927622"></p>
 <p>5．在master节点／root目录下编写YAML文件cronjobyaml 创建的CronJob，具体要求如下：</p>
 <p>（1）Cronjob名称：cronjob； </p>
 <p>（2）镜像：busybox；</p>
 <p>（3）要求该CronJob的．spec·配置文件每分钟打印出当前时间信息．完成后使用该YAML 文件创建 Cronjob.</p>
-<pre class="line-numbers language-none"><code class="language-none">＊：表示匹配该域的任意值，假如在Minutes域使用＊，则表示每分钟都会触发事件。 o／：表示起始时间开始触发，然后每隔固定时间触发一次，例如在Minutes域设置为5／20， 则意味着第1次触发在第5min时，接下来每20min触发一次，将在第25min、第45min 等时刻分别触发。
+<pre class="language-none"><code class="language-none">＊：表示匹配该域的任意值，假如在Minutes域使用＊，则表示每分钟都会触发事件。 o／：表示起始时间开始触发，然后每隔固定时间触发一次，例如在Minutes域设置为5／20， 则意味着第1次触发在第5min时，接下来每20min触发一次，将在第25min、第45min 等时刻分别触发。
 
 比如，我们要每隔1min执行一次任务，则Cron表达式如下：
 
-*/1****<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+*/1****</code></pre>
 
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> batch/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> batch/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> CronJob
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> cronjob
@@ -880,14 +880,14 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
             <span class="token punctuation">-</span> bin/sh
             <span class="token punctuation">-</span> <span class="token punctuation">-</span>c
             <span class="token punctuation">-</span> data;
-          <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> OnFailure<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> OnFailure</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125141150591.png" alt="image-20221125141150591"></p>
 <p>6．在master节点／root目录下编写YAML文件pod-host．yaml创建Pod，具体要求如下： </p>
 <p>（1）Pod 名称：hostaliases-pod；</p>
 <p>（2）为该Pod配置HostAliases，向hosts文件添加额外的条目，将foo.remote、bar.remote解析为127.0.0.1，将foo．remote、bar．remote解析为10.1.2.3．</p>
 <p>完成后使用该YAML文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> hostaliases<span class="token punctuation">-</span>pod
@@ -903,7 +903,7 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
   <span class="token punctuation">-</span> <span class="token key atrule">ip</span><span class="token punctuation">:</span> <span class="token string">"10.1.2.3"</span>
     <span class="token key atrule">hostnames</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> <span class="token string">"foo.remote"</span>
-    <span class="token punctuation">-</span> <span class="token string">"bar.remote"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">-</span> <span class="token string">"bar.remote"</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125143252306.png" alt="image-20221125143252306"></p>
 <p>7．在master节点／root目录下编写YAML文件 clusterrole.yaml 创建 ClusterRole，具体要求如下：</p>
@@ -911,7 +911,7 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
 <p>（2）对Secret 拥有get、watch、list的权限； </p>
 <p>（3）对Pod和Deployment拥有create、delete、update的权限。</p>
 <p>完成后使用该YAML 文件创建ClusterRole.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> secret<span class="token punctuation">-</span>reader
@@ -921,19 +921,19 @@ kubectl rollout undo deployment httpd <span class="token punctuation">-</span><s
   <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"create"</span><span class="token punctuation">,</span><span class="token string">"delete"</span><span class="token punctuation">,</span><span class="token string">"update"</span><span class="token punctuation">]</span>
 <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
   <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Secret"</span><span class="token punctuation">]</span>
-  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span></code></pre>
 
 <h2 id="第四套"><a href="#第四套" class="headerlink" title="第四套"></a>第四套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125144142490.png" alt="image-20221125144142490"></p>
 <p>1．为master节点打上“app=exam”标签，并将其调度策略设置为PreferNoSchedule。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl label nodes k8s-master-node1 <span class="token assign-left variable">app</span><span class="token operator">=</span>exam
-kubectl taint <span class="token function">node</span> k8s-master-node1 node-role.kubernetes.io/master<span class="token operator">=</span>:PreferNoSchedule<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubectl label nodes k8s-master-node1 <span class="token assign-left variable">app</span><span class="token operator">=</span>exam
+kubectl taint <span class="token function">node</span> k8s-master-node1 node-role.kubernetes.io/master<span class="token operator">=</span>:PreferNoSchedule</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125144158988.png" alt="image-20221125144158988"></p>
 <p>2．在master节点／root目录下编写YAML文件deployment．yamml，具体要求如下： </p>
 <p>（1）Deployment 名称：nginx；</p>
 <p>（2）镜像：nginx：latest；</p>
 <p>（3）指定其Pod调度到有“app＝exma”标签的节点上．完成后使用该YAML文件创建 Deployment.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -954,7 +954,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
         <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
       <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span>
-        <span class="token key atrule">app</span><span class="token punctuation">:</span> exam<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> exam</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125144213171.png" alt="image-20221125144213171"></p>
 <p>3．在master节点／root目录下编写YAML文件service．yaml，具体要求如下：</p>
@@ -962,7 +962,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（2）关联名为nginx的Deployment；</p>
 <p>（3）以NodePort方式将其80端口对外暴露为30080．</p>
 <p>完成后使用该YAML文件创建 Service.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>service
@@ -974,7 +974,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
     <span class="token key atrule">nodePort</span><span class="token punctuation">:</span> <span class="token number">30089</span> <span class="token comment">#由于30080端口已经有服务占用这里改一下端口号</span>
     <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP 
     <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125144224805.png" alt="image-20221125144224805"></p>
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125155318523.png" alt="image-20221125155318523"></p>
@@ -984,7 +984,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（3）副本数：7；</p>
 <p>（4）label: app_enb_stage=dev.</p>
 <p>完成后保存这个spec．yaml 文件到 master 节点／opt／exam2022／deploy＿spec．yaml中．</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam2022
@@ -1002,7 +1002,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> httpd<span class="token punctuation">-</span>dev
         <span class="token key atrule">image</span><span class="token punctuation">:</span> 192.168.10.131/library/httpd
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125155935897.png" alt="image-20221125155935897"></p>
 <p>6．在master 节点／root目录下编写YAML文件pv．yaml 创建PV，具体要求如下：</p>
@@ -1012,7 +1012,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（4）容量：1Gi；</p>
 <p>（5）模式：ReadOnlyMany。</p>
 <p>完成后使用该YAML 文件创建PV。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> PersistentVolume
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> test<span class="token punctuation">-</span>pv
@@ -1022,7 +1022,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
   <span class="token key atrule">accessModes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> ReadOnlyMany
   <span class="token key atrule">capacity</span><span class="token punctuation">:</span>
-    <span class="token key atrule">storage</span><span class="token punctuation">:</span> 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">storage</span><span class="token punctuation">:</span> 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125163653557.png" alt="image-20221125163653557"></p>
 <p>7．在master 节点／root目录下编写YAML 文件pod-secret．yaml 创建 Secret 和Pod，具体</p>
@@ -1032,7 +1032,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（3）第一个Pod-test1 使用env引用mysecret；</p>
 <p>（4）第二个Pod·test2使用 volume引用 mysecret．</p>
 <p>完成后使用该YAML文件创建Secret和Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">echo <span class="token punctuation">-</span>n "123456" <span class="token punctuation">|</span> base64
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">echo <span class="token punctuation">-</span>n "123456" <span class="token punctuation">|</span> base64
 <span class="token punctuation">[</span>root@k8s<span class="token punctuation">-</span>master<span class="token punctuation">-</span>node1 test<span class="token punctuation">]</span><span class="token comment"># cat pod-secret.yaml </span>
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Secret
@@ -1079,7 +1079,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
   <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> foo
     <span class="token key atrule">secret</span><span class="token punctuation">:</span>
       <span class="token key atrule">secretName</span><span class="token punctuation">:</span> mysecret
-      <span class="token key atrule">optional</span><span class="token punctuation">:</span> <span class="token boolean important">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">optional</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125164157943.png" alt="image-20221125164157943"></p>
 <p>8．在Kubernetes 集群中完成Bookinfo样例程序的部署，然后在maser 节点／root目录下 编写YAML 文件istio.yaml 配置HTTP请求超时，具体要求如下：</p>
@@ -1089,7 +1089,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>完成后使用该YAML 文件配置HTTP请求超时.</p>
 <h2 id="第五套"><a href="#第五套" class="headerlink" title="第五套"></a>第五套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125180041105.png" alt="image-20221125180041105"></p>
 <p>1．·默认情况下，Pod能够使用集群节点全部可用计算资源，请配置集群为系统守护进程kube-reserved 和 system-reserved 预留 500m·CPU、1Gi-memory和1Gi ephemeral-storage 计 算资源.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
@@ -1102,7 +1102,7 @@ kubeReserved:  <span class="token comment">#配置kube预留资源</span>
 systemReserved:  <span class="token comment">#配置系统预留资源</span>
   cpu: 500m
   memory: 1Gi
-  ephemeral-storage: 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  ephemeral-storage: 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125180049916.png" alt="image-20221125180049916"></p>
 <p>2．在master 节点／roct目录下编写YAML文件pod．yaml 创建Pod，具体要求如下：</p>
@@ -1110,7 +1110,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
 <p>（2）Pod名称：exam；</p>
 <p>（3）该Pod包含2个容器：redis和nginx，分别使用镜像redis和nginx．</p>
 <p>完成后使用该YAML 文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam
@@ -1122,7 +1122,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
   <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
     <span class="token key atrule">image</span><span class="token punctuation">:</span> 192.168.10.131/library/nginx
     <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125202050428.png" alt="image-20221125202050428"></p>
 <p>3．在master 节点／root目录下编写YAML 文件pod-secret．yaml 创建 Secret和Pod，具体</p>
@@ -1132,7 +1132,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
 <p>（3）第一个Pod-test1使用env引用mysecret；</p>
 <p>（4）第二个Pod-test2使用volume引用mysecret．</p>
 <p>完成后使用该YAML文件创建Secret和Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">echo <span class="token punctuation">-</span>n "123456" <span class="token punctuation">|</span> base64
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">echo <span class="token punctuation">-</span>n "123456" <span class="token punctuation">|</span> base64
 <span class="token punctuation">[</span>root@k8s<span class="token punctuation">-</span>master<span class="token punctuation">-</span>node1 test<span class="token punctuation">]</span><span class="token comment"># cat pod-secret.yaml </span>
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Secret
@@ -1179,7 +1179,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
   <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> foo
     <span class="token key atrule">secret</span><span class="token punctuation">:</span>
       <span class="token key atrule">secretName</span><span class="token punctuation">:</span> mysecret
-      <span class="token key atrule">optional</span><span class="token punctuation">:</span> <span class="token boolean important">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">optional</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125202108783.png" alt="image-20221125202108783"></p>
 <p>4．在master 节点／root目录下编写YAML 文件创建LimitRange，具体要求如下：</p>
@@ -1189,7 +1189,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
 <p>（4）容器资源请求下限为100Mi内存，300m·CPU；</p>
 <p>（5）内存和CPU超售的比率均为2．</p>
 <p>完成后使用该YAML 创建LimitRang.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> LimitRange
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> mem<span class="token punctuation">-</span>limit<span class="token punctuation">-</span>range
@@ -1207,7 +1207,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
     <span class="token key atrule">min</span><span class="token punctuation">:</span>
       <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 300m
       <span class="token key atrule">memory</span><span class="token punctuation">:</span> 100Mi
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> Container</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125204947792.png" alt="image-20221125204947792"></p>
 <p>5．·为master 节点打上标签“disktype＝ssd”和标签“exam＝chinaskill”，然后在master 节点／root目录下编写YAML 文件创建Deployment，具体要求如下：。</p>
@@ -1215,7 +1215,7 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
 <p>（2）要求Pod只能调度到具有标签“disktype＝ssd”的节点上；</p>
 <p>（3）具有标签“exam＝chinaskill”的节点优先被调度。 </p>
 <p>完成后使用该YAML 文件创建 Deployment.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>deployment
@@ -1251,28 +1251,28 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
               <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> exam
                 <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
                 <span class="token key atrule">values</span><span class="token punctuation">:</span>
-                <span class="token punctuation">-</span> chinaskill<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <span class="token punctuation">-</span> chinaskill</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125210807555.png" alt="image-20221125210807555"></p>
 <p>6．在master节点／root目录下编写YAML 文件创建ClusterRole，具体要求如下：</p>
 <p>（1）ClusterRole 名称：deployment-clusterrole；</p>
 <p>（2）只拥有对Deployment、Daemonset、StatefulSet的创建权限．</p>
 <p>完成后使用该YAML 文件创建 ClusterRole.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1 
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1 
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> deployment<span class="token punctuation">-</span>clusterrole
 <span class="token key atrule">rules</span><span class="token punctuation">:</span>
 <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
   <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Deployment"</span><span class="token punctuation">,</span><span class="token string">"Daemonset"</span><span class="token punctuation">,</span><span class="token string">"StatefulSet"</span><span class="token punctuation">]</span>
-  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"create"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"create"</span><span class="token punctuation">]</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125210822500.png" alt="image-20221125210822500"></p>
 <p>7．在master节点／root目录下编写YAML 文件创建 ServiceAccount，具体要求如下：</p>
 <p>（1） ServiceAcccunt 名称：exam-sa；</p>
 <p>（2）将该ServiceAccount 与上一题创建的ClusterRole 进行绑定绑定．</p>
 <p>完成后使用该YAML 文件创建 ServiceAccount.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam<span class="token punctuation">-</span>sa
@@ -1290,17 +1290,17 @@ systemReserved:  <span class="token comment">#配置系统预留资源</span>
 <span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
   <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
   <span class="token key atrule">name</span><span class="token punctuation">:</span> deployment<span class="token punctuation">-</span>clusterrole 
-  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io</code></pre>
 
 <h2 id="第六套"><a href="#第六套" class="headerlink" title="第六套"></a>第六套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125215358715.png" alt="image-20221125215358715"></p>
 <p>1．Kubelet 使用证书进行Kubernetes：API的认证，证书默认有效期为1年．请配置Kubelet 证书轮换，当证书即将过期时，将自动生成新的秘钥，并从Kubernetes·API申请新的证书.</p>
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125215412005.png" alt="image-20221125215412005"></p>
 <p>2．·为Kubernetes集群节点配置资源配置最小回收量，要求当节点可用内存不足1Gi或者可用文件系统空间不足10Gi时开始驱逐节点上的Pod．</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
-eviction-hard<span class="token operator">=</span>memory.available<span class="token operator">&lt;</span>1Gi,nodefs.available<span class="token operator">&lt;</span>10Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+eviction-hard<span class="token operator">=</span>memory.available<span class="token operator">&lt;</span>1Gi,nodefs.available<span class="token operator">&lt;</span>10Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125215422503.png" alt="image-20221125215422503"></p>
 <p>3．在master 节点／root目录下编写YAML 文件pod．yaml 创建 Pod，具体要求如下：</p>
@@ -1308,7 +1308,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（2）容器默认请求100M内存；</p>
 <p>（3）容器最多请求200M内存．</p>
 <p>完成后使用该YAML 文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -1322,7 +1322,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
       <span class="token key atrule">requests</span><span class="token punctuation">:</span>
         <span class="token key atrule">memory</span><span class="token punctuation">:</span> 100M
       <span class="token key atrule">limits</span><span class="token punctuation">:</span>
-        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 200M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 200M</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125220316951.png" alt="image-20221125220316951"></p>
 <p>4．在master节点／root目录下编写YAML文件 replicaset．yaml 创建ReplicaSet．具体要求如下：</p>
@@ -1331,7 +1331,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（3）副本数：3；</p>
 <p>（4）镜像：nginx．</p>
 <p>完成后使用该YAML 文件创建 ReplicaSet</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ReplicationController
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -1350,7 +1350,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
         <span class="token key atrule">image</span><span class="token punctuation">:</span> 192.168.10.131/library/nginx
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125220333728.png" alt="image-20221125220333728"></p>
 <p>5．在master节点／root目录下编写YAML文件pod-live．yaml 创建Pod，具体要求如下：</p>
@@ -1359,7 +1359,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（3）启动命令：／bin／sh-c·＂touch／tmp／healthy；sleep·30；rm-rf／tmp／healthy；</p>
 <p>（3）在容器内执行命令“cat／tmp／healthy”来进行存活探测，每5秒执行一次．</p>
 <p>完成后使用该YAML文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> liveness<span class="token punctuation">-</span>exec
@@ -1371,7 +1371,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
     <span class="token key atrule">livenessProbe</span><span class="token punctuation">:</span>
       <span class="token key atrule">exec</span><span class="token punctuation">:</span>
         <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span><span class="token string">"-c"</span><span class="token punctuation">,</span><span class="token string">"cat /tmp/healthy"</span><span class="token punctuation">]</span>
-      <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">5</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125220429559.png" alt="image-20221125220429559"></p>
 <p>6．创建命名空间quota-example，在master节点／root目录下编写YAML 文件 quota．yaml 创建ResourceQuota，具体要求如下：</p>
@@ -1382,7 +1382,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（5）命名空间compute-resources内所有容器申请的CPU不得超过1；</p>
 <p>（6）命名空间 compute-resources 内所有容器限制的CPU不得超过2．</p>
 <p>完成后使用该YAML文件创建 ResourceQuota. </p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1 
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1 
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ResourceQuota
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> compute<span class="token punctuation">-</span>resources
@@ -1393,14 +1393,14 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
     <span class="token key atrule">requests.cpu</span><span class="token punctuation">:</span> <span class="token number">1</span>
     <span class="token key atrule">requests.memory</span><span class="token punctuation">:</span> 1Gi
     <span class="token key atrule">limits.cpu</span><span class="token punctuation">:</span> <span class="token number">2</span>
-    <span class="token key atrule">limits.memory</span><span class="token punctuation">:</span> 2Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">limits.memory</span><span class="token punctuation">:</span> 2Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221125224014752.png" alt="image-20221125224014752"></p>
 <p>7．在master 节点／root目录下编写YAML 文件api．yaml扩展一个Kubernetes·API，具体 要求如下：</p>
 <p>（1）API·Server名称：crontabs； </p>
 <p>（2）作用域：整个集群．</p>
 <p>完成后使用该YAML 文件创建 API-Server. </p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apiextensions.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apiextensions.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> CustomResourceDefinition
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> crontabs.stable.example.com
@@ -1429,7 +1429,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
     <span class="token key atrule">singular</span><span class="token punctuation">:</span> crontab
     <span class="token key atrule">kind</span><span class="token punctuation">:</span> CronTab
     <span class="token key atrule">shortNames</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> ct<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">-</span> ct</code></pre>
 
 <p>第七套</p>
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126150625421.png" alt="image-20221126150625421"></p>
@@ -1438,7 +1438,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（2）镜像：nginx</p>
 <p>（3）挂载一个Volume，名称为cache-volume，将其／data目录挂载到宿主机／data目录 下。</p>
 <p>完成后使用该YAML文件创建Pod。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -1454,7 +1454,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
   <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> cache<span class="token punctuation">-</span>volume
     <span class="token key atrule">hostPath</span><span class="token punctuation">:</span> 
-      <span class="token key atrule">path</span><span class="token punctuation">:</span> /data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+      <span class="token key atrule">path</span><span class="token punctuation">:</span> /data</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126150655449.png" alt="image-20221126150655449"></p>
 <p>2.·在 master 节点/root 目录下编写 YAML 文件 deployment.yaml 创建 Deployment，具体要求如下：</p>
@@ -1464,7 +1464,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（4）标签: app: nginx;</p>
 <p>（5）容器端口：80</p>
 <p>完成后使用该 YAML 文件创建 Deployment.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>deployment
@@ -1482,7 +1482,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>7<span class="token punctuation">-</span>2<span class="token punctuation">-</span>pod
         <span class="token key atrule">image</span><span class="token punctuation">:</span> 192.168.10.131/library/nginx<span class="token punctuation">:</span>latest
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126150726186.png" alt="image-20221126150726186"></p>
 <p>3．在master节点／root目录下编写YAML文件scale．yaml为上一题的nginx-deployment配置Pod水平自动伸缩，具体要求如下：</p>
@@ -1492,7 +1492,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（4）根据设定的CPU使用率（75％）动态的增加或者减少Pod·数量．</p>
 <p>完成后使用该YAML文件创建Pod水平自动伸缩.</p>
 <p><strong>###如果需要autoscale需给被监测pod添加requests资源声明，否则HPA读取不到CPU指标信息</strong></p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> autoscaling/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> HorizontalPodAutoscaler
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
@@ -1504,7 +1504,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
     <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>deployment
   <span class="token key atrule">minReplicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
   <span class="token key atrule">maxReplicas</span><span class="token punctuation">:</span> <span class="token number">5</span>
-  <span class="token key atrule">targetCPUUtilizationPercentage</span><span class="token punctuation">:</span> <span class="token number">75</span>   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">targetCPUUtilizationPercentage</span><span class="token punctuation">:</span> <span class="token number">75</span>   </code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126164258383.png" alt="image-20221126164258383"></p>
 <p>4．·在master节点／root目录下编写YAML文件quota．yaml创建命名空间和ResourceQuota， 具体要求如下：</p>
@@ -1514,7 +1514,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（4）所有容器内存申请总和不得超过1Gi；</p>
 <p>（5）所有容器申请的CPU不得超过2000m。</p>
 <p>完成后使用该YAML 文件创建命名空间和ResourceQuota </p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1 
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1 
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Namespace
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> quota<span class="token punctuation">-</span>exam
@@ -1530,11 +1530,11 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
   <span class="token key atrule">hard</span><span class="token punctuation">:</span>
     <span class="token key atrule">pods</span><span class="token punctuation">:</span> <span class="token number">4</span>
     <span class="token key atrule">limits.cpu</span><span class="token punctuation">:</span> 2000m
-    <span class="token key atrule">limits.memory</span><span class="token punctuation">:</span> 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token key atrule">limits.memory</span><span class="token punctuation">:</span> 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126164323908.png" alt="image-20221126164323908"></p>
 <p>5．·默认情况下，Pod能够使用集群节点全部可用计算资源，请配置集群为系统守护进程 kube-reserved 和 system-reserved 预留 500m·CPU、1Gi-memory和 1Gi-ephemeral-storage 计 算资源。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
@@ -1547,7 +1547,7 @@ kubeReserved:   <span class="token comment">#配置kube预留资源</span>
 systemReserved:   <span class="token comment">#配置系统预留资源</span>
   cpu: 500m
   memory: 1Gi
-  ephemeral-storage: 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  ephemeral-storage: 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126165842691.png" alt="image-20221126165842691"></p>
 <p>6．·在master 节点／root目录下编写YAML 文件创建角色，具体要求如下：</p>
@@ -1555,14 +1555,14 @@ systemReserved:   <span class="token comment">#配置系统预留资源</span>
 <p>（2）该角色拥有创建、删除和更新Pod的权限；</p>
 <p>（3）该角色拥有查看、创建、更改和删除Deployment的权限。</p>
 <p>完成后使用该YAML文件创建角色。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam
 <span class="token key atrule">rules</span><span class="token punctuation">:</span>
 <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
   <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Deployment"</span><span class="token punctuation">]</span>
-  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"create"</span><span class="token punctuation">,</span><span class="token string">"update"</span><span class="token punctuation">,</span><span class="token string">"delete"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"create"</span><span class="token punctuation">,</span><span class="token string">"update"</span><span class="token punctuation">,</span><span class="token string">"delete"</span><span class="token punctuation">]</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126165922896.png" alt="image-20221126165922896"></p>
 <p>7．在master和node节点安装NFS文件服务器，共享目录为／data／k8s／，然后在master节点／root目录下编写YAML文件 nfs-pv.yaml 创建PV，具体要求如下：</p>
@@ -1572,7 +1572,7 @@ systemReserved:   <span class="token comment">#配置系统预留资源</span>
 <p>（4）访问模式为ReadWriteOnce；</p>
 <p>（5）回收策略为Recyle。</p>
 <p>完成后使用该YAML文件创建PV。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">mkdir <span class="token punctuation">-</span>p /nfs/data
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml">mkdir <span class="token punctuation">-</span>p /nfs/data
 chmod <span class="token punctuation">-</span>R 777 /nfs
 cat &lt;&lt;EOF<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span> /etc/exports
 /nfs/data <span class="token important">*(rw</span><span class="token punctuation">,</span>no_root_squash<span class="token punctuation">,</span>sync)
@@ -1595,15 +1595,15 @@ showmount <span class="token punctuation">-</span>e &lt;ip<span class="token pun
     <span class="token key atrule">storage</span><span class="token punctuation">:</span> 1Gi
   <span class="token key atrule">accessModes</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> ReadWriteOnce
-  <span class="token key atrule">persistentVolumeReclaimPolicy</span><span class="token punctuation">:</span> Recycle<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">persistentVolumeReclaimPolicy</span><span class="token punctuation">:</span> Recycle</code></pre>
 
 <h2 id="第八套"><a href="#第八套" class="headerlink" title="第八套"></a>第八套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126174216002.png" alt="image-20221126174216002"></p>
 <p>1．修改集群配置参数，要求集群节点可用内存低于500Mi时，kubelet开始驱逐节点上的Pods。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /var/lib/kubelet/config.yaml
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
 <span class="token builtin class-name">.</span>
-eviction-hard<span class="token operator">=</span>memory.available<span class="token operator">&lt;</span>500M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+eviction-hard<span class="token operator">=</span>memory.available<span class="token operator">&lt;</span>500M</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126174237608.png" alt="image-20221126174237608"></p>
 <p>2．在master 节点／root目录下编写YAML文件pod．yaml创建Pod，具体要求如下：</p>
@@ -1612,7 +1612,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（3）以Guaranteed·QoS类运行；</p>
 <p>（4）其requests值等于limits值．</p>
 <p>完成后使用该YAML文件创建 Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
@@ -1628,7 +1628,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
         <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi
       <span class="token key atrule">limits</span><span class="token punctuation">:</span>
         <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
-        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126174259177.png" alt="image-20221126174259177"></p>
 <p>3．在master 节点／root目录下编写YAML文件nginx-deployment．yaml 创建 Deployment，具体要求如下：</p>
@@ -1638,7 +1638,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（4）网络：hostNetwork；</p>
 <p>（5）容器端口：80。</p>
 <p>完成后使用该YAML 文件创建 Deployment.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>deployment
@@ -1657,7 +1657,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
         <span class="token key atrule">image</span><span class="token punctuation">:</span> 192.168.10.131/library/nginx
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126174349980.png" alt="image-20221126174349980"></p>
 <p>4．在master节点／root目录下编写YAML文件hpa．yaml为上一题的Deployment 创建Pod 水平自动伸缩，具体要求如下：</p>
@@ -1666,7 +1666,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（3）期望每个Pod根据设定的CPU使用率50％动态的伸缩。</p>
 <p>完成后使用该YAML文件创建 Pod水平自动伸缩。</p>
 <p><strong>###如果需要autoscale需给被监测pod添加requests资源声明，否则HPA读取不到CPU指标信息</strong></p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> autoscaling/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> autoscaling/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> HorizontalPodAutoscaler
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> fronted<span class="token punctuation">-</span>scaler
@@ -1677,7 +1677,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
     <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>deployment
   <span class="token key atrule">minReplicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
   <span class="token key atrule">maxReplicas</span><span class="token punctuation">:</span> <span class="token number">7</span>
-  <span class="token key atrule">targetCPUUtilizationPercentage</span><span class="token punctuation">:</span> <span class="token number">50</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">targetCPUUtilizationPercentage</span><span class="token punctuation">:</span> <span class="token number">50</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126174456008.png" alt="image-20221126174456008"></p>
 <p>5．在master节点／root目录下编写YAML文件role．yaml创建角色，具体要求如下：</p>
@@ -1685,7 +1685,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（2）对default命名空间内的Pod 拥有get、watch、list、create、delete的权限；</p>
 <p>（3）对default 命名空间内的Deploymeht拥有get、list的权限。</p>
 <p>完成后使用该YAML文件创建角色。</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam<span class="token punctuation">-</span>reader
@@ -1695,7 +1695,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
   <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">,</span><span class="token string">"create"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span>
 <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
   <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"Deployment"</span><span class="token punctuation">]</span>
-  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126174534894.png" alt="image-20221126174534894"></p>
 <p>6．Kubernetes集群支持Pod优先级抢占，通过抢占式调度策略来实现同一个Node 节点内部的Pod对象抢占。在master 节点／root目录下编写YAML 文件schedule.yaml 创建一个抢 占式调度策略，具体要求如下：</p>
@@ -1703,12 +1703,12 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（2）优先级为1000000；</p>
 <p>（3）不要将该调度策略设置为默认优先调度策略。</p>
 <p>完成后使用该YAML文件创建抢占式调度策略。”</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> scheduling.k8s.io/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> scheduling.k8s.io/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> PriorityClass
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> higi<span class="token punctuation">-</span>scheduling
 <span class="token key atrule">value</span><span class="token punctuation">:</span> <span class="token number">1000000</span>
-<span class="token key atrule">globalDefault</span><span class="token punctuation">:</span> <span class="token boolean important">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token key atrule">globalDefault</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126210143357.png" alt="image-20221126210143357"></p>
 <p>7．·在master节点／root目录下编写YAML文件部署 MySQL 服务，具体要求如下：</p>
@@ -1718,7 +1718,7 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
 <p>（4）挂载一个持久卷mysql—pv，拥有2GB的存储空间，路径为／mnt／data；</p>
 <p>（5）以NodePort方式将3306端口对外暴露为33306．</p>
 <p>完成后使用该YAML文件部署 MySQL服务.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> PersistentVolume
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> mysql<span class="token punctuation">-</span>pv
@@ -1791,12 +1791,12 @@ eviction-hard<span class="token operator">=</span>memory.available<span class="t
   <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">3306</span>
     <span class="token key atrule">nodePort</span><span class="token punctuation">:</span> <span class="token number">33306</span>
     <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">3306</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort</code></pre>
 
 <h2 id="第九套"><a href="#第九套" class="headerlink" title="第九套"></a>第九套</h2><p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126225859210.png" alt="image-20221126225859210"></p>
 <p>1．·为master 节点打上“app＝exam”标签，并将其调度策略设置为PreferNoSchedule。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl label nodes k8s-master-node1 <span class="token assign-left variable">app</span><span class="token operator">=</span>exam
-kubectl taint <span class="token function">node</span> k8s-master-node1 node-role.kubernetes.io/master<span class="token operator">=</span>:PreferNoSchedule<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubectl label nodes k8s-master-node1 <span class="token assign-left variable">app</span><span class="token operator">=</span>exam
+kubectl taint <span class="token function">node</span> k8s-master-node1 node-role.kubernetes.io/master<span class="token operator">=</span>:PreferNoSchedule</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126225915790.png" alt="image-20221126225915790"></p>
 <p>2．在master节点／root目录下编写YAML文件nginx．yaml 创建Pod，具体要求如下：</p>
@@ -1805,7 +1805,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（3）镜像拉取策略：IfNotPresent；</p>
 <p>（4）启用进程命名空间共享．</p>
 <p>完成后使用该YAML文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>pod
@@ -1816,7 +1816,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
     <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
     <span class="token key atrule">ports</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
-  <span class="token key atrule">shareProcessNamespace</span><span class="token punctuation">:</span> <span class="token boolean important">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">shareProcessNamespace</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126225948643.png" alt="image-20221126225948643"></p>
 <p>3．在master节点／root目录下编写YAML文件nginx-deployment．yaml 创建 Deployment，</p>
@@ -1826,7 +1826,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（3）镜像：nginx；</p>
 <p>（4）容器端口：80</p>
 <p>完成后使用该YAML文件创建 Deployment.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>deployment
@@ -1844,7 +1844,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
         <span class="token key atrule">image</span><span class="token punctuation">:</span> 192.168.10.131/library/nginx
         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126230004306.png" alt="image-20221126230004306"></p>
 <p>4．在master节点／root目录下编写YAML文件service．yaml 创建Service，具体要求如下：</p>
@@ -1853,7 +1853,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（3）使用TCP协议；</p>
 <p>（4）服务类型：ClusterIP．</p>
 <p>完成后使用该YAML 文件创建 Service.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> exam<span class="token punctuation">-</span>service
@@ -1862,7 +1862,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
   <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
     <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
     <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP</code></pre>
 
 <p><img src="C:\Users\26324\AppData\Roaming\Typora\typora-user-images\image-20221126230023743.png" alt="image-20221126230023743"></p>
 <p>5．在master节点／root目录下编写YAML文件创建Pod并使用ConfigMap，具体要求如 下：</p>
@@ -1870,7 +1870,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
 <p>（2）镜像：busybox；</p>
 <p>（3）在数据卷里面使用ConfigMap，并设置变量“DB＿HOST＝localhost”和 “DB_PORT=3306”。</p>
 <p>完成后使用该YAML文件创建Pod.</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
 <span class="token key atrule">kind</span><span class="token punctuation">:</span> ConfigMap
 <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> config
@@ -1900,7 +1900,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
           <span class="token key atrule">name</span><span class="token punctuation">:</span> config
           <span class="token key atrule">key</span><span class="token punctuation">:</span> data2
     <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span></code></pre>
 
 
                 
@@ -2322,7 +2322,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

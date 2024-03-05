@@ -442,7 +442,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="【任务-1】私有云服务搭建-10-分"><a href="#【任务-1】私有云服务搭建-10-分" class="headerlink" title="【任务 1】私有云服务搭建[10 分]"></a>【任务 1】私有云服务搭建[10 分]</h2><h3 id="【题目-1】基础环境配置-0-5-分"><a href="#【题目-1】基础环境配置-0-5-分" class="headerlink" title="【题目 1】基础环境配置[0.5 分]"></a>【题目 1】基础环境配置[0.5 分]</h3><p>使用提供的用户名密码，登录提供的 OpenStack 私有云平台，在当前租户下，使用CentOS7.9 镜像，创建两台云主机，云主机类型使用 4vCPU/12G/100G_50G 类型。当前租户下默认存在一张网卡，自行创建第二张网卡并连接至 controller 和 compute 节点（第二张网卡的网段为 10.10.X.0/24，X 为工位号，不需要创建路由）。自行检查安全组策略，以确保网络正常通信与 ssh 连接，然后按以下要求配置服务器：<br>（1）设置控制节点主机名为 controller，设置计算节点主机名为 compute；<br>（2）修改hosts 文件将 IP 地址映射为主机名；<br>完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname controller</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname controller</span>
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname compute</span>
 
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/hosts</span>
@@ -450,10 +450,10 @@
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 <span class="token number">192.168</span>.100.10 controller
 <span class="token number">192.168</span>.100.20 compute
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.查看控制节点名字为 controller 正确计 0.2 分<br>2.查看 hosts 文件中有正确的主机名和 IP 映射计 0.2 分<br>3.控制节点正确使用两块网卡计 0.1 分</p>
 <h3 id="【题目-2】Yum-源配置-0-5-分"><a href="#【题目-2】Yum-源配置-0-5-分" class="headerlink" title="【题目 2】Yum 源配置[0.5 分]"></a>【题目 2】Yum 源配置[0.5 分]</h3><p>使用提供的 http 服务地址，在 http 服务下，存在 centos7.9 和 iaas 的网络 yum 源，使用该 http 源作为安装 iaas 平台的网络源。分别设置 controller 节点和 compute 节点的 yum 源文件 http.repo。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/yum.repos.d/local.repo</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /etc/yum.repos.d/local.repo</span>
 <span class="token punctuation">[</span>centos<span class="token punctuation">]</span>
 <span class="token assign-left variable">name</span><span class="token operator">=</span>centos
 <span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/centos  <span class="token comment">#比赛使用的是http远程yum源</span>
@@ -464,10 +464,10 @@
 <span class="token assign-left variable">baseurl</span><span class="token operator">=</span>file:///opt/iaas/iaas-repo
 <span class="token assign-left variable">gpgcheck</span><span class="token operator">=</span><span class="token number">0</span>
 <span class="token assign-left variable">enabled</span><span class="token operator">=</span><span class="token number">1</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.查看/etc/yum.repos.d/http.repo 文件，有正确的 baseurl  路径，计 0.5 分</p>
 <h3 id="【题目-3】配置无秘钥-ssh-0-5-分"><a href="#【题目-3】配置无秘钥-ssh-0-5-分" class="headerlink" title="【题目 3】配置无秘钥 ssh[0.5 分]"></a>【题目 3】配置无秘钥 ssh[0.5 分]</h3><p>配置 controller 节点可以无秘钥访问 compute 节点，配置完成后，尝试 ssh 连接 compute<br>节点的 hostname 进行测试。完成后提交 controller 节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ssh compute</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ssh compute</span>
 Last login: Sun Sep <span class="token number">20</span> <span class="token number">23</span>:40:30 <span class="token number">2022</span> from <span class="token number">192.168</span>.100.1
  <span class="token comment">################################</span>
  <span class="token comment">#    Welcome  to  OpenStack    #</span>
@@ -477,11 +477,11 @@ Last login: Sun Sep <span class="token number">20</span> <span class="token numb
  <span class="token comment">################################</span>
  <span class="token comment">#    Welcome  to  OpenStack    #</span>
  <span class="token comment">################################</span>
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 
 <p>1.查看控制节点允许计算节点无秘钥登录计 0.5 分</p>
 <h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>【题目 4】基础安装[0.5 分]<br>在控制节点和计算节点上分别安装 openstack-iaas 软件包，根据表 2 配置两个节点脚本文件中的基本变量（配置脚本文件为/etc/openstack/openrc.sh）。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum install -y openstack-iaas</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># yum install -y openstack-iaas</span>
 Loaded plugins: fastestmirror
 Determining fastest mirrors
 centos                                                                                           <span class="token operator">|</span> <span class="token number">3.6</span> kB  00:00:00
@@ -674,12 +674,12 @@ Nothing to <span class="token keyword">do</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># scp /etc/openstack/openrc.sh compute:/etc/openstack/</span>
 
 <span class="token comment">#传输完毕后，设置磁盘分区，分出三块！！！对应的磁盘名称写入环境变量中</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查环境变量文件配置正确计 0.5 分</p>
 <h3 id="【题目-5】数据库安装与调优-0-5-分"><a href="#【题目-5】数据库安装与调优-0-5-分" class="headerlink" title="【题目 5】数据库安装与调优[0.5 分]"></a>【题目 5】数据库安装与调优[0.5 分]</h3><p>在 controller 节点上使用 iaas-install-mysql.sh 脚本安装 Mariadb、Memcached、RabbitMQ<br>等服务。安装服务完毕后，修改/etc/my.cnf 文件，完成下列要求：</p>
 <p>1.设置数据库支持大小写；<br>2.设置数据库缓存 innodb 表的索引，数据，插入数据时的缓冲为 4G；</p>
 <p>3.设置数据库的 log buffer 为 64MB；<br>4.设置数据库的 redo log 大小为 256MB；<br>5.设置数据库的 redo log 文件组为 2。<br>完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-pre-host.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-pre-host.sh</span>
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># iaas-pre-host.sh</span>
 <span class="token comment">#执行完这一步，一定要重新连接，刷新一下，不然rabbitmq服务会报错</span>
 
@@ -729,10 +729,10 @@ max_allowed_packet <span class="token operator">=</span> 30M
 <span class="token comment">#</span>
 <span class="token operator">!</span>includedir /etc/my.cnf.d
 
-<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.检查数据库配置正确计 0.5 分</p>
 <h3 id="【题目-6】Keystone-服务安装与使用-0-5-分"><a href="#【题目-6】Keystone-服务安装与使用-0-5-分" class="headerlink" title="【题目 6】Keystone 服务安装与使用[0.5 分]"></a>【题目 6】Keystone 服务安装与使用[0.5 分]</h3><p>在 controller 节点上使用 iaas-install-keystone.sh 脚本安装 Keystone 服务。安装完成后， 使用相关命令，创建用户 chinaskill，密码为 000000。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-keystone.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-keystone.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># source /etc/keystone/admin-openrc.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack user create --domain huhy --password 000000 chinaskill</span>
 +---------------------+----------------------------------+
@@ -746,10 +746,10 @@ max_allowed_packet <span class="token operator">=</span> 30M
 <span class="token operator">|</span> password_expires_at <span class="token operator">|</span> None                             <span class="token operator">|</span>
 +---------------------+----------------------------------+
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
-<span class="token comment">#注意我的域名是自定义的，正常应该是demo</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#注意我的域名是自定义的，正常应该是demo</span></code></pre>
 <p>1.检查keystone 服务安装正确计 0.2 分<br>2.检查chinaskill 用户创建正确计 0.3 分</p>
 <h3 id="【题目-7】Glance-安装与使用-0-5-分"><a href="#【题目-7】Glance-安装与使用-0-5-分" class="headerlink" title="【题目 7】Glance 安装与使用[0.5 分]"></a>【题目 7】Glance 安装与使用[0.5 分]</h3><p>在 controller 节点上使用 iaas-install-glance.sh 脚本安装 glance 服务。使用命令将提供的 cirros-0.3.4-x86_64-disk.img 镜像（该镜像在 HTTP 服务中，可自行下载）上传至平台， 命名为 cirros，并设置最小启动需要的硬盘为 10G，最小启动需要的内存为 1G。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller images<span class="token punctuation">]</span><span class="token comment"># iaas-install-glance.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller images<span class="token punctuation">]</span><span class="token comment"># iaas-install-glance.sh</span>
 <span class="token punctuation">[</span>root@controller images<span class="token punctuation">]</span><span class="token comment"># ls</span>
 amphora-x64-haproxy.qcow2  CentOS-7-x86_64-2009.qcow2    MySQL_5.6_XD.qcow2
 CentOS7_1804.tar           cirros-0.3.4-x86_64-disk.img
@@ -786,10 +786,10 @@ CentOS7_1804.tar           cirros-0.3.4-x86_64-disk.img
 <span class="token operator">|</span> visibility       <span class="token operator">|</span> shared
                                                                                         <span class="token operator">|</span>
 +------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-<span class="token punctuation">[</span>root@controller images<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@controller images<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.检查glance 服务安装正确计 0.1 分<br>2.检查cirros 镜像最小启动硬盘与内存配置正确计 0.4 分</p>
 <h3 id="【题目-8】Nova-安装与优化-0-5-分"><a href="#【题目-8】Nova-安装与优化-0-5-分" class="headerlink" title="【题目 8】Nova 安装与优化[0.5 分]"></a>【题目 8】Nova 安装与优化[0.5 分]</h3><p>在 controller 节点和 compute 节点上分别使用 iaas-install-placement.sh 脚本、iaas-install-nova -controller.sh 脚本、iaas-install-nova-compute.sh 脚本安装Nova 服务。安装完成后，请修改 nova 相关配置文件，解决因等待时间过长而导致虚拟机启动超时从而获取不到 IP 地址而报</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-placement.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-placement.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-nova-controller.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/nova/nova.conf</span>
 
@@ -798,23 +798,23 @@ CentOS7_1804.tar           cirros-0.3.4-x86_64-disk.img
 改为
 
 <span class="token assign-left variable">vif_plugging_is_fatal</span><span class="token operator">=</span>false
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查nova 服务解决超时问题配置正确计 0.5 分</p>
 <h3 id="【题目-9】Neutron-安装-0-5-分"><a href="#【题目-9】Neutron-安装-0-5-分" class="headerlink" title="【题目 9】Neutron 安装[0.5 分]"></a>【题目 9】Neutron 安装[0.5 分]</h3><p>使用提供的脚本 iaas-install-neutron-controller.sh 和 iaas-install-neutron-compute.sh，在controller 和 compute 节点上安装 neutron 服务。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-neutron-controller.sh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-neutron-controller.sh</span></code></pre>
 <p>1.检查neutron 服务安装正确计 0.2 分<br>2.检查neutron 服务的 linuxbridge 网桥服务启动正确计 0.3 分</p>
 <h3 id="【题目-10】Dashboard-安装-0-5-分"><a href="#【题目-10】Dashboard-安装-0-5-分" class="headerlink" title="【题目 10】Dashboard 安装[0.5 分]"></a>【题目 10】Dashboard 安装[0.5 分]</h3><p>在controller 节点上使用iaas-install-dashboad.sh 脚本安装dashboad服务。安装完成后， 将 Dashboard 中的 Djingo 数据修改为存储在文件中（此种修改解决了 ALL-in-one 快照在其他云平台 Dashboard 不能访问的问题）。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-dashboard.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-dashboard.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/openstack-dashboard/local_settings</span>
 
 SESSION_ENGINE <span class="token operator">=</span> <span class="token string">'django.contrib.sessions.backends.cache'</span>
 
 改为
 
-SESSION_ENGINE <span class="token operator">=</span> <span class="token string">'django.contrib.sessions.backends.file'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+SESSION_ENGINE <span class="token operator">=</span> <span class="token string">'django.contrib.sessions.backends.file'</span></code></pre>
 <p>1.检查Dashboard 服务安装正确计 0.2 分<br>2.检查Dashboard 服务中Djingo 数据修改为存储在文件中配置正确计 0.3 分</p>
 <h3 id="【题目-11】Swift-安装-0-5-分"><a href="#【题目-11】Swift-安装-0-5-分" class="headerlink" title="【题目 11】Swift 安装[0.5 分]"></a>【题目 11】Swift 安装[0.5 分]</h3><p>在 控 制 节 点 和 计 算 节 点 上 分 别 使 用 iaas-install-swift-controller.sh 和iaas-install-swift-compute.sh 脚本安装 Swift 服务。安装完成后，使用命令创建一个名叫examcontainer 的容器，将 cirros-0.3.4-x86_64-disk.img 镜像上传到 examcontainer 容器中，并设置分段存放，每一段大小为 10M。完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-swift-controller.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-swift-controller.sh</span>
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-swift-compute.sh</span>
 
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ls</span>
@@ -828,10 +828,10 @@ cirros-0.3.4-x86_64-disk.img
 13M     cirros-0.3.4-x86_64-disk.img
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
 
-<span class="token comment">#因为镜像就13M，所有存储为两段</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#因为镜像就13M，所有存储为两段</span></code></pre>
 <p>1.检查 swift 服务安装正确计 0.3 分<br>2.分段上传cirros 镜像正确计 0.2 分</p>
 <h3 id="【题目-12】Cinder-创建硬盘-0-5-分"><a href="#【题目-12】Cinder-创建硬盘-0-5-分" class="headerlink" title="【题目 12】Cinder 创建硬盘[0.5 分]"></a>【题目 12】Cinder 创建硬盘[0.5 分]</h3><p>在 控 制 节 点 和 计 算 节 点 分 别 使 用 iaas-install-cinder-controller.sh 、iaas-install-cinder-compute.sh 脚本安装Cinder 服务，请在计算节点，对块存储进行扩容操作， 即在计算节点再分出一个 5G 的分区，加入到 cinder 块存储的后端存储中去。完成后提交计算节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-cinder-controller.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-cinder-controller.sh</span>
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-cinder-compute.sh</span>
 
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># lsblk</span>
@@ -939,10 +939,10 @@ sr0                                              <span class="token number">11</
   Free  PE / Size       <span class="token number">0</span> / <span class="token number">0</span>
   VG UUID               acAXNK-eqKm-qs9b-ly3T-R3Sh-8qyv-nELNWv
 
-<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.检查cinder 后端存储扩容成功计 0.5 分</p>
 <h3 id="【题目-13】Manila-服务安装与使用-0-5-分"><a href="#【题目-13】Manila-服务安装与使用-0-5-分" class="headerlink" title="【题目 13】Manila 服务安装与使用[0.5 分]"></a>【题目 13】Manila 服务安装与使用[0.5 分]</h3><p>在 控 制 和 计 算 节 点 上 分 别 使 用 iaas-install-manila-controller.sh 和iaas-install-manila-compute.sh 脚本安装 manila 服务。安装服务后创建 default_share_type 共享类型（不使用驱动程序支持），接着创建一个大小为 2G 的共享存储名为 share01 并开放share01 目录对 OpenStack 管理网段使用权限。最后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-manila-controller.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-manila-controller.sh</span>
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-manila-compute.sh</span>
 
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># manila type-create default_share_type False</span>
@@ -1043,10 +1043,10 @@ tmpfs                    378M     <span class="token number">0</span>  378M   <s
 /dev/dm-5                <span class="token number">2</span>.0G  <span class="token number">6</span>.0M  <span class="token number">1</span>.8G   <span class="token number">1</span>% /var/lib/manila/mnt/share-8648e34b-a68b-4710-97fe-4e85515c444e
 <span class="token punctuation">[</span>root@compute ~<span class="token punctuation">]</span><span class="token comment">#</span>
 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查 share01 共享存储正确创建并赋予权限计 0.5 分</p>
 <h3 id="【题目-14】Barbican-服务安装与使用-0-5-分"><a href="#【题目-14】Barbican-服务安装与使用-0-5-分" class="headerlink" title="【题目 14】Barbican 服务安装与使用[0.5 分]"></a>【题目 14】Barbican 服务安装与使用[0.5 分]</h3><p>使用 iaas-install-barbican.sh 脚本安装 barbican 服务，安装服务完毕后，使用 openstack 命令创建一个名为 secret01 的密钥，创建完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-barbican.sh</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># iaas-install-barbican.sh</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack secret store --name secret01 --payload secretkey</span>
 +---------------+-----------------------------------------------------------------------+
 <span class="token operator">|</span> Field         <span class="token operator">|</span> Value                                                                 <span class="token operator">|</span>
@@ -1061,10 +1061,10 @@ tmpfs                    378M     <span class="token number">0</span>  378M   <s
 <span class="token operator">|</span> Secret <span class="token builtin class-name">type</span>   <span class="token operator">|</span> opaque                                                                <span class="token operator">|</span>
 <span class="token operator">|</span> Mode          <span class="token operator">|</span> cbc                                                                   <span class="token operator">|</span>
 <span class="token operator">|</span> Expiration    <span class="token operator">|</span> None                                                                  <span class="token operator">|</span>
-+---------------+-----------------------------------------------------------------------+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
++---------------+-----------------------------------------------------------------------+</code></pre>
 <p>1.检查 secret01 密钥创建正确计 0.5 分</p>
 <h3 id="【题目-15】Cloudkitty-服务安装与使用-1-分"><a href="#【题目-15】Cloudkitty-服务安装与使用-1-分" class="headerlink" title="【题目 15】Cloudkitty 服务安装与使用[1 分]"></a>【题目 15】Cloudkitty 服务安装与使用[1 分]</h3><p>使用 iaas-install-cloudkitty.sh 脚本安装cloudkitty 服务，安装完毕后，启用 hashmap 评级模块，接着创建 volume_thresholds 组，创建服务匹配规则 volume.size，并设置每 GB 的价格为 0.01。接下来对应大量数据设置应用折扣，在组 volume_thresholds 中创建阈值，设置若超过 50GB 的阈值，应用 2%的折扣（0.98）。设置完成后提交控制节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#0.启用hashmap</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#0.启用hashmap</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack rating module enable hashmap </span>
 
 <span class="token comment">#1.创建hashmap service</span>
@@ -1089,10 +1089,10 @@ openstack rating hashmap group create  volume_thresholds
 
 <span class="token comment">#4.创建service rule</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack rating hashmap threshold create   -s  09da4a8b-b849-4715-a8e3-7cd12dfcf46e -g 8b3dfe73-5efb-46ab-a93b-dc9519063ed6  -t rate 50 0.98</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查hashmap 评级模块启用成功计 0.2 分<br>2.检查服务匹配规则volume.size 创建成功 0.8 分</p>
 <h3 id="【题目-16】OpenStack-平台内存优化-0-5-分"><a href="#【题目-16】OpenStack-平台内存优化-0-5-分" class="headerlink" title="【题目 16】OpenStack 平台内存优化[0.5 分]"></a>【题目 16】OpenStack 平台内存优化[0.5 分]</h3><p>搭建完 OpenStack 平台后，关闭系统的内存共享，打开透明大页。完成后提交控制节点<br>的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># find / -name defrag</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># find / -name defrag</span>
 /sys/kernel/mm/transparent_hugepage/defrag
 /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># echo never &gt; /sys/kernel/mm/transparent_hugepage/defr</span>
@@ -1100,10 +1100,10 @@ ag
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat /sys/kernel/mm/transparent_hugepage/defrag </span>
 always madvise <span class="token punctuation">[</span>never<span class="token punctuation">]</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># </span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查系统内存优化成功计 0.5 分</p>
 <h3 id="【题目-17】修改文件句柄数-0-5-分"><a href="#【题目-17】修改文件句柄数-0-5-分" class="headerlink" title="【题目 17】修改文件句柄数[0.5 分]"></a>【题目 17】修改文件句柄数[0.5 分]</h3><p>Linux 服务器大并发时，往往需要预先调优 Linux 参数。默认情况下，Linux 最大文件句柄数为 1024 个。当你的服务器在大并发达到极限时，就会报出“too many open files”。创建一台云主机，修改相关配置，将控制节点的最大文件句柄数永久修改为 65535。配置完成后提交 controller 点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
 <span class="token number">1024</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#  echo "* soft nofile 65535" &gt;&gt; /etc/security/limits.conf</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#  echo "* hard nofile 65535" &gt;&gt; /etc/security/limits.conf</span>
@@ -1122,10 +1122,10 @@ Last login: Thu May  <span class="token number">5</span> <span class="token numb
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
 <span class="token number">65535</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># </span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查配置 linux 系统句柄数为 65535 成功计 0.5 分</p>
 <h3 id="【题目-18】Linux-系统调优-防止SYN-攻击-1-分"><a href="#【题目-18】Linux-系统调优-防止SYN-攻击-1-分" class="headerlink" title="【题目 18】Linux 系统调优-防止SYN 攻击[1 分]"></a>【题目 18】Linux 系统调优-防止SYN 攻击[1 分]</h3><p>修改 controller 节点的相关配置文件，开启 SYN cookie，防止 SYN 洪水攻击。完成后提交 controller 节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/sysctl.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/sysctl.conf</span>
 
 <span class="token comment">#添加以下参数</span>
 <span class="token assign-left variable">net.ipv4.tcp_max_syn_backlog</span><span class="token operator">=</span><span class="token number">2048</span>
@@ -1141,10 +1141,10 @@ net.ipv4.tcp_max_syn_backlog <span class="token operator">=</span> <span class="
 net.ipv4.tcp_syncookies <span class="token operator">=</span> <span class="token number">1</span>
 sysctl: setting key <span class="token string">"net.ipv4.tcp_syn_retries"</span><span class="token builtin class-name">:</span> Invalid argument
 net.ipv4.tcp_syn_retries <span class="token operator">=</span> <span class="token number">0</span>
-<span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.检查开启SYN cookie 配置计 1 分</p>
 <h2 id="【任务-2】私有云服务运维-15-分"><a href="#【任务-2】私有云服务运维-15-分" class="headerlink" title="【任务 2】私有云服务运维[15 分]"></a>【任务 2】私有云服务运维[15 分]</h2><h3 id="【题目-1】OpenStack-开放镜像权限-0-5-分"><a href="#【题目-1】OpenStack-开放镜像权限-0-5-分" class="headerlink" title="【题目 1】OpenStack 开放镜像权限[0.5 分]"></a>【题目 1】OpenStack 开放镜像权限[0.5 分]</h3><p>使用 OpenStack 私 有 云 平 台 ， 在 OpenStack 平台的 admin 项 目 中 使 用cirros-0.3.4-x86_64-disk.img 镜像文件创建名为glance-cirros 的镜像，通过OpenStack 命令将glance-cirros 镜像指定 demo 项目进行共享使用。配置完成后提交controller 点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --disk-format qcow2 --container-format bare --file cirros-0.3.4-x86_64-disk.img glance-cirros</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># openstack image create --disk-format qcow2 --container-format bare --file cirros-0.3.4-x86_64-disk.img glance-cirros</span>
 <span class="token number">9</span>+------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 <span class="token operator">|</span> Field            <span class="token operator">|</span> Value                                                                                                                                                                                      <span class="token operator">|</span>
 +------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -1215,10 +1215,10 @@ net.ipv4.tcp_syn_retries <span class="token operator">=</span> <span class="toke
 <span class="token operator">|</span> 3bac7fd7-bc66-4586-9872-3cbea90da5d2 <span class="token operator">|</span> 7fc907bd4a6e471aa6d714ff66646d2a <span class="token operator">|</span> accepted <span class="token operator">|</span>
 +--------------------------------------+----------------------------------+----------+
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查glance-cirros 镜像权限开放正确计 0.5 分</p>
 <h3 id="【题目-2】OpenStack-消息队列调优-0-5-分"><a href="#【题目-2】OpenStack-消息队列调优-0-5-分" class="headerlink" title="【题目 2】OpenStack 消息队列调优[0.5 分]"></a>【题目 2】OpenStack 消息队列调优[0.5 分]</h3><p>OpenStack 各服务内部通信都是通过 RPC 来交互，各 agent 都需要去连接 RabbitMQ； 随着各服务 agent 增多，MQ 的连接数会随之增多，最终可能会到达上限，成为瓶颈。使用自行搭建的OpenStack 私有云平台，分别通过用户级别、系统级别、配置文件来设置RabbitMQ 服务的最大连接数为 10240，配置完成后提交修改节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/sysctl.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/sysctl.conf</span>
 fs.file-max<span class="token operator">=</span><span class="token number">10240</span>
 <span class="token comment">#在sysctl.conf文件的最下方添加一行fs.file-max=10240</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># sysctl -p</span>
@@ -1250,10 +1250,10 @@ Status of <span class="token function">node</span> rabbit@controller
  <span class="token punctuation">{</span>run_queue,0<span class="token punctuation">}</span>,
  <span class="token punctuation">{</span>uptime,40<span class="token punctuation">}</span>,
  <span class="token punctuation">{</span>kernel,<span class="token punctuation">{</span>net_ticktime,60<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">]</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查 rabbitmq 服务最大连接数正确计 0.5 分</p>
 <h3 id="【题目-3】OpenStack-Glance-镜像压缩-0-5-分"><a href="#【题目-3】OpenStack-Glance-镜像压缩-0-5-分" class="headerlink" title="【题目 3】OpenStack Glance 镜像压缩[0.5 分]"></a>【题目 3】OpenStack Glance 镜像压缩[0.5 分]</h3><p>使用自行搭建的 OpenStack 平台。在 HTTP 服务中存在一个镜像为CentOS7.5-compress.qcow2 的镜像，请使用 qemu 相关命令，对该镜像进行压缩，压缩后的镜像命名为chinaskill-js-compress.qcow2 并存放在/root 目录下。完成后提交 controller 点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress.qcow2</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress.qcow2</span>
 892M CentOS7.5-compress.qcow2
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># qemu-img convert -c -O qcow2 CentOS7.5-compress.qcow2 CentOS7.5-compress2.qcow2</span>
 
@@ -1264,10 +1264,10 @@ CentOS7.5-compress2.qcow2 压缩完成后文件
 
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># du -sh CentOS7.5-compress2.qcow2</span>
 405M CentOS7.5-compress2.qcow2
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.检查镜像压缩正确计 0.5 分</p>
 <h3 id="【题目-4】glance-对接-cinder-后端存储-0-5-分"><a href="#【题目-4】glance-对接-cinder-后端存储-0-5-分" class="headerlink" title="【题目 4】glance 对接 cinder 后端存储[0.5 分]"></a>【题目 4】glance 对接 cinder 后端存储[0.5 分]</h3><p>在自行搭建的OpenStack 平台中修改相关参数，使glance 可以使用cinder 作为后端存储， 将镜像存储于cinder 卷中。使用 cirros-0.3.4-x86_64-disk.img 文件创建 cirros-image 镜像存储于 cirros-cinder 卷中，通过 cirros-image 镜像使用 cinder 卷启动盘的方式进行创建虚拟机。完成后提交修改节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/glance/glance-api.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/glance/glance-api.conf</span>
 
 <span class="token comment">#show_multiple_locations = false</span>
 
@@ -1289,11 +1289,11 @@ image_upload_use_internal_tenant <span class="token operator">=</span> <span cla
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart openstack-cinderack-cinder-scheduler.service httpd</span>
 
 代码不全,还差一些操作,只有一半的分
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <p>1.检查修改glance 后端存储为 cinder 正确计 0.5 分</p>
 <h3 id="【题目-5】OpenStack-Heat-运维：创建容器-0-5-分"><a href="#【题目-5】OpenStack-Heat-运维：创建容器-0-5-分" class="headerlink" title="【题目 5】OpenStack Heat 运维：创建容器[0.5 分]"></a>【题目 5】OpenStack Heat 运维：创建容器[0.5 分]</h3><p>在自行搭建的 OpenStack 私 有 云 平 台 上 ， 在 /root 目录下编写 Heat 模板create_container.yaml，要求执行 yaml 文件可以创建名为 heat-swift 的容器。完成后提交控制节点的用户名、密码和 IP 地址到答题框。（在提交信息前请准备好 yaml 模板执行的环境）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vim create_container.yaml</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vim create_container.yaml</span>
 
 heat_template_version: <span class="token number">2014</span>-10-16
 resources:
@@ -1302,14 +1302,14 @@ resources:
     properties:
       name: heat-swift
 
-<span class="token comment">#此类题目，在dashboard界面上都有模板可以查询</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#此类题目，在dashboard界面上都有模板可以查询</span></code></pre>
 <p>1.执行heat 模板文件成功创建容器计 0.5 分</p>
 <h3 id="【题目-6】OpenStack-Nova-清除缓存-0-5-分"><a href="#【题目-6】OpenStack-Nova-清除缓存-0-5-分" class="headerlink" title="【题目 6】OpenStack Nova 清除缓存[0.5 分]"></a>【题目 6】OpenStack Nova 清除缓存[0.5 分]</h3><p>在 OpenStack 平台的一台计算节点创建虚拟机，若是第一次在该节点创建次虚拟机，会先将镜像文件复制到该计算节点目录/var/lib/nova/instances/_base。长期下来，该目录会占用比较大的磁盘空间而要清理。可以通过修改 nova 的配置文件来自动清理该缓存目录，即在该节点没有使用某镜像启动的云主机，那么这个镜像在过一定的时间后会被自动删除。配置完成后提交改动节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">此题默认配置文件是是正确的，直接提交即可得分<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">此题默认配置文件是是正确的，直接提交即可得分</code></pre>
 <p>1.检查nova 配置自动清理缓存文件正确计 0.5 分</p>
 <h3 id="【题目-7】Redis-一主二从三哨兵模式-1-分"><a href="#【题目-7】Redis-一主二从三哨兵模式-1-分" class="headerlink" title="【题目 7】Redis 一主二从三哨兵模式[1 分]"></a>【题目 7】Redis 一主二从三哨兵模式[1 分]</h3><p>使用提供的 OpenStack 私有云平台，申请三台 CentOS7.9 系统的云主机，使用提供的http 源，在三个节点自行安装 Redis 服务并启动，配置 Redis 的访问需要密码，密码设置为123456。然后将这三个 Redis 节点配置为 Redis 的一主二从三哨兵架构，即一个 Redis 主节点，两个从节点，三个节点均为哨兵节点。配置完成后提交Redis 主节点的用户名、密码和IP 地址到答题框。</p>
 <p>（1）环境配置<br><img src="https://img-blog.csdnimg.cn/c73c298fadef455bbf8e99eb816b7919.png" alt="在这里插入图片描述"><br>(2) 修改 Redis 配置文件（所有节点操作）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl stop firewalld
 setenforce <span class="token number">0</span>
  
 <span class="token function">vim</span> /opt/redis-5.0.7/sentinel.conf
@@ -1320,15 +1320,15 @@ logfile <span class="token string">"/var/log/sentinel.log"</span>					<span clas
 <span class="token function">dir</span> <span class="token string">"/var/lib/redis/6379"</span>						<span class="token comment">#65行，指定数据库存放路径</span>
 sentinel monitor mymaster <span class="token number">192.168</span>.154.19 <span class="token number">6379</span> <span class="token number">2</span>	<span class="token comment">#84行，修改 指定该哨兵节点监控192.168.184.10:6379这个主节点，该主节点的名称是mymaster，最后的2的含义与主节点的故障判定有关：至少需要2个哨兵节点同意，才能判定主节点故障并进行故障转移</span>
 sentinel down-after-milliseconds mymaster <span class="token number">30000</span>	<span class="token comment">#113行，判定服务器down掉的时间周期，默认30000毫秒（30秒）</span>
-sentinel failover-timeout mymaster <span class="token number">180000</span>		<span class="token comment">#146行，故障节点的最大超时时间为180000（180秒）</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+sentinel failover-timeout mymaster <span class="token number">180000</span>		<span class="token comment">#146行，故障节点的最大超时时间为180000（180秒）</span></code></pre>
 <p><img src="https://img-blog.csdnimg.cn/54dcd46c858d47378a421e403e7c518d.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/879238a44be94099b01210ca11f90793.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/a8d3824fd7ac43bb9ec9d77da8043e06.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/304db3abbefe4a2089f1ca4f0f8ec563.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/29581791405c4b6b9db8f01314eb3dce.png" alt="在这里插入图片描述"><br> （3）启动哨兵模式</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /opt/redis-5.0.7/
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /opt/redis-5.0.7/
 redis-sentinel sentinel.conf <span class="token operator">&amp;</span>
-注意！先启动主服务器，再启动从服务器<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+注意！先启动主服务器，再启动从服务器</code></pre>
 
 <p><img src="https://img-blog.csdnimg.cn/21a120c186d946239fb211e543317c92.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/519c03302e4345ff9a61c42c74f1c3fc.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/45077adaad0e40769f587692af1ca613.png" alt="在这里插入图片描述"></p>
 <p>（4）查看哨兵信息</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@slave2 redis-5.0.7<span class="token punctuation">]</span><span class="token comment"># redis-cli -p 26379 info Sentinel</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@slave2 redis-5.0.7<span class="token punctuation">]</span><span class="token comment"># redis-cli -p 26379 info Sentinel</span>
 <span class="token comment"># Sentinel</span>
 sentinel_masters:1
 sentinel_tilt:0
@@ -1336,11 +1336,11 @@ sentinel_running_scripts:0
 sentinel_scripts_queue_length:0
 sentinel_simulate_failure_flags:0
 master0:name<span class="token operator">=</span>mymaster,status<span class="token operator">=</span>ok,address<span class="token operator">=</span><span class="token number">192.168</span>.58.30:6379,slaves<span class="token operator">=</span><span class="token number">2</span>,sentinels<span class="token operator">=</span><span class="token number">3</span>
-<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>+  完成                  redis-sentinel sentinel.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>+  完成                  redis-sentinel sentinel.conf</code></pre>
 
 <p>1.检查 redis 主从集群部署正确计 0.5 分<br>2.检查 redis 集群部署为哨兵节点正确计 0.5 分</p>
 <h3 id="【题目-8】Redis-服务调优-AOF-1-分"><a href="#【题目-8】Redis-服务调优-AOF-1-分" class="headerlink" title="【题目 8】Redis 服务调优-AOF[1 分]"></a>【题目 8】Redis 服务调优-AOF[1 分]</h3><p>使用上一题安装的Redis 服务。在 Redis 中，AOF 配置为以三种不同的方式在磁盘上执行 write 或者 fsync。假设当前 Redis 压力过大，请配置 Redis 不执行 fsync。除此之外，避免AOF 文件过大，Redis 会进行 AOF 重写，生成缩小的 AOF 文件。请修改配置，让 AOF 重写时，不进行fsync 操作。配置完成后提交 Redis 节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@master ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/redis.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@master ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/redis.conf</span>
 
 no-appendfsync-on-rewrite no
 aof-rewrite-incremental-fsync <span class="token function">yes</span>
@@ -1351,18 +1351,18 @@ aof-rewrite-incremental-fsync no
 no-appendfsync-on-rewrite <span class="token function">yes</span>
 <span class="token comment">#配置就是设置为yes时候，在aof重写期间会停止aof的fsync操作</span>
 <span class="token punctuation">[</span>root@master ~<span class="token punctuation">]</span><span class="token comment"># systemctl restart redis</span>
-<span class="token punctuation">[</span>root@master ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@master ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.检查配置 redis 不执行 fsync 正确计 0.5 分、<br>2.检查配置 redis 进行 AOF 重写不执行 fsync 正确计 0.5 分</p>
 <h3 id="【题目-9】应用部署：堡垒机部署-0-5-分"><a href="#【题目-9】应用部署：堡垒机部署-0-5-分" class="headerlink" title="【题目 9】应用部署：堡垒机部署[0.5 分]"></a>【题目 9】应用部署：堡垒机部署[0.5 分]</h3><p>使用提供的 OpenStack 平台申请一台 CentOS7.9 的云主机，使用提供的软件包安装JumpServer 堡垒机服务，并配置使用该堡垒机对接自己安装的 controller 和 compute 节点。完成后提交 JumpServer 节点的用户名、密码和 IP 地址到答题框。</p>
 <p>使用提供的软件包配置Yum源，通过地址将jumpserver.tar.gz软件包下载至Jumpserver节点的/root目录下</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># ls</span>
-anaconda-ks.cfg  jumpserver.tar.gz  original-ks.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># ls</span>
+anaconda-ks.cfg  jumpserver.tar.gz  original-ks.cfg</code></pre>
 <p>解压软件包jumpserver.tar.gz至/opt目录下</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># tar -zxvf jumpserver.tar.gz -C /opt/</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># tar -zxvf jumpserver.tar.gz -C /opt/</span>
 <span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># ls /opt/</span>
-compose  config  <span class="token function">docker</span>  docker.service  images  jumpserver-repo  static.env<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+compose  config  <span class="token function">docker</span>  docker.service  images  jumpserver-repo  static.env</code></pre>
 <p>将默认Yum源移至其他目录，创建本地Yum源文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># mv /etc/yum.repos.d/* /mnt/</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># mv /etc/yum.repos.d/* /mnt/</span>
 <span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># cat &gt;&gt; /etc/yum.repos.d/jumpserver.repo &lt;&lt; EOF</span>
 <span class="token punctuation">[</span>jumpserver<span class="token punctuation">]</span>
 <span class="token assign-left variable">name</span><span class="token operator">=</span>jumpserver
@@ -1372,27 +1372,27 @@ compose  config  <span class="token function">docker</span>  docker.service  ima
 EOF
 <span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># yum repolist</span>
 repo <span class="token function">id</span>		repo name		status
-jumpserver	jumpserver		<span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+jumpserver	jumpserver		<span class="token number">2</span></code></pre>
 
 <p>安装Python数据库</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># yum install python2 -y</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver ~<span class="token punctuation">]</span><span class="token comment"># yum install python2 -y</span></code></pre>
 <p>安装配置Docker环境</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># cp -rf /opt/docker/* /usr/bin/</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># cp -rf /opt/docker/* /usr/bin/</span>
 <span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># chmod 775 /usr/bin/docker*</span>
 <span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># cp -rf /opt/docker.service /etc/systemd/system</span>
 <span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># chmod 775 /etc/systemd/system/docker.service </span>
 <span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># systemctl daemon-reload</span>
 <span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># systemctl enable docker --now</span>
 Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /etc/systemd/system/dock
-er.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+er.service.</code></pre>
 <p>验证服务状态</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># docker -v</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># docker -v</span>
 Docker version <span class="token number">18.06</span>.3-ce, build d7080c1
 <span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># docker-compose -v</span>
 <span class="token function">docker-compose</span> version <span class="token number">1.27</span>.4, build <span class="token number">40524192</span>
-<span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@jumpserver opt<span class="token punctuation">]</span><span class="token comment"># </span></code></pre>
 <p>安装Jumpserver服务</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># ls</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># ls</span>
 jumpserver_core_v2.11.4.tar  jumpserver_lion_v2.11.4.tar  jumpserver_nginx_alpine2.tar
 jumpserver_koko_v2.11.4.tar  jumpserver_luna_v2.11.4.tar  jumpserver_redis_6-alpine.tar
 jumpserver_lina_v2.11.4.tar  jumpserver_mysql_5.tar       load.sh
@@ -1406,12 +1406,12 @@ jumpserver_lina_v2.11.4.tar  jumpserver_mysql_5.tar       load.sh
 <span class="token function">docker</span> load <span class="token parameter variable">-i</span> jumpserver_mysql_5.tar
 <span class="token function">docker</span> load <span class="token parameter variable">-i</span> jumpserver_nginx_alpine2.tar
 <span class="token function">docker</span> load <span class="token parameter variable">-i</span> jumpserver_redis_6-alpine.tar
-<span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># sh load.sh </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># sh load.sh </span></code></pre>
 <p>创建Jumpserver服务组件目录</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># mkdir -p /opt/jumpserver/{core,koko,lion,mysql,nginx,redis}</span>
-<span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># cp -rf /opt/config /opt/jumpserver/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># mkdir -p /opt/jumpserver/{core,koko,lion,mysql,nginx,redis}</span>
+<span class="token punctuation">[</span>root@jumpserver images<span class="token punctuation">]</span><span class="token comment"># cp -rf /opt/config /opt/jumpserver/</span></code></pre>
 <p>生效环境变量static.env，使用所提供的脚本up.sh启动Jumpserver服务</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver compose<span class="token punctuation">]</span><span class="token comment"># ls</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@jumpserver compose<span class="token punctuation">]</span><span class="token comment"># ls</span>
 config_static                docker-compose-lb.yml              docker-compose-network.yml         down.sh
 docker-compose-app.yml       docker-compose-mysql-internal.yml  docker-compose-redis-internal.yml  up.sh
 docker-compose-es.yml        docker-compose-mysql.yml           docker-compose-redis.yml
@@ -1428,7 +1428,7 @@ Creating jms_celery <span class="token punctuation">..</span>. <span class="toke
 Creating jms_lion   <span class="token punctuation">..</span>. <span class="token keyword">done</span>
 Creating jms_luna   <span class="token punctuation">..</span>. <span class="token keyword">done</span>
 Creating jms_koko   <span class="token punctuation">..</span>. <span class="token keyword">done</span>
-<span class="token punctuation">[</span>root@jumpserver compose<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@jumpserver compose<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>浏览器访问<a target="_blank" rel="noopener" href="http://10.24.193.142/">http://10.24.193.142</a> Jumpserver Web登录（admin/admin）<br><img src="https://img-blog.csdnimg.cn/9c6d08ac6cbc413782c571a509762d33.png" alt="图1 Web登录.png"></p>
 <p>图1 Web登录</p>
 <p>登录成功后，会提示设置新密码，如图2所示：</p>
@@ -1477,7 +1477,7 @@ Creating jms_koko   <span class="token punctuation">..</span>. <span class="toke
 <h3 id="【题目-10】skywalking-服务部署与应用-1-分"><a href="#【题目-10】skywalking-服务部署与应用-1-分" class="headerlink" title="【题目 10】skywalking 服务部署与应用[1 分]"></a>【题目 10】skywalking 服务部署与应用[1 分]</h3><p>使用提供的 OpenStack 私有云平台，申请一台 centos7.9 系统的云主机，使用提供的软件包安装 Elasticsearch 服务和 skywalking 服务，将 skywalking 的 UI 访问端口修改为 8888。接下来再申请一台CentOS7.9 的云主机，用于搭建gpmall 商城应用，并配置SkyWalking Agent， 将 gpmall 的 jar 包放置探针并启动。安装与配置完成后提交 skywalking 节点的用户名、密码和 IP 地址到答题框。</p>
 <p>登录物理OpenStack平台，使用CentOS7.9镜像创建两台云主机（node-1，mall），云主机类型使用4VCPU/8GB内存/100GB硬盘。创建后的云主机作为本次案例的实验节点。</p>
 <p>修改主机名</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 ~]# hostnamectl set-hostname node-1
+<pre class="language-none"><code class="language-none">[root@node-1 ~]# hostnamectl set-hostname node-1
 [root@node-1 ~]# hostnamectl
   Static hostname: node-1
         Icon name: computer-vm
@@ -1488,13 +1488,13 @@ Creating jms_koko   <span class="token punctuation">..</span>. <span class="toke
 Operating System: CentOS Linux 7 (Core)
       CPE OS Name: cpe:/o:centos:centos:7
           Kernel: Linux 3.10.0-1160.el7.x86_64
-    Architecture: x86-64<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    Architecture: x86-64</code></pre>
 <p>将提供的elasticsearch-7.17.0-linux-x86_64.tar.gz软件包上传到此节点并解压到/opt目录，进入解压后的目录并创建data目录</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 ~]# tar -zxvf elasticsearch-7.17.0-linux-x86_64.tar.gz -C /opt
+<pre class="language-none"><code class="language-none">[root@node-1 ~]# tar -zxvf elasticsearch-7.17.0-linux-x86_64.tar.gz -C /opt
 [root@node-1 ~]# cd /opt/elasticsearch-7.17.0/
-[root@node-1 elasticsearch-7.17.0]# mkdir data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+[root@node-1 elasticsearch-7.17.0]# mkdir data</code></pre>
 <p>修改Elasticsearch配置，修改并添加如下几行内容</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# vi config/elasticsearch.yml
+<pre class="language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# vi config/elasticsearch.yml
 …
 cluster.name: my-application
 node.name: node-1
@@ -1505,27 +1505,27 @@ cluster.initial_master_nodes: ["node-1"]
 …
 http.cors.enabled: true
 http.cors.allow-origin: "*"
-http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-Type<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-Type</code></pre>
 <p>创建Elasticsearch启动用户，并设置属组及权限</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# groupadd elsearch
+<pre class="language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# groupadd elsearch
 [root@node-1 elasticsearch-7.17.0]# useradd elsearch -g elsearch -p elasticsearch
-[root@node-1 elasticsearch-7.17.0]# chown -R elsearch:elsearch /opt/elasticsearch-7.17.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+[root@node-1 elasticsearch-7.17.0]# chown -R elsearch:elsearch /opt/elasticsearch-7.17.0</code></pre>
 <p>修改资源限制及内核配置，添加如下内容</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# vi /etc/security/limits.conf
+<pre class="language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# vi /etc/security/limits.conf
 …
 * hard   nofile           65536
 * soft   nofile           65536
 [root@node-1 elasticsearch-7.17.0]# vi /etc/sysctl.conf
 vm.max_map_count=262144
 [root@node-1 elasticsearch-7.17.0]# sysctl -p
-[root@node-1 elasticsearch-7.17.0]# reboot<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+[root@node-1 elasticsearch-7.17.0]# reboot</code></pre>
 <p>启动Elasticsearch服务</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 ~]# cd /opt/elasticsearch-7.17.0/
+<pre class="language-none"><code class="language-none">[root@node-1 ~]# cd /opt/elasticsearch-7.17.0/
 [root@node-1 elasticsearch-7.17.0]# su elsearch
 [elsearch@node-1 elasticsearch-7.17.0]$ ./bin/elasticsearch -d
-按Ctrl+D退出<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+按Ctrl+D退出</code></pre>
 <p>查询端口，存在9200则成功启动</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# netstat -ntpl
+<pre class="language-none"><code class="language-none">[root@node-1 elasticsearch-7.17.0]# netstat -ntpl
 Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address     Foreign Address       State       PID/Program name
 tcp        0      0 0.0.0.0:22         0.0.0.0:*             LISTEN      1081/sshd      
@@ -1535,11 +1535,11 @@ tcp6       0      0 :::9300           :::*                 LISTEN      2261/java
 tcp6       0      0 :::22             :::*                 LISTEN      1081/sshd      
 tcp6       0      0 ::1:25             :::*                 LISTEN      1041/master    
 tcp6       0      0 :::111             :::*                 LISTEN      610/rpcbind    
-tcp6       0      0 :::9200           :::*                 LISTEN      2261/java<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+tcp6       0      0 :::9200           :::*                 LISTEN      2261/java</code></pre>
 
 
 <p>使用提供的jdk-8u144-linux-x64.tar.gz软件包，上传jdk软件包，配置jdk如下</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 ~]# tar -zxvf jdk-8u144-linux-x64.tar.gz -C /usr/local/
+<pre class="language-none"><code class="language-none">[root@node-1 ~]# tar -zxvf jdk-8u144-linux-x64.tar.gz -C /usr/local/
 [root@node-1 ~]# vi /etc/profile
 # /etc/profile
 export JAVA_HOME=/usr/local/jdk1.8.0_144
@@ -1550,9 +1550,9 @@ export PATH=$PATH:${JAVA_HOME}/bin
 [root@node-1 ~]# java -version
 java version "1.8.0_144"
 Java(TM) SE Runtime Environment (build 1.8.0_144-b01)
-Java HotSpot(TM) 64-Bit Server VM (build 25.144-b01, mixed mode)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Java HotSpot(TM) 64-Bit Server VM (build 25.144-b01, mixed mode)</code></pre>
 <p>进入解压后目录，修改OAP配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 ~]# cd /opt/apache-skywalking-apm-bin-es7/
+<pre class="language-none"><code class="language-none">[root@node-1 ~]# cd /opt/apache-skywalking-apm-bin-es7/
 [root@node-1 apache-skywalking-apm-bin-es7]# vi config/application.yml
 …
 #集群配置使用单机版
@@ -1566,10 +1566,10 @@ selector: ${SW_STORAGE:elasticsearch7}
 …
 elasticsearch7:
   nameSpace: ${SW_NAMESPACE:""}
-  clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:172.128.11.32:9200}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:172.128.11.32:9200}</code></pre>
 
 <p>启动OAP服务，查询端口，存在11800与12800则成功启动</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# ./bin/oapService.sh
+<pre class="language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# ./bin/oapService.sh
 SkyWalking OAP started successfully!
 [root@node-1 apache-skywalking-apm-bin-es7]# netstat -ntpl
 Active Internet connections (only servers)
@@ -1584,19 +1584,19 @@ tcp6       0      0 ::1:25               :::*                 LISTEN     1041/ma
 tcp6       0      0 :::12800             :::*                 LISTEN     2416/java      
 tcp6       0      0 :::111               :::*                 LISTEN     610/rpcbind    
 tcp6       0      0 :::9200             :::*                 LISTEN     2261/java
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <p> 部署SkyWalking UI服务由于SkyWalking UI的默认地址是8080，与很多中间件可能存在冲突，修改一下</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# vi webapp/webapp.yml
+<pre class="language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# vi webapp/webapp.yml
 …
 server:
 port: 8888
-…<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+…</code></pre>
 <p>启动SkyWalking UI服务</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# ./bin/webappService.sh
-SkyWalking Web Application started successfully!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# ./bin/webappService.sh
+SkyWalking Web Application started successfully!</code></pre>
 <p>查看端口，存在8888则成功启动</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# netstat -ntpl
+<pre class="language-none"><code class="language-none">[root@node-1 apache-skywalking-apm-bin-es7]# netstat -ntpl
 Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address       Foreign Address     State       PID/Program name
 tcp        0      0 0.0.0.0:22           0.0.0.0:*           LISTEN      1081/sshd      
@@ -1609,9 +1609,9 @@ tcp6       0      0 :::11800             :::*               LISTEN      2416/jav
 tcp6       0      0 ::1:25               :::*               LISTEN      1041/master    
 tcp6       0      0 :::12800             :::*               LISTEN      2416/java      
 tcp6       0      0 :::111               :::*               LISTEN      610/rpcbind    
-tcp6       0      0 :::9200             :::*               LISTEN      2261/java<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+tcp6       0      0 :::9200             :::*               LISTEN      2261/java</code></pre>
 <p>搭建并启动应用商城服务，并配置SkyWalking Agent修改mall节点主机名</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# hostnamectl set-hostname mall
+<pre class="language-none"><code class="language-none">[root@localhost ~]# hostnamectl set-hostname mall
 [root@mall ~]# hostnamectl
   Static hostname: mall
         Icon name: computer-vm
@@ -1622,15 +1622,15 @@ tcp6       0      0 :::9200             :::*               LISTEN      2261/java
 Operating System: CentOS Linux 7 (Core)
       CPE OS Name: cpe:/o:centos:centos:7
           Kernel: Linux 3.10.0-1160.el7.x86_64
-    Architecture: x86-64<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    Architecture: x86-64</code></pre>
 <p>修改/etc/hosts配置文件如下</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# cat /etc/hosts
+<pre class="language-none"><code class="language-none">[root@mall ~]# cat /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-172.128.11.42 mal<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+172.128.11.42 mal</code></pre>
 <p>将提供的gpmall包上传到服务器的/root目录下并解压gpmall.tar.gz，配置本地local.repo文件</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# mv /etc/yum.repos.d/* /media/
+<pre class="language-none"><code class="language-none">[root@mall ~]# mv /etc/yum.repos.d/* /media/
 [root@mall ~]# cd gpmall/
 [root@mall gpmall]# tar -zxvf gpmall-repo.tar.gz -C /root/
 [root@mall ~]# cat /etc/yum.repos.d/local.repo
@@ -1638,9 +1638,9 @@ Operating System: CentOS Linux 7 (Core)
 name=mall
 baseurl=file:///root/gpmall-repo
 gpgcheck=0
-enabled=1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+enabled=1</code></pre>
 <p>安装基础服务，包括Java JDK环境、数据库、Redis、Nginx等</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+<pre class="language-none"><code class="language-none">[root@mall ~]# yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
 ...
 [root@mall ~]# java -version
 openjdk version "1.8.0_322"
@@ -1688,10 +1688,10 @@ tcp6       0      0 :::46949             :::*               LISTEN      6039/jav
 tcp6       0      0 :::2181             :::*               LISTEN      1722/java  
 tcp6       0      0 :::48677             :::*               LISTEN      1722/java  
 tcp6       0      0 :::22               :::*               LISTEN      1008/sshd  
-tcp6       0      0 ::1:25               :::*               LISTEN      887/master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+tcp6       0      0 ::1:25               :::*               LISTEN      887/master</code></pre>
 
 <p>修改数据库配置文件并启动MariaDB数据库，设置root用户密码为123456，并创建gpmall数据库，将提供的gpmall.sql导入。</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall bin]# cd
+<pre class="language-none"><code class="language-none">[root@mall bin]# cd
 [root@mall ~]# vi /etc/my.cnf
 [mysqld]
 …
@@ -1702,51 +1702,51 @@ character-set-server=utf8
 collation-server=utf8_unicode_ci
 skip-character-set-client-handshake
 
-[root@mall ~]# systemctl start mariadb<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+[root@mall ~]# systemctl start mariadb</code></pre>
 <p>设置root用户的权限，命令如下</p>
-<pre class="line-numbers language-none"><code class="language-none">MariaDB [(none)]&gt; grant all privileges on *.* to root@localhost identified by '123456' with grant option;
+<pre class="language-none"><code class="language-none">MariaDB [(none)]&gt; grant all privileges on *.* to root@localhost identified by '123456' with grant option;
 Query OK, 0 rows affected (0.001 sec)
 
 MariaDB [(none)]&gt; grant all privileges on *.* to root@"%" identified by '123456' with grant option;
-Query OK, 0 rows affected (0.001 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Query OK, 0 rows affected (0.001 sec)</code></pre>
 <p>将gpmall.sql文件上传至云主机的/root目录下。创建数据库gpmall并导入gpmall.sql文件。</p>
-<pre class="line-numbers language-none"><code class="language-none">MariaDB [(none)]&gt; create database gpmall;
+<pre class="language-none"><code class="language-none">MariaDB [(none)]&gt; create database gpmall;
 Query OK, 1 row affected (0.00 sec)
 MariaDB [(none)]&gt; use gpmall;
-MariaDB [gpmall]&gt; source /root/gpmall/gpmall.sql<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+MariaDB [gpmall]&gt; source /root/gpmall/gpmall.sql</code></pre>
 <p>退出数据库并设置开机自启</p>
-<pre class="line-numbers language-none"><code class="language-none">MariaDB [gpmall]&gt; Ctrl-C -- exit!
+<pre class="language-none"><code class="language-none">MariaDB [gpmall]&gt; Ctrl-C -- exit!
 Aborted
 [root@mall ~]# systemctl enable mariadb
 Created symlink from /etc/systemd/system/mysql.service to /usr/lib/systemd/system/mariadb.service.
 Created symlink from /etc/systemd/system/mysqld.service to /usr/lib/systemd/system/mariadb.service.
-Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.</code></pre>
 <p>修改Redis配置文件，编辑/etc/redis.conf文件。<br>将bind 127.0.0.1这一行注释掉；将protected-mode yes 改为 protected-mode no。</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# vi /etc/redis.conf
+<pre class="language-none"><code class="language-none">[root@mall ~]# vi /etc/redis.conf
 …
 #bind 127.0.0.1
 protected-mode no
 …
 [root@mall ~]# systemctl start redis
 [root@mall ~]# systemctl enable redis
-Created symlink from /etc/systemd/system/multi-user.target.wants/redis.service to /usr/lib/systemd/system/redis.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Created symlink from /etc/systemd/system/multi-user.target.wants/redis.service to /usr/lib/systemd/system/redis.service.</code></pre>
 <p>启动Nginx服务命令如下</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# systemctl start nginx
+<pre class="language-none"><code class="language-none">[root@mall ~]# systemctl start nginx
 [root@mall ~]# systemctl enable nginx
-Created symlink from /etc/systemd/system/multi-user.target.wants/nginx.service to /usr/lib/systemd/system/nginx.service.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+Created symlink from /etc/systemd/system/multi-user.target.wants/nginx.service to /usr/lib/systemd/system/nginx.service.</code></pre>
 <p>应用系统部署，使用提供gpmall-shopping-0.0.1-SNAPSHOT.jar、gpmall-user-0.0.1-SNAPSHOT.jar、shopping-provider-0.0.1-SNAPSHOT.jar、user-provider-0.0.1-SNAPSHOT.jar 、dist这5个包部署应用系统，其中4个jar包为后端服务包，dist为前端包。（包在gpmall目录下）<br>修改/etc/hosts文件，修改项目全局配置文件如下（原有的172.128.11.42 mall映射删除）</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# cat /etc/hosts
+<pre class="language-none"><code class="language-none">[root@mall ~]# cat /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 172.128.11.42 kafka.mall
 172.128.11.42 mysql.mall
 172.128.11.42 redis.mall
-172.128.11.42 zookeeper.mall<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+172.128.11.42 zookeeper.mall</code></pre>
 <p>清空默认项目路径下的文件，将dist目录下的文件，复制到Nginx默认项目路径</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# rm -rf /usr/share/nginx/html/*
-[root@mall ~]# cp -rvf gpmall/dist/* /usr/share/nginx/html/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-none"><code class="language-none">[root@mall ~]# rm -rf /usr/share/nginx/html/*
+[root@mall ~]# cp -rvf gpmall/dist/* /usr/share/nginx/html/</code></pre>
 <p>修改Nginx配置文件/etc/nginx/nginx.conf，添加映射如下所示</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# vi /etc/nginx/nginx.conf
+<pre class="language-none"><code class="language-none">[root@mall ~]# vi /etc/nginx/nginx.conf
 …
   server {
       listen       80;
@@ -1775,11 +1775,11 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/nginx.service t
 
       error_page 404 /404.html;
 …
-[root@mall ~]# systemctl restart nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+[root@mall ~]# systemctl restart nginx</code></pre>
 <p>到此，前端部署完毕。</p>
 <p>部署后端</p>
 <p>将node-1节点的/opt/apache-skywalking-apm-bin-es7目录下的agent目录复制到mall节点下：</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# scp -r 172.128.11.32:/opt/apache-skywalking-apm-bin-es7/agent /root
+<pre class="language-none"><code class="language-none">[root@mall ~]# scp -r 172.128.11.32:/opt/apache-skywalking-apm-bin-es7/agent /root
 
 修改SkyWalking agent配置文件
 
@@ -1789,9 +1789,9 @@ agent.service_name=${SW_AGENT_NAME:my-application}
 agent.sample_n_per_3_secs=${SW_AGENT_SAMPLE:1}
 …
 collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11800}
-…<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+…</code></pre>
 <p>将提供的4个jar包上传到服务器的/root目录下，放置探针并启动，通过设置启动参数的方式检测系统，启动命令如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">[root@mall ~]# nohup java -javaagent:/root/agent/skywalking-agent.jar -jar gpmall/shopping-provider-0.0.1-SNAPSHOT.jar &amp;
+<pre class="language-none"><code class="language-none">[root@mall ~]# nohup java -javaagent:/root/agent/skywalking-agent.jar -jar gpmall/shopping-provider-0.0.1-SNAPSHOT.jar &amp;
 [1] 20086
 [root@mall ~]# nohup: ignoring input and appending output to ‘nohup.out’
 
@@ -1807,12 +1807,12 @@ collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:172.128.11.32:11
 [4] 20281
 [root@mall ~]# nohup: ignoring input and appending output to ‘nohup.out’
 # httpd访问网络配置
-[root@mall ~]# setsebool -P httpd_can_network_connect 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+[root@mall ~]# setsebool -P httpd_can_network_connect 1</code></pre>
 <p>按照顺序运行4个jar包后，至此后端服务部署完毕<br>打开浏览器，在地址栏中输入<a target="_blank" rel="noopener" href="http://localhost,访问界面/">http://localhost，访问界面</a></p>
 <p><img src="https://img-blog.csdnimg.cn/fcb1e4fa3d6d4f2197d9b2496a11b3be.png" alt="在这里插入图片描述"><br>单击右上角“头像”，进行登录操作，使用用户名/密码为test/test进行登录</p>
 <p>1.检查 skywalking 服务部署正确计 1 分</p>
 <h3 id="【题目-11】Linux-内核优化-1-分"><a href="#【题目-11】Linux-内核优化-1-分" class="headerlink" title="【题目 11】Linux 内核优化[1 分]"></a>【题目 11】Linux 内核优化[1 分]</h3><p>在使用 Linux 服务器的时候，TCP 协议规定，对于已经建立的连接，网络双方要进行四次挥手才能成功断开连接，如果缺少了其中某个步骤，将会使连接处于假死状态，连接本身占用的资源不会被释放。因为服务器程序要同时管理大量连接，所以很有必要保证无用的连接完全断开，否则大量僵死的连接会浪费许多服务器资源。创建一台 CentOS7.9 云主机，修改相应的配置文件，分别开启 SYN Cookies；允许将 TIME-WAIT sockets 重新用于新的 TCP 连接；开启TCP 连接中TIME-WAIT sockets 的快速回收；修改系統默认的 TIMEOUT 时间为 30。完成后提交修改节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/sysctl.conf</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment"># vim /etc/sysctl.conf</span>
 
 <span class="token comment">#添加如下参数</span>
 net.ipv4.tcp_syncookies <span class="token operator">=</span> <span class="token number">1</span>
@@ -1827,18 +1827,18 @@ net.ipv4.tcp_syncookies <span class="token operator">=</span> <span class="token
 net.ipv4.tcp_tw_reuse <span class="token operator">=</span> <span class="token number">1</span>
 net.ipv4.tcp_tw_recycle <span class="token operator">=</span> <span class="token number">1</span>
 net.ipv4.tcp_fin_timeout <span class="token operator">=</span> <span class="token number">30</span>
-<span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 <p>1.检查内核优化正确计 1 分</p>
 <h3 id="【题目-12】排错：Glance-服务排错-1-分"><a href="#【题目-12】排错：Glance-服务排错-1-分" class="headerlink" title="【题目 12】排错：Glance 服务排错[1 分]"></a>【题目 12】排错：Glance 服务排错[1 分]</h3><p>使用赛项提供的 chinaskill-error1 镜像启动云主机，flavor 使用 4vcpu/12G 内存/100G 硬<br>盘。启动后存在错误的私有云平台，错误现象为查看不到 image 列表，试根据错误信息排查云平台错误，使云平台可以查询到 image 信息。完成后提交云主机节点的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">如果不会做，提供取巧思路~~
+<pre class="language-bash" data-language="bash"><code class="language-bash">如果不会做，提供取巧思路~~
 国赛是用错误镜像来创建一个云主机进行排错，可以试着修改正常经常的标签，然后创建正常的glance服务
 可以得到部分分
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <p>1.检查错误镜像glance 服务启动正确计 1 分</p>
 <h3 id="【题目-13】排错：数据库排错-1-5-分"><a href="#【题目-13】排错：数据库排错-1-5-分" class="headerlink" title="【题目 13】排错：数据库排错[1.5 分]"></a>【题目 13】排错：数据库排错[1.5 分]</h3><p>使用赛项提供的排错镜像 chinaskill-error2 创建一台云主机（云主机的登录用户名为 root， 密码为 000000），该云主机中存在错误的数据库服务，错误现象为数据库服务无法启动。请将数据库服务修复并启动，将数据库的密码修改为 chinaskill123。修复完成后提交该云主机的用户名、密码和 IP 地址到答题框。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">使用一个正常的mysql数据库，创建一个符合要求的用户和密码，可以得到0.5分~判分系统是先连接数据库
-再进去查询<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">使用一个正常的mysql数据库，创建一个符合要求的用户和密码，可以得到0.5分~判分系统是先连接数据库
+再进去查询</code></pre>
 
 <p>1.检查错误镜像数据库服务启动正确计 1.5 分</p>
 <h2 id="【任务-3】私有云运维开发-10-分"><a href="#【任务-3】私有云运维开发-10-分" class="headerlink" title="【任务 3】私有云运维开发[10 分]"></a>【任务 3】私有云运维开发[10 分]</h2><h3 id="【题目-1】Ansible-服务部署：部署-MariaDB-集群-2-分"><a href="#【题目-1】Ansible-服务部署：部署-MariaDB-集群-2-分" class="headerlink" title="【题目 1】Ansible 服务部署：部署 MariaDB 集群[2 分]"></a>【题目 1】Ansible 服务部署：部署 MariaDB 集群[2 分]</h3><p>使用OpenStack 私有云平台，创建 4 台系统为centos7.9 的云主机，其中一台作为 Ansible 的母机并命名为 ansible，另外三台云主机命名为 node1、node2、node3；使用这一台母机， 编写 Ansible 脚本（在/root 目录下创建 example 目录作为 Ansible 工作目录，部署的入口文件命名为 cscc_install.yaml ） ， 对其他三台云主机进行安装高可用数据库集群<br>（MariaDB_Galera_cluster，数据库密码设置为 123456）的操作（所需的安装包在 HTTP 服务中）。完成后提交 Ansible 节点的用户名、密码和 IP 地址到答题框。（考试系统会连接到你的Ansible 节点，去执行 Ansible 脚本，请准备好 Ansible 运行环境，以便考试系统访问）</p>
@@ -1868,7 +1868,7 @@ net.ipv4.tcp_fin_timeout <span class="token operator">=</span> <span class="toke
 </tr>
 </tbody></table>
 <p>（2）环境配置</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname ansible</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># hostnamectl set-hostname ansible</span>
 <span class="token punctuation">[</span>root@localhost ~<span class="token punctuation">]</span><span class="token comment"># su</span>
 <span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># </span>
 
@@ -1919,9 +1919,9 @@ ansible <span class="token number">2.9</span>.10
   ansible python module location <span class="token operator">=</span> /usr/lib/python2.7/site-packages/ansible
   executable location <span class="token operator">=</span> /usr/bin/ansible
   python version <span class="token operator">=</span> <span class="token number">2.7</span>.5 <span class="token punctuation">(</span>default, Oct <span class="token number">14</span> <span class="token number">2020</span>, <span class="token number">14</span>:45:30<span class="token punctuation">)</span> <span class="token punctuation">[</span>GCC <span class="token number">4.8</span>.5 <span class="token number">20150623</span> <span class="token punctuation">(</span>Red Hat <span class="token number">4.8</span>.5-44<span class="token punctuation">)</span><span class="token punctuation">]</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>（3）设置免密</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># ssh-keygen</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># ssh-keygen</span>
 Generating public/private rsa key pair.
 Enter <span class="token function">file</span> <span class="token keyword">in</span> <span class="token function">which</span> to save the key <span class="token punctuation">(</span>/root/.ssh/id_rsa<span class="token punctuation">)</span>: 
 Enter passphrase <span class="token punctuation">(</span>empty <span class="token keyword">for</span> no passphrase<span class="token punctuation">)</span>: 
@@ -1990,10 +1990,10 @@ Number of key(s) added: 1
 
 Now try logging into the machine, with:   "ssh '</span>root@node3'"
 and check to <span class="token function">make</span> sure that only the key<span class="token punctuation">(</span>s<span class="token punctuation">)</span> you wanted were added.
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <p>（4）修改ansible文件配置组</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/ansible/hosts </span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># vi /etc/ansible/hosts </span>
 <span class="token punctuation">[</span>node<span class="token punctuation">]</span>
 node1
 node2
@@ -2018,10 +2018,10 @@ mariadb/schema.xml
 <span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># tar -xvf mariadb/mariadb-repo.tar.gz </span>
 <span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># scp -r mariadb-repo/ root@node1:/root</span>
 <span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># scp -r mariadb-repo/ root@node2:/root</span>
-<span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># scp -r mariadb-repo/ root@node3:/root</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># scp -r mariadb-repo/ root@node3:/root</span></code></pre>
 
 <p>（5）创建ansible执行的工作目录编写执行playbook剧本的相关文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># mkdir cscc_galera</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># mkdir cscc_galera</span>
 <span class="token punctuation">[</span>root@ansible ~<span class="token punctuation">]</span><span class="token comment"># cd cscc_galera/</span>
 
 
@@ -2086,9 +2086,9 @@ bind-address<span class="token operator">=</span><span class="token number">0.0<
   tasks:
   - name: start mariadb
     shell: systemctl start mariadb
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>（6）执行入口文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible cscc_galera<span class="token punctuation">]</span><span class="token comment"># ansible-playbook install_galera.yaml </span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible cscc_galera<span class="token punctuation">]</span><span class="token comment"># ansible-playbook install_galera.yaml </span>
 <span class="token punctuation">[</span>WARNING<span class="token punctuation">]</span>: Found both group and <span class="token function">host</span> with same name: node1
 <span class="token punctuation">[</span>WARNING<span class="token punctuation">]</span>: Found both group and <span class="token function">host</span> with same name: node3
 <span class="token punctuation">[</span>WARNING<span class="token punctuation">]</span>: Found both group and <span class="token function">host</span> with same name: node2
@@ -2161,9 +2161,9 @@ node1                      <span class="token builtin class-name">:</span> <span
 node2                      <span class="token builtin class-name">:</span> <span class="token assign-left variable">ok</span><span class="token operator">=</span><span class="token number">9</span>    <span class="token assign-left variable">changed</span><span class="token operator">=</span><span class="token number">7</span>    <span class="token assign-left variable">unreachable</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">failed</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">skipped</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">rescued</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">ignored</span><span class="token operator">=</span><span class="token number">0</span>   
 node3                      <span class="token builtin class-name">:</span> <span class="token assign-left variable">ok</span><span class="token operator">=</span><span class="token number">9</span>    <span class="token assign-left variable">changed</span><span class="token operator">=</span><span class="token number">7</span>    <span class="token assign-left variable">unreachable</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">failed</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">skipped</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">rescued</span><span class="token operator">=</span><span class="token number">0</span>    <span class="token assign-left variable">ignored</span><span class="token operator">=</span><span class="token number">0</span>   
 
-<span class="token punctuation">[</span>root@ansible cscc_galera<span class="token punctuation">]</span><span class="token comment"># </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@ansible cscc_galera<span class="token punctuation">]</span><span class="token comment"># </span></code></pre>
 <p>（7）验证,检查wsrep_cluster_size的值是否为3/wsrep_ready的状态是否为ON</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible cscc_galera<span class="token punctuation">]</span><span class="token comment"># ssh node1</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ansible cscc_galera<span class="token punctuation">]</span><span class="token comment"># ssh node1</span>
 Last login: Fri Aug <span class="token number">26</span> 05:01:52 <span class="token number">2022</span> from <span class="token number">192.168</span>.100.1
 <span class="token punctuation">[</span>root@node1 ~<span class="token punctuation">]</span><span class="token comment"># mysql -uroot -p123456</span>
 Welcome to the MariaDB monitor.  Commands end with <span class="token punctuation">;</span> or <span class="token punctuation">\</span>g.
@@ -2190,18 +2190,18 @@ MariaDB <span class="token punctuation">[</span><span class="token punctuation">
 +---------------+-------+
 <span class="token number">1</span> row <span class="token keyword">in</span> <span class="token builtin class-name">set</span> <span class="token punctuation">(</span><span class="token number">0.001</span> sec<span class="token punctuation">)</span>
 
-MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+MariaDB <span class="token punctuation">[</span><span class="token punctuation">(</span>none<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> </code></pre>
 
 
 <p>1.执行yaml 文件正确计 0.5 分<br>2.检查数据库集群部署正确计 1 分<br>3.检查数据库集群数量为 3 正确计 0.5 分</p>
 <h3 id="【题目-2】Ansible-服务部署：部署ELK-集群服务-2-分"><a href="#【题目-2】Ansible-服务部署：部署ELK-集群服务-2-分" class="headerlink" title="【题目 2】Ansible 服务部署：部署ELK 集群服务[2 分]"></a>【题目 2】Ansible 服务部署：部署ELK 集群服务[2 分]</h3><p>使用赛项提供的OpenStack 私有云平台，创建三台 CentOS7.9 系统的云主机分别命名为elk-1、elk-2 和elk-3，Ansible 主机可以使用上一题的环境。要求Ansible 节点编写剧本，执行 Ansible 剧本可以在这三个节点部署 ELK 集群服务（在/root 目录下创建 install_elk 目录作为 ansible 工作目录，部署的入口文件命名为 install_elk.yaml）。具体要求为三个节点均安装Elasticserach 服务并配置为 Elasticserach 集群；kibana 安装在第一个节点；Logstash 安装在第二个节点。（需要用到的软件包在 HTTP 服务下）完成后提交 ansible 节点的用户名、密码和 IP 地址到答题框。（考试系统会连接到 ansible 节点，执行 ansible 脚本，准备好环境， 以便考试系统访问）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">参考学习地址
+<pre class="language-bash" data-language="bash"><code class="language-bash">参考学习地址
 
-https://www.likecs.com/show-307196346.html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+https://www.likecs.com/show-307196346.html</code></pre>
 <p>1.执行yaml 文件正确计 0.5 分<br>2.检查 ELK 服务部署正确计 1.5 分</p>
 <h3 id="【题目-3】Python-运维开发：基于OpenStack-Restful-API-实现镜像上传-1-分"><a href="#【题目-3】Python-运维开发：基于OpenStack-Restful-API-实现镜像上传-1-分" class="headerlink" title="【题目 3】Python 运维开发：基于OpenStack Restful API 实现镜像上传[1 分]"></a>【题目 3】Python 运维开发：基于OpenStack Restful API 实现镜像上传[1 分]</h3><p>使用OpenStack all-in-one 镜像，创建 OpenStack Python 运维开发环境。云主机的用户/ 密码为：“root/Abc@1234”，OpenStack 的域名/账号/密码为：“demo/admin/000000”。<br>提示说明：python 脚本文件头建议加入“#encoding:utf-8”避免编码错误；测试脚本代码用 python3 命令执行与测试。<br>在 controller 节点的/root 目录下创建 api_image_manager.py 脚本，编写 python 代码对接OpenStack API，完成镜像的创建与上传。创建之前查询是否存在“同名镜像”，如果存在先删除该镜像。<br>（1）创建镜像：要求在 OpenStack 私有云平台中上传镜像cirros-0.3.4-x86_64-disk.img，名字为 cirros001，disk_format 为 qcow2，container_format 为bare。<br>（2）查询镜像：查询 cirros001 的详细信息，并以 json 格式文本输出到控制台。<br>完成后提交 OpenStack Python 运维开发环境Controller 节点的 IP 地址，用户名和密码提交。</p>
 <p>（1）基础环境准备，安装python3，已经需要的依赖</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ controller ~<span class="token punctuation">]</span><span class="token comment"># python3 --version</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@ controller ~<span class="token punctuation">]</span><span class="token comment"># python3 --version</span>
 Python <span class="token number">3.6</span>.8
 
 <span class="token comment">#使用提供的whl文件安装依赖</span>
@@ -2211,9 +2211,9 @@ Python <span class="token number">3.6</span>.8
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#  pip3 install idna-2.8-py2.py3-none-any.whl</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#  pip3 install chardet-3.0.4-py2.py3-none-any.whl</span>
 <span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment">#  pip3 install requests-2.24.0-py2.py3-none-any.whl</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>（2）代码实现</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi api_image_manager.py</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># vi api_image_manager.py</span>
 
 <span class="token comment">#encoding:utf-8  </span>
 <span class="token function">import</span> requests, json, <span class="token function">time</span>  
@@ -2389,7 +2389,7 @@ if __name__ == '</span>__main__':
    <span class="token comment"># 1.2 上传镜像文件  </span>
   result <span class="token operator">=</span> image_m.upload_iamge_data<span class="token punctuation">(</span>id, <span class="token assign-left variable">file_path</span><span class="token operator">=</span><span class="token string">"cirros-0.3.4-x86_64-disk.img"</span><span class="token punctuation">)</span>  
   print<span class="token punctuation">(</span>f<span class="token string">"上传{id}镜像:"</span>, result<span class="token punctuation">)</span>  
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <blockquote>
 <p>需要修改的所有变量信息全部都在  if <strong>name</strong> == ‘<strong>main</strong>‘:    下面</p>
@@ -2397,7 +2397,7 @@ if __name__ == '</span>__main__':
 <p>1.执行api_image_manager.py 脚本,成功创建镜像，计 0.5 分<br>2.检查镜像状态正确，计 0.5 分</p>
 <h3 id="【题目-4】Python-运维开发：基于-Openstack-Python-SDK-实现云主机创建-1-分"><a href="#【题目-4】Python-运维开发：基于-Openstack-Python-SDK-实现云主机创建-1-分" class="headerlink" title="【题目 4】Python 运维开发：基于 Openstack Python SDK 实现云主机创建[1 分]"></a>【题目 4】Python 运维开发：基于 Openstack Python SDK 实现云主机创建[1 分]</h3><p>使 用 已 建 好 的 OpenStack Python 运 维 开 发 环 境 ，在 /root 目 录 下 创 建sdk_server_manager.py 脚本，使用 python-openstacksdk Python 模块，完成云主机的创建和查询。创建之前查询是否存在“同名云主机”，如果存在先删除该镜像。<br>（1）创建 1 台云主机：云主机信息如下： 云主机名称如下：server001<br>镜像文件：cirros-0.3.4-x86_64-disk.img 云主机类型：m1.tiny<br>网络等必要信息自己补充。<br>（2）查询云主机：查询云主机 server001 的详细信息，并以 json 格式文本输出到控制台。<br>完成后提交 OpenStack Python 运维开发环境 Controller 节点的 IP 地址，用户名和密码提交。</p>
 <p>（1）代码实现<br>创建云主机所需的镜像、类型、网络是用name来识别的，需要提前创建好</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment"># vi sdk_server_manager.py</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@container ~<span class="token punctuation">]</span><span class="token comment"># vi sdk_server_manager.py</span>
 
 <span class="token function">import</span> json,logging  
 <span class="token function">import</span> openstack  
@@ -2572,16 +2572,16 @@ class network_manager:
    <span class="token comment">#6 删除云主机  </span>
    result <span class="token operator">=</span> sdk_m.delete_server<span class="token punctuation">(</span><span class="token string">"test_song"</span><span class="token punctuation">)</span>  
    print<span class="token punctuation">(</span><span class="token string">"servers:"</span>, result<span class="token punctuation">)</span>  
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <p>1.执行 sdk_server_manager.py 脚本,成功创建云主机，计 0.5 分<br>2.检查创建的云主机状态正确，计 0.5 分</p>
 <h3 id="【题目-5】Python-运维开发：云主机类型管理的命令行工具开发-2-分"><a href="#【题目-5】Python-运维开发：云主机类型管理的命令行工具开发-2-分" class="headerlink" title="【题目 5】Python 运维开发：云主机类型管理的命令行工具开发[2 分]"></a>【题目 5】Python 运维开发：云主机类型管理的命令行工具开发[2 分]</h3><p>使用已建好的 OpenStack Python 运维开发环境，在/root 目录下创建 flavor_manager.py<br>脚本，完成云主机类型的管理，flavor_manager.py 程序支持命令行参数执行。提示说明：Python 标准库argparse 模块，可以提供命令行参数的解析。要求如下：<br>（1）程序支持根据命令行参数，创建 1 个多云主机类型。返回 response。位置参数“create”，表示创建；<br>参数“-n”支持指定 flavor 名称，数据类型为字符串类型； 参数“-m”支持指定内存大小，数据类型为 int，单位 M； 参数“-v”支持指定虚拟 cpu 个数，数据类型为 int；<br>参数“-d”支持磁盘大小，内存大小类型为 int，单位 G； 参数“-id”支持指定 ID，类型为字符串。<br>参考运行实例：<br>python3 flavor_manager.py create -n flavor_small -m 1024 -v 1 -d 10 -id 100000</p>
 <p>（2）程序支持查询目前 admin 账号下所有的云主机类型。位置参数“getall”，表示查询所有云主机类型；<br>查询结果，以 json 格式输出到控制台。参考执行实例如下：<br>python3 flavor_manager.py getall</p>
 <p>（3）支持查询给定具体名称的云主机类型查询。位置参数“get”，表示查询 1 个云主机类型； 参数“-id”支持指定 ID 查询，类型为 string。 控制台以 json 格式输出创建结果。<br>参考执行实例如下：<br>python3 flavor_manager.py get -id 100000</p>
 <p>（4）支持删除指定的 ID 云主机类型。<br>位置参数“delete”，表示删除一个云主机类型；<br>参数“-id”支持指定 ID 查询，返回 response，控制台输出response。参考执行实例如下：<br>python3 flavor_manager.py delete -id 100001</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">在这里插入代码片<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">在这里插入代码片</code></pre>
 
 <p>1.执行 flavor_manager.py 脚本，指定 create 和配置参数，成功创建 1 个云主机类型，计 0.5<br>分；<br>2.执行 flavor_manager.py 脚本，指定 getall 参数，成功查询所有云主机类型，计 0.5 分；<br>3.执行 flavor_manager.py 脚本，指定 get 和配置参数，成功查询具体名称的云主机类型，计<br>0.5 分；<br>4.执行 flavor_manager.py 脚本，指定 delete 和配置参数，成功删除指定 ID 云主机类型，计<br>0.5 分。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">import</span> json,openstack,argparse
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">import</span> json,openstack,argparse
 
 class flavor_manager:
     def __init__<span class="token punctuation">(</span>self,auth_url,user_domain_name,username,password<span class="token punctuation">)</span>:
@@ -2648,16 +2648,16 @@ class flavor_manager:
     parser_delete.set_defaults<span class="token punctuation">(</span>func<span class="token operator">=</span>flavor_m.delete_flavor_by_id<span class="token punctuation">)</span>
     args <span class="token operator">=</span> parser.parse_args<span class="token punctuation">(</span><span class="token punctuation">)</span>
     print<span class="token punctuation">(</span>args.func<span class="token punctuation">(</span>args<span class="token punctuation">))</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 <h3 id="【题目-6】Python-运维开发：用户管理的命令行工具开发-2-分"><a href="#【题目-6】Python-运维开发：用户管理的命令行工具开发-2-分" class="headerlink" title="【题目 6】Python 运维开发：用户管理的命令行工具开发[2 分]"></a>【题目 6】Python 运维开发：用户管理的命令行工具开发[2 分]</h3><p>使用已建好的OpenStack Python 运维开发环境，在/root 目录下创建 user_manager.py 脚本，完成用户管理功能开发，user_manager.py 程序支持命令行带参数执行。<br>提示说明：Python 标准库argparse 模块，可以提供命令行参数的解析。</p>
 <p>（1）程序支持根据命令行参数，创建 1 个用户。位置参数“create”，表示创建；<br>参数“-i 或–input”，格式为 json 格式文本用户数据。查询结果，以 json 格式输出到控制台。<br>参考执行实例如下：<br>python3 user_manager.py create –input ‘{ “name”: “user01”, “password”: “000000”, “description”: “description” } ‘</p>
 <p>（2）支持查询给定具体名称的用户查询。<br>位置参数“get”，表示查询 1 个用户；<br>参数“-n 或 –name”支持指定名称查询，类型为 string。<br>参数“-o 或 output”支持查询该用户信息输出到文件，格式为json 格式。参考执行实例如下：<br>python3 user_manager.py get –name user01-o user.json</p>
 <p>（3）程序支持查询目前 admin 账号下所有的用户。位置参数“getall”，表示查询所有用户；<br>参数“-o 或–output”支持输出到文件，格式为 yaml 格式。参考执行实例如下：<br>python3 user_manager.py getall -o openstack_all_user.yaml</p>
 <p>（4）支持删除指定的名称的用户。<br>位置参数“delete”，表示删除一个用户；返回 response，通过控制台输出。参数“-n 或–name”支持指定名称查询，类型为 string。<br>参考执行实例如下：<br>python3 user_manager.py delete -name user01</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">在这里插入代码片<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">在这里插入代码片</code></pre>
 <p>1.执行user_manager.py 脚本，指定 create 和配置参数，成功创建 1 个用户，计 0.5 分；<br>2.执行user_manager.py 脚本，指定 get 和配置参数，成功查询具体名称的用户，计 0.5 分； 3.执行user_manager.py 脚本，指定 getall 和配置参数，成功查询 admin 账号下的所有用户， 计 0.5 分；<br>4.执行user_manager.py 脚本，指定 delete 和配置参数，成功删除指定名称的用户，计 0.5 分</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat user_manager.py </span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@controller ~<span class="token punctuation">]</span><span class="token comment"># cat user_manager.py </span>
 <span class="token function">import</span> json, yaml, openstack, argparse
 
 class UserManager:
@@ -2729,7 +2729,7 @@ class UserManager:
     parser_delete.set_defaults<span class="token punctuation">(</span>func<span class="token operator">=</span>user_m.del_user<span class="token punctuation">)</span>
     args <span class="token operator">=</span> parser.parse_args<span class="token punctuation">(</span><span class="token punctuation">)</span>
     args.func<span class="token punctuation">(</span>args<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
 
                 
@@ -2878,19 +2878,19 @@ class UserManager:
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/10/openstack-ping-tai-jing-xiang-you-hua/">
+                <a href="/2023/03/10/io-diao-du-ce-lue-xiu-gai/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="OpenStack平台镜像优化">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="I/O调度策略修改">
                         
-                        <span class="card-title">OpenStack平台镜像优化</span>
+                        <span class="card-title">I/O调度策略修改</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            OpenStack镜像在制作出来的时候较大，通过一些方法可以将镜像优化小
+                            I/O调度策略修改
                         
                     </div>
                     <div class="publish-info">
@@ -2912,10 +2912,6 @@ class UserManager:
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Openstack/">
-                        <span class="chip bg-color">Openstack</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -2927,19 +2923,19 @@ class UserManager:
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/10/rong-qi-yun-bu-shu/">
+                <a href="/2023/03/10/linux-xi-tong-ju-bing-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="2023云计算技能大赛容器云">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Linux系统句柄优化">
                         
-                        <span class="card-title">2023云计算技能大赛容器云</span>
+                        <span class="card-title">Linux系统句柄优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            2023年重庆市云计算技能大赛容器云环境部署
+                            Linux系统优化
                         
                     </div>
                     <div class="publish-info">
@@ -2948,12 +2944,8 @@ class UserManager:
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/deploy/" class="post-category">
-                                    deploy
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            IW
                             
                         </span>
                     </div>
@@ -2961,16 +2953,8 @@ class UserManager:
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Deploy/">
-                        <span class="chip bg-color">Deploy</span>
-                    </a>
-                    
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/Kubernetes/">
-                        <span class="chip bg-color">Kubernetes</span>
                     </a>
                     
                 </div>
@@ -3170,7 +3154,7 @@ class UserManager:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

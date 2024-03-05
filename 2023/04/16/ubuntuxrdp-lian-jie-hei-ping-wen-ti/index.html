@@ -415,25 +415,25 @@
             <div id="articleContent">
                 <h2 id="连接黑屏问题"><a href="#连接黑屏问题" class="headerlink" title="连接黑屏问题"></a>连接黑屏问题</h2><p>这个问题，<strong>主要是当你的本机没有注销的话，远程桌面就会黑屏</strong>，最佳解决策略就是退出本地登录，也就是注销登录，这个方法一定没问题。与windows那种完美的远程控制不同，在ubuntu中，本地登录和远程登陆是隔离开的，远程登录了不注销，那么本地就会黑屏，反过来本地登陆了不注销，远程就会黑屏。所谓注销就是logout，应该都懂，就是和关机、重启放在一起的那个选项。</p>
 <p>或者使用网上的一些解决方案，但是这个放在在Ubuntu 22中会导致闪退。即，编辑<code> /etc/xrdp/startwm.sh</code> 文件：</p>
-<h3 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1. 打开文件"></a>1. 打开文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/xrdp/startwm.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="1-打开文件"><a href="#1-打开文件" class="headerlink" title="1. 打开文件"></a>1. 打开文件</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/xrdp/startwm.sh</code></pre>
 
-<h3 id="2-添加配置"><a href="#2-添加配置" class="headerlink" title="2. 添加配置"></a>2. 添加配置</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">unset</span> <span class="token environment constant">DBUS_SESSION_BUS_ADDRESS</span>
-<span class="token builtin class-name">unset</span> <span class="token environment constant">XDG_RUNTIME_DIR</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="2-添加配置"><a href="#2-添加配置" class="headerlink" title="2. 添加配置"></a>2. 添加配置</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">unset</span> <span class="token environment constant">DBUS_SESSION_BUS_ADDRESS</span>
+<span class="token builtin class-name">unset</span> <span class="token environment constant">XDG_RUNTIME_DIR</span></code></pre>
 
-<h3 id="3-重启xrdp服务"><a href="#3-重启xrdp服务" class="headerlink" title="3. 重启xrdp服务"></a>3. 重启xrdp服务</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart xrdp.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="3-重启xrdp服务"><a href="#3-重启xrdp服务" class="headerlink" title="3. 重启xrdp服务"></a>3. 重启xrdp服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart xrdp.service</code></pre>
 
 <h2 id="桌面优化"><a href="#桌面优化" class="headerlink" title="桌面优化"></a>桌面优化</h2><p>注意，一定要<strong>先修改下面配置文件，再远程连接</strong>，否则会黑屏，这个时候需要重启。</p>
 <p>反正记住一句话，重启后不在本地登录，那么远程必不黑屏！</p>
 <p>如果不做任何配置，启动之后的桌面是非常别扭的，因为是Gnome的原始桌面，没有左侧的任务栏，窗口也没有最小化按钮，等等一些列问题。解决方案也很简单：</p>
-<h3 id="1-添加配置文件"><a href="#1-添加配置文件" class="headerlink" title="1. 添加配置文件"></a>1. 添加配置文件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.xsessionrc
+<h3 id="1-添加配置文件"><a href="#1-添加配置文件" class="headerlink" title="1. 添加配置文件"></a>1. 添加配置文件</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.xsessionrc
 
 添加：
 
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">GNOME_SHELL_SESSION_MODE</span><span class="token operator">=</span>ubuntu
 <span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">XDG_CURRENT_DESKTOP</span></span><span class="token operator">=</span>ubuntu:GNOME
-<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">XDG_CONFIG_DIRS</span></span><span class="token operator">=</span>/etc/xdg/xdg-ubuntu:/etc/xdg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">XDG_CONFIG_DIRS</span></span><span class="token operator">=</span>/etc/xdg/xdg-ubuntu:/etc/xdg</code></pre>
 
-<h3 id="2-重启xrdp服务"><a href="#2-重启xrdp服务" class="headerlink" title="2. 重启xrdp服务"></a>2. 重启xrdp服务</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart xrdp.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="2-重启xrdp服务"><a href="#2-重启xrdp服务" class="headerlink" title="2. 重启xrdp服务"></a>2. 重启xrdp服务</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl restart xrdp.service</code></pre>
                 
             </div>
             <hr/>
@@ -840,7 +840,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

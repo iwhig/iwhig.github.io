@@ -335,12 +335,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Docker/">
-                                <span class="chip bg-color">Docker</span>
-                            </a>
-                        
                             <a href="/tags/Mysql/">
                                 <span class="chip bg-color">Mysql</span>
+                            </a>
+                        
+                            <a href="/tags/Docker/">
+                                <span class="chip bg-color">Docker</span>
                             </a>
                         
                     </div>
@@ -414,12 +414,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>WordPress是一款能让您建立出色网站、博客或应用程序的开源软件，下面是以Docker的方式部署</p>
-<h3 id="启动MySQL容器作为Wordpress的数据库"><a href="#启动MySQL容器作为Wordpress的数据库" class="headerlink" title="启动MySQL容器作为Wordpress的数据库"></a>启动MySQL容器作为Wordpress的数据库</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--privileged</span><span class="token operator">=</span>true <span class="token parameter variable">--name</span> wp-mysql <span class="token punctuation">\</span>
+<h3 id="启动MySQL容器作为Wordpress的数据库"><a href="#启动MySQL容器作为Wordpress的数据库" class="headerlink" title="启动MySQL容器作为Wordpress的数据库"></a>启动MySQL容器作为Wordpress的数据库</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--privileged</span><span class="token operator">=</span>true <span class="token parameter variable">--name</span> wp-mysql <span class="token punctuation">\</span>
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span>root  <span class="token punctuation">\</span>
 <span class="token parameter variable">-p</span> <span class="token number">33306</span>:3306 <span class="token punctuation">\</span>
-<span class="token parameter variable">-d</span> mysql:8.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">-d</span> mysql:8.0</code></pre>
 
-<h4 id="进入MySQL容器对数据库进行配置"><a href="#进入MySQL容器对数据库进行配置" class="headerlink" title="进入MySQL容器对数据库进行配置"></a>进入MySQL容器对数据库进行配置</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> wp-mysql /bin/bash
+<h4 id="进入MySQL容器对数据库进行配置"><a href="#进入MySQL容器对数据库进行配置" class="headerlink" title="进入MySQL容器对数据库进行配置"></a>进入MySQL容器对数据库进行配置</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> wp-mysql /bin/bash
 
 <span class="token comment">#登录数据库</span>
 mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
@@ -428,14 +428,14 @@ mysql <span class="token parameter variable">-uroot</span> <span class="token pa
 create user <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span>
 create database wordpress<span class="token punctuation">;</span>
 grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<span class="token string">'%'</span> identified by <span class="token string">'wordpress'</span><span class="token punctuation">;</span>
-<span class="token comment">#8.0以上版本去掉结尾identified by 'wordpress'换成with grant option</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#8.0以上版本去掉结尾identified by 'wordpress'换成with grant option</span></code></pre>
 
-<h3 id="启动Wordpress容器"><a href="#启动Wordpress容器" class="headerlink" title="启动Wordpress容器"></a>启动Wordpress容器</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--name</span> wordpress <span class="token parameter variable">-itd</span> <span class="token punctuation">\</span>
+<h3 id="启动Wordpress容器"><a href="#启动Wordpress容器" class="headerlink" title="启动Wordpress容器"></a>启动Wordpress容器</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--name</span> wordpress <span class="token parameter variable">-itd</span> <span class="token punctuation">\</span>
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">WORDPRESS_DB_NAME</span><span class="token operator">=</span>wordpress <span class="token punctuation">\</span>        
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">WORDPRESS_DB_USER</span><span class="token operator">=</span>wp <span class="token punctuation">\</span>
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">WORDPRESS_DB_PASSWORD</span><span class="token operator">=</span>wordpress <span class="token punctuation">\</span>
 <span class="token parameter variable">-e</span> <span class="token assign-left variable">WORDPRESS_DB_HOST</span><span class="token operator">=</span><span class="token number">172.17</span>.0.2 <span class="token punctuation">\</span>
-<span class="token parameter variable">-p</span> <span class="token number">30912</span>:80 wordpress:latest<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token parameter variable">-p</span> <span class="token number">30912</span>:80 wordpress:latest</code></pre>
 
 <h3 id="访问-http-locahost-30912-即可打开WordPress"><a href="#访问-http-locahost-30912-即可打开WordPress" class="headerlink" title="访问 http://locahost:30912 即可打开WordPress"></a>访问 <a target="_blank" rel="noopener" href="http://locahost:30912/">http://locahost:30912</a> 即可打开WordPress</h3>
                 
@@ -501,12 +501,12 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Docker/">
-                                    <span class="chip bg-color">Docker</span>
-                                </a>
-                            
                                 <a href="/tags/Mysql/">
                                     <span class="chip bg-color">Mysql</span>
+                                </a>
+                            
+                                <a href="/tags/Docker/">
+                                    <span class="chip bg-color">Docker</span>
                                 </a>
                             
                         </div>
@@ -647,6 +647,10 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
+                    <a href="/tags/Container/">
+                        <span class="chip bg-color">Container</span>
+                    </a>
+                    
                     <a href="/tags/Ubuntu/">
                         <span class="chip bg-color">Ubuntu</span>
                     </a>
@@ -657,10 +661,6 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
                     
                     <a href="/tags/Kubernetes/">
                         <span class="chip bg-color">Kubernetes</span>
-                    </a>
-                    
-                    <a href="/tags/Containerd/">
-                        <span class="chip bg-color">Containerd</span>
                     </a>
                     
                 </div>
@@ -860,7 +860,7 @@ grant all privileges on wordpress.* to <span class="token string">'wp'</span>@<s
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

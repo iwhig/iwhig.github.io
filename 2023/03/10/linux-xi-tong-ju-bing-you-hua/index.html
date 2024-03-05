@@ -401,28 +401,28 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="Linux系统句柄优化"><a href="#Linux系统句柄优化" class="headerlink" title="Linux系统句柄优化"></a>Linux系统句柄优化</h3><h4 id="（1）查看当前的句柄数"><a href="#（1）查看当前的句柄数" class="headerlink" title="（1）查看当前的句柄数"></a>（1）查看当前的句柄数</h4><p>使用CRT等远程连接工具，连接至192.168.200.21，查看当前系统默认的文件句柄数量，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
-<span class="token number">1024</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
+<span class="token number">1024</span></code></pre>
 
 <p>可以看到当前的系统默认限制是1024。</p>
 <h4 id="（2）修改句柄数"><a href="#（2）修改句柄数" class="headerlink" title="（2）修改句柄数."></a>（2）修改句柄数.</h4><p>修改Linux系统的句柄数限制有两种方法，一种是使用ulimit命令临时生效，另外一种是修改配置文件，永久生效。此处使用修改配置文件的方式。</p>
 <p><strong>注意：</strong>如果使用命令临时生效句柄限制，root用户可以调大或者调小句柄的限制，而非root用户一旦设定了值，就只能调小这个限制，不能调大，不然会报“bash: ulimit: open files: cannot modify limit: Operation not permitted”的错误。</p>
 <p>修改配置文件调整句柄限制为65535，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* soft nofile 65535"  &gt;&gt; /etc/security/limits.conf</span>
-<span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* hard nofile 65535"  &gt;&gt; /etc/security/limits.conf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* soft nofile 65535"  &gt;&gt; /etc/security/limits.conf</span>
+<span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* hard nofile 65535"  &gt;&gt; /etc/security/limits.conf</span></code></pre>
 
 <p>添加配置的解释如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">*       <span class="token comment">#代表所有用户</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">*       <span class="token comment">#代表所有用户</span>
 soft    <span class="token comment">#超过文件句柄数时，仅提示</span>
-hard    <span class="token comment">#超过文件句柄数时，直接限制</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+hard    <span class="token comment">#超过文件句柄数时，直接限制</span></code></pre>
 
 <p>修改完之后，不需要重启系统即会生效，但是需要重新登录。退出重新登录该云主机，查看当前的句柄限制，命令如下：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># logout</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># logout</span>
 
 Connection closed.
 Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="token number">2022</span> from <span class="token number">192.168</span>.0.70
 <span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
-<span class="token number">65535</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token number">65535</span></code></pre>
 
 <p>可以看到当前的限制为65535。</p>
 <p>至此，Linux系统文件句柄优化配置结束。在生产环境中，系统默认的1024远远不够，会导致系统报“too many open files”的错误。所以优化句柄数量限制是很有必要的。此案例默认使用的root用户进行修改，如果使用非root用户，在修改句柄限制的时候，会有比较多的限制，感兴趣的读者，可以自行查找资料学习。</p>
@@ -541,19 +541,19 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/10/io-diao-du-ce-lue-xiu-gai/">
+                <a href="/2023/03/10/2022-yun-ji-suan-ji-neng-da-sai-si-you-yun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="I/O调度策略修改">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="2023 云计算技能大赛-私有云">
                         
-                        <span class="card-title">I/O调度策略修改</span>
+                        <span class="card-title">2023 云计算技能大赛-私有云</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            I/O调度策略修改
+                            2022年云计算技能大赛私有云场，记录了本次比赛所有赛题以及解答
                         
                     </div>
                     <div class="publish-info">
@@ -562,8 +562,12 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            IW
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CloudComputing/" class="post-category">
+                                    CloudComputing
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -573,6 +577,38 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Ansible/">
+                        <span class="chip bg-color">Ansible</span>
+                    </a>
+                    
+                    <a href="/tags/Openstack/">
+                        <span class="chip bg-color">Openstack</span>
+                    </a>
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/SQL/">
+                        <span class="chip bg-color">SQL</span>
+                    </a>
+                    
+                    <a href="/tags/Elasticsearch/">
+                        <span class="chip bg-color">Elasticsearch</span>
+                    </a>
+                    
+                    <a href="/tags/Jumpserver/">
+                        <span class="chip bg-color">Jumpserver</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                    <a href="/tags/Skywalking/">
+                        <span class="chip bg-color">Skywalking</span>
                     </a>
                     
                 </div>
@@ -821,7 +857,7 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

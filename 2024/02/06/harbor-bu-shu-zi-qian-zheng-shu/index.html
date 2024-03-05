@@ -335,12 +335,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Deploy/">
-                                <span class="chip bg-color">Deploy</span>
-                            </a>
-                        
                             <a href="/tags/Docker/">
                                 <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/Deploy/">
+                                <span class="chip bg-color">Deploy</span>
                             </a>
                         
                             <a href="/tags/Container/">
@@ -418,21 +418,21 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>​		通常我们在使用Docker后会产生很多容器镜像，在这里我们搭建一个Harbor镜像仓库来存放容器镜像，使得拉取镜像时速度更快，更方便，这里会自签证书，在局域网内登录时可以避免登录显示不安全，从而减少编辑/etc/daemon.json文件</p>
-<h2 id="一、基础配置"><a href="#一、基础配置" class="headerlink" title="一、基础配置"></a>一、基础配置</h2><h3 id="1、更换软件源"><a href="#1、更换软件源" class="headerlink" title="1、更换软件源"></a>1、更换软件源</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">
+<h2 id="一、基础配置"><a href="#一、基础配置" class="headerlink" title="一、基础配置"></a>一、基础配置</h2><h3 id="1、更换软件源"><a href="#1、更换软件源" class="headerlink" title="1、更换软件源"></a>1、更换软件源</h3><pre class="language-bash" data-language="bash"><code class="language-bash">
 <span class="token comment">#备份源文件</span>
 <span class="token function">mkdir</span> /etc/yum.repos.d/bak
 <span class="token function">mv</span> /etc/yum.repos.d/* /etc/yum.repos.d/bak/ <span class="token operator">&gt;&gt;</span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span><span class="token file-descriptor important">&amp;1</span>
 <span class="token comment">#下载源文件</span>
 <span class="token function">curl</span> <span class="token parameter variable">-L</span> http://mirrors.aliyun.com/repo/Centos-7.repo <span class="token parameter variable">-o</span> /etc/yum.repos.d/CentOS-Base.repo
 <span class="token comment">#清楚缓存并创建元数据</span>
-yum clean all <span class="token operator">&amp;&amp;</span> yum makecache<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+yum clean all <span class="token operator">&amp;&amp;</span> yum makecache</code></pre>
 
-<h3 id="2、安装基础软件"><a href="#2、安装基础软件" class="headerlink" title="2、安装基础软件"></a>2、安装基础软件</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token function">vim</span> epel-release.noarch yum-utils device-mapper-persistent-data lvm2 bash-completion <span class="token function">wget</span> tree <span class="token parameter variable">-y</span>
+<h3 id="2、安装基础软件"><a href="#2、安装基础软件" class="headerlink" title="2、安装基础软件"></a>2、安装基础软件</h3><pre class="language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> <span class="token function">vim</span> epel-release.noarch yum-utils device-mapper-persistent-data lvm2 bash-completion <span class="token function">wget</span> tree <span class="token parameter variable">-y</span>
 <span class="token comment">#设置hostname</span>
 hostnamectl set-hostname server
-<span class="token builtin class-name">exec</span> <span class="token function">bash</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token builtin class-name">exec</span> <span class="token function">bash</span></code></pre>
 
-<h3 id="3、安装Docker"><a href="#3、安装Docker" class="headerlink" title="3、安装Docker"></a>3、安装Docker</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#添加Docker软件源</span>
+<h3 id="3、安装Docker"><a href="#3、安装Docker" class="headerlink" title="3、安装Docker"></a>3、安装Docker</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#添加Docker软件源</span>
 yum-config-manager --add-repo<span class="token operator">=</span>http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 <span class="token comment">#安装Docker</span>
 yum <span class="token function">install</span> docker-ce docker-ce-cli <span class="token parameter variable">-y</span>
@@ -495,24 +495,24 @@ Server:
  Experimental: <span class="token boolean">false</span>
  Insecure Registries:
   <span class="token number">127.0</span>.0.0/8
- Live Restore Enabled: <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+ Live Restore Enabled: <span class="token boolean">false</span></code></pre>
 
-<h3 id="4、安装docker-compose"><a href="#4、安装docker-compose" class="headerlink" title="4、安装docker-compose"></a>4、安装docker-compose</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span>  <span class="token string">"https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-s</span><span class="token variable">)</span></span>-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-m</span><span class="token variable">)</span></span>"</span> <span class="token parameter variable">-O</span> /usr/local/bin/docker-compose
+<h3 id="4、安装docker-compose"><a href="#4、安装docker-compose" class="headerlink" title="4、安装docker-compose"></a>4、安装docker-compose</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span>  <span class="token string">"https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-s</span><span class="token variable">)</span></span>-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-m</span><span class="token variable">)</span></span>"</span> <span class="token parameter variable">-O</span> /usr/local/bin/docker-compose
 <span class="token comment">#增加执行权限</span>
 <span class="token function">chmod</span> a+x /usr/local/bin/docker-compose 
 <span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># docker-compose version</span>
-Docker Compose version v2.24.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Docker Compose version v2.24.5</code></pre>
 
 
 
 <h3 id="5、内核升级"><a href="#5、内核升级" class="headerlink" title="5、内核升级"></a>5、内核升级</h3><p>​		我这里为了后续软件支持需要升级内核，如不想升级内核可直接跳过此步</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看内核</span>
-<span class="token function">uname</span> <span class="token parameter variable">-sr</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看内核</span>
+<span class="token function">uname</span> <span class="token parameter variable">-sr</span></code></pre>
 
-<h5 id="1、导入公钥"><a href="#1、导入公钥" class="headerlink" title="1、导入公钥"></a>1、导入公钥</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">--import</span> https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-<span class="token function">rpm</span> <span class="token parameter variable">-Uvh</span> https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="1、导入公钥"><a href="#1、导入公钥" class="headerlink" title="1、导入公钥"></a>1、导入公钥</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">rpm</span> <span class="token parameter variable">--import</span> https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+<span class="token function">rpm</span> <span class="token parameter variable">-Uvh</span> https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm</code></pre>
 
-<h5 id="2、加载elrepo-kernel元数据"><a href="#2、加载elrepo-kernel元数据" class="headerlink" title="2、加载elrepo-kernel元数据"></a>2、加载elrepo-kernel元数据</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">--disablerepo</span><span class="token operator">=</span><span class="token string">"*"</span> <span class="token parameter variable">--enablerepo</span><span class="token operator">=</span><span class="token string">"elrepo-kernel"</span> repolist<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="2、加载elrepo-kernel元数据"><a href="#2、加载elrepo-kernel元数据" class="headerlink" title="2、加载elrepo-kernel元数据"></a>2、加载elrepo-kernel元数据</h5><pre class="language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">--disablerepo</span><span class="token operator">=</span><span class="token string">"*"</span> <span class="token parameter variable">--enablerepo</span><span class="token operator">=</span><span class="token string">"elrepo-kernel"</span> repolist</code></pre>
 
 <blockquote>
 <p><code>kernel-lt</code> 和 <code>kernel-ml</code> 二者的区别：</p>
@@ -522,7 +522,7 @@ Docker Compose version v2.24.5<span aria-hidden="true" class="line-numbers-rows"
 </ul>
 <p>在 <code>ELRepo</code>中有两个内核选项，一个是<code>kernel-lt</code>（长期支持版），一个是 <code>kernel-ml</code>（主线最新版本），采用长期支持版本（<code>kernel-lt</code>），会更加稳定。</p>
 </blockquote>
-<h5 id="3、查看可用内核版本"><a href="#3、查看可用内核版本" class="headerlink" title="3、查看可用内核版本"></a>3、查看可用内核版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment">#  yum --disablerepo="*" --enablerepo="elrepo-kernel" list available | sort -c</span>
+<h5 id="3、查看可用内核版本"><a href="#3、查看可用内核版本" class="headerlink" title="3、查看可用内核版本"></a>3、查看可用内核版本</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment">#  yum --disablerepo="*" --enablerepo="elrepo-kernel" list available | sort -c</span>
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
  * elrepo-kernel: hkg.mirror.rackspace.com
@@ -541,17 +541,17 @@ kernel-lt-headers.x86_64                <span class="token number">5.4</span>.26
 kernel-lt-doc.noarch                    <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
 kernel-lt-devel.x86_64                  <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
 perf.x86_64                             <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel
-python-perf.x86_64                      <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+python-perf.x86_64                      <span class="token number">5.4</span>.268-1.el7.elrepo       elrepo-kernel</code></pre>
 
-<h5 id="4、安装长期支持版本"><a href="#4、安装长期支持版本" class="headerlink" title="4、安装长期支持版本"></a>4、安装长期支持版本</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">--enablerepo</span><span class="token operator">=</span><span class="token string">"elrepo-kernel"</span> <span class="token function">install</span> kernel-lt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="4、安装长期支持版本"><a href="#4、安装长期支持版本" class="headerlink" title="4、安装长期支持版本"></a>4、安装长期支持版本</h5><pre class="language-bash" data-language="bash"><code class="language-bash">yum <span class="token parameter variable">--enablerepo</span><span class="token operator">=</span><span class="token string">"elrepo-kernel"</span> <span class="token function">install</span> kernel-lt</code></pre>
 
 <p>​		查看当前系统下可用内核</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># awk -F\' '$1=="menuentry " {print $2}' /etc/grub2.cfg</span>
 CentOS Linux <span class="token punctuation">(</span><span class="token number">5.4</span>.268-1.el7.elrepo.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
 CentOS Linux <span class="token punctuation">(</span><span class="token number">3.10</span>.0-862.el7.x86_64<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span>
-CentOS Linux <span class="token punctuation">(</span><span class="token number">0</span>-rescue-4e37109fc2c64b78804e7b0263d94b67<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+CentOS Linux <span class="token punctuation">(</span><span class="token number">0</span>-rescue-4e37109fc2c64b78804e7b0263d94b67<span class="token punctuation">)</span> <span class="token number">7</span> <span class="token punctuation">(</span>Core<span class="token punctuation">)</span></code></pre>
 
-<h5 id="5、创建内核配置"><a href="#5、创建内核配置" class="headerlink" title="5、创建内核配置"></a>5、创建内核配置</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># grub2-mkconfig -o /boot/grub2/grub.cfg</span>
+<h5 id="5、创建内核配置"><a href="#5、创建内核配置" class="headerlink" title="5、创建内核配置"></a>5、创建内核配置</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># grub2-mkconfig -o /boot/grub2/grub.cfg</span>
 Generating grub configuration <span class="token function">file</span> <span class="token punctuation">..</span>.
 Found linux image: /boot/vmlinuz-5.4.268-1.el7.elrepo.x86_64
 Found initrd image: /boot/initramfs-5.4.268-1.el7.elrepo.x86_64.img
@@ -560,40 +560,40 @@ Found initrd image: /boot/initramfs-3.10.0-862.el7.x86_64.img
 Found linux image: /boot/vmlinuz-0-rescue-4e37109fc2c64b78804e7b0263d94b67
 Found initrd image: /boot/initramfs-0-rescue-4e37109fc2c64b78804e7b0263d94b67.img
 <span class="token keyword">done</span>
-<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment">#</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment">#</span></code></pre>
 
-<h5 id="6、设置开机加载新内核"><a href="#6、设置开机加载新内核" class="headerlink" title="6、设置开机加载新内核"></a>6、设置开机加载新内核</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">grub2-set-default <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="6、设置开机加载新内核"><a href="#6、设置开机加载新内核" class="headerlink" title="6、设置开机加载新内核"></a>6、设置开机加载新内核</h5><pre class="language-bash" data-language="bash"><code class="language-bash">grub2-set-default <span class="token number">0</span></code></pre>
 
 <p>​		重启并验证</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">reboot</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">reboot</span></code></pre>
 
 <p><img src="https://s2.loli.net/2024/02/06/vDIp9es8aflERAu.png" alt="启动内核顺序.png"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># uname -sr</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># uname -sr</span>
 Linux <span class="token number">5.4</span>.268-1.el7.elrepo.x86_64
-<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">[</span>root@server ~<span class="token punctuation">]</span><span class="token comment"># </span></code></pre>
 
 
 
 <h2 id="二、自签证书"><a href="#二、自签证书" class="headerlink" title="二、自签证书"></a>二、自签证书</h2><p>​		以下用到域名的地方自行替换成自己的域名我的域名是：iw.harbor</p>
-<h3 id="1、创建ca证书私钥"><a href="#1、创建ca证书私钥" class="headerlink" title="1、创建ca证书私钥"></a>1、创建ca证书私钥</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server /<span class="token punctuation">]</span><span class="token comment"># mkdir /data/cert &amp;&amp; cd /data/cert</span>
+<h3 id="1、创建ca证书私钥"><a href="#1、创建ca证书私钥" class="headerlink" title="1、创建ca证书私钥"></a>1、创建ca证书私钥</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server /<span class="token punctuation">]</span><span class="token comment"># mkdir /data/cert &amp;&amp; cd /data/cert</span>
 <span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl genrsa -out ca.key 4096</span>
 Generating RSA private key, <span class="token number">4096</span> bit long modulus
 <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>++
 <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>++
-e is <span class="token number">65537</span> <span class="token punctuation">(</span>0x10001<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+e is <span class="token number">65537</span> <span class="token punctuation">(</span>0x10001<span class="token punctuation">)</span></code></pre>
 
-<h3 id="2、创建ca证书"><a href="#2、创建ca证书" class="headerlink" title="2、创建ca证书"></a>2、创建ca证书</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl req <span class="token parameter variable">-x509</span> <span class="token parameter variable">-new</span> <span class="token parameter variable">-sha512</span> <span class="token parameter variable">-days</span> <span class="token number">3650</span> <span class="token parameter variable">-subj</span> <span class="token string">"/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=iw.harbor"</span> <span class="token parameter variable">-key</span> ca.key <span class="token parameter variable">-out</span> ca.crt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="2、创建ca证书"><a href="#2、创建ca证书" class="headerlink" title="2、创建ca证书"></a>2、创建ca证书</h3><pre class="language-bash" data-language="bash"><code class="language-bash">openssl req <span class="token parameter variable">-x509</span> <span class="token parameter variable">-new</span> <span class="token parameter variable">-sha512</span> <span class="token parameter variable">-days</span> <span class="token number">3650</span> <span class="token parameter variable">-subj</span> <span class="token string">"/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=iw.harbor"</span> <span class="token parameter variable">-key</span> ca.key <span class="token parameter variable">-out</span> ca.crt</code></pre>
 
-<h3 id="3、生出域名证书"><a href="#3、生出域名证书" class="headerlink" title="3、生出域名证书"></a>3、生出域名证书</h3><h6 id="1、生成私钥"><a href="#1、生成私钥" class="headerlink" title="1、生成私钥"></a>1、生成私钥</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl genrsa -out iw.harbor.key 4096</span>
+<h3 id="3、生成域名证书"><a href="#3、生成域名证书" class="headerlink" title="3、生成域名证书"></a>3、生成域名证书</h3><h6 id="1、生成私钥"><a href="#1、生成私钥" class="headerlink" title="1、生成私钥"></a>1、生成私钥</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl genrsa -out iw.harbor.key 4096</span>
 Generating RSA private key, <span class="token number">4096</span> bit long modulus
 <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.++
 <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.++
-e is <span class="token number">65537</span> <span class="token punctuation">(</span>0x10001<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+e is <span class="token number">65537</span> <span class="token punctuation">(</span>0x10001<span class="token punctuation">)</span></code></pre>
 
-<h6 id="2、生成证书签名请求（CSR）"><a href="#2、生成证书签名请求（CSR）" class="headerlink" title="2、生成证书签名请求（CSR）"></a>2、生成证书签名请求（CSR）</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl req <span class="token parameter variable">-sha512</span> <span class="token parameter variable">-new</span> <span class="token parameter variable">-subj</span> <span class="token string">"/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=iw.harbor"</span> <span class="token parameter variable">-key</span> iw.harbor.key <span class="token parameter variable">-out</span> iw.harbor.csr<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h6 id="2、生成证书签名请求（CSR）"><a href="#2、生成证书签名请求（CSR）" class="headerlink" title="2、生成证书签名请求（CSR）"></a>2、生成证书签名请求（CSR）</h6><pre class="language-bash" data-language="bash"><code class="language-bash">openssl req <span class="token parameter variable">-sha512</span> <span class="token parameter variable">-new</span> <span class="token parameter variable">-subj</span> <span class="token string">"/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=iw.harbor"</span> <span class="token parameter variable">-key</span> iw.harbor.key <span class="token parameter variable">-out</span> iw.harbor.csr</code></pre>
 
 <h6 id="3、生成x509-v3扩展文件"><a href="#3、生成x509-v3扩展文件" class="headerlink" title="3、生成x509 v3扩展文件"></a>3、生成x509 v3扩展文件</h6><p>​		这里有两种方式，如果是域名则选择第一种，IP则选择第二种</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">################################</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">################################</span>
 <span class="token comment">#域名访问，注意修改域名等信息</span>
 
 <span class="token function">cat</span> <span class="token operator">&gt;</span> v3.ext <span class="token operator">&lt;&lt;-</span><span class="token string">EOF
@@ -618,47 +618,47 @@ basicConstraints=CA:FALSE
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = IP:192.168.200.147
-EOF</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+EOF</span></code></pre>
 
 <h3 id="4、生成主机证书"><a href="#4、生成主机证书" class="headerlink" title="4、生成主机证书"></a>4、生成主机证书</h3><p>​		使用上面生出的v3.ext证书生出harbor主机证书</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl x509 -req -sha512 -days 3650 -extfile v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in iw.harbor.csr -out iw.harbor.crt</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># openssl x509 -req -sha512 -days 3650 -extfile v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -in iw.harbor.csr -out iw.harbor.crt</span>
 Signature ok
 <span class="token assign-left variable">subject</span><span class="token operator">=</span>/C<span class="token operator">=</span>CN/ST<span class="token operator">=</span>Beijing/L<span class="token operator">=</span>Beijing/O<span class="token operator">=</span>example/OU<span class="token operator">=</span>Personal/CN<span class="token operator">=</span>iw.harbor
-Getting CA Private Key<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+Getting CA Private Key</code></pre>
 
 <h3 id="5、提供证书给Harbor和Docker"><a href="#5、提供证书给Harbor和Docker" class="headerlink" title="5、提供证书给Harbor和Docker"></a>5、提供证书给Harbor和Docker</h3><h6 id="1、转换crt为cert，提供给Docker守护进程"><a href="#1、转换crt为cert，提供给Docker守护进程" class="headerlink" title="1、转换crt为cert，提供给Docker守护进程"></a>1、转换crt为cert，提供给Docker守护进程</h6><p>​		Docker守护进程会将.crt文件解释为CA证书，并将.cert文件解释为客户端证书</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl x509 <span class="token parameter variable">-inform</span> PEM <span class="token parameter variable">-in</span> iw.harbor.crt <span class="token parameter variable">-out</span> iw.harbor.cert<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">openssl x509 <span class="token parameter variable">-inform</span> PEM <span class="token parameter variable">-in</span> iw.harbor.crt <span class="token parameter variable">-out</span> iw.harbor.cert</code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> iw.harbor.crt /etc/pki/ca-trust/source/anchors/iw.harbor.crt <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cp</span> iw.harbor.crt /etc/pki/ca-trust/source/anchors/iw.harbor.crt </code></pre>
 
-<h6 id="2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker-certificate文件夹中"><a href="#2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker-certificate文件夹中" class="headerlink" title="2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker certificate文件夹中"></a>2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker certificate文件夹中</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/docker/certs.d/iw.harbor/
-<span class="token function">cp</span> iw.harbor.cert iw.harbor.key ca.crt /etc/docker/certs.d/iw.harbor/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h6 id="2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker-certificate文件夹中"><a href="#2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker-certificate文件夹中" class="headerlink" title="2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker certificate文件夹中"></a>2、创建文件夹并将服务器证书、密钥和CA文件复制到Harbor主机的Docker certificate文件夹中</h6><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/docker/certs.d/iw.harbor/
+<span class="token function">cp</span> iw.harbor.cert iw.harbor.key ca.crt /etc/docker/certs.d/iw.harbor/</code></pre>
 
 <p>​		最终Docker目录结构如下</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># tree /etc/docker/certs.d/</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@server cert<span class="token punctuation">]</span><span class="token comment"># tree /etc/docker/certs.d/</span>
 /etc/docker/certs.d/
 └── iw.harbor
     ├── ca.crt
     ├── iw.harbor.cert
     └── iw.harbor.key
 
-<span class="token number">1</span> directory, <span class="token number">3</span> files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token number">1</span> directory, <span class="token number">3</span> files</code></pre>
 
-<h6 id="3、重启Docker"><a href="#3、重启Docker" class="headerlink" title="3、重启Docker"></a>3、重启Docker</h6><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart <span class="token function">docker</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h6 id="3、重启Docker"><a href="#3、重启Docker" class="headerlink" title="3、重启Docker"></a>3、重启Docker</h6><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl restart <span class="token function">docker</span></code></pre>
 
 
 
-<h2 id="三、部署Harbor"><a href="#三、部署Harbor" class="headerlink" title="三、部署Harbor"></a>三、部署Harbor</h2><h3 id="1、下载harbor离线安装包"><a href="#1、下载harbor离线安装包" class="headerlink" title="1、下载harbor离线安装包"></a>1、下载harbor离线安装包</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://github.com/goharbor/harbor/releases/download/v2.10.0/harbor-offline-installer-v2.10.0.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="三、部署Harbor"><a href="#三、部署Harbor" class="headerlink" title="三、部署Harbor"></a>三、部署Harbor</h2><h3 id="1、下载harbor离线安装包"><a href="#1、下载harbor离线安装包" class="headerlink" title="1、下载harbor离线安装包"></a>1、下载harbor离线安装包</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://github.com/goharbor/harbor/releases/download/v2.10.0/harbor-offline-installer-v2.10.0.tgz</code></pre>
 
-<h5 id="1、解压文件"><a href="#1、解压文件" class="headerlink" title="1、解压文件"></a>1、解压文件</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> harbor-offline-installer-v2.10.0.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="1、解压文件"><a href="#1、解压文件" class="headerlink" title="1、解压文件"></a>1、解压文件</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> <span class="token parameter variable">-zxvf</span> harbor-offline-installer-v2.10.0.tgz</code></pre>
 
-<h5 id="2、修改Harbor配置文件"><a href="#2、修改Harbor配置文件" class="headerlink" title="2、修改Harbor配置文件"></a>2、修改Harbor配置文件</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> harbor/
+<h5 id="2、修改Harbor配置文件"><a href="#2、修改Harbor配置文件" class="headerlink" title="2、修改Harbor配置文件"></a>2、修改Harbor配置文件</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> harbor/
 <span class="token comment">#复制配置文件</span>
 <span class="token function">cp</span> harbor.yml.tmpl harbor.yml
-<span class="token function">vim</span> harbor.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">vim</span> harbor.yml</code></pre>
 
 <p><img src="https://s2.loli.net/2024/02/06/lhIGe3tyvHYEgDu.png" alt="Harbor配置文件修改.png"></p>
-<h5 id="3、运行脚本部署harbor"><a href="#3、运行脚本部署harbor" class="headerlink" title="3、运行脚本部署harbor"></a>3、运行脚本部署harbor</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./install.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="3、运行脚本部署harbor"><a href="#3、运行脚本部署harbor" class="headerlink" title="3、运行脚本部署harbor"></a>3、运行脚本部署harbor</h5><pre class="language-bash" data-language="bash"><code class="language-bash">./install.sh</code></pre>
 
 <p>完成后出现以下界面</p>
 <p><img src="https://s2.loli.net/2024/02/06/Bz9isAMopfYcOm7.png" alt="部署完成.png"></p>
@@ -729,12 +729,12 @@ Getting CA Private Key<span aria-hidden="true" class="line-numbers-rows"><span><
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Deploy/">
-                                    <span class="chip bg-color">Deploy</span>
-                                </a>
-                            
                                 <a href="/tags/Docker/">
                                     <span class="chip bg-color">Docker</span>
+                                </a>
+                            
+                                <a href="/tags/Deploy/">
+                                    <span class="chip bg-color">Deploy</span>
                                 </a>
                             
                                 <a href="/tags/Container/">
@@ -784,56 +784,50 @@ Getting CA Private Key<span aria-hidden="true" class="line-numbers-rows"><span><
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2024/02/06/harbor-bu-shu-zi-qian-zheng-shu/">
+                <a href="/2024/03/05/k8s-pei-zhi-guan-li-configmap-he-sercret/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Harbor部署及自签证书">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="K8S配置管理 ConfigMap和Sercret">
                         
-                        <span class="card-title">Harbor部署及自签证书</span>
+                        <span class="card-title">K8S配置管理 ConfigMap和Sercret</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            容器镜像仓库部署，证书自签避免docker登录仓库时提示仓库不安全
+                            K8S配置管理 ConfigMap和Sercret，两种资源的简单介绍及使用
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-06
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-05
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/deploy/" class="post-category">
-                                    deploy
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            IW
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Deploy/">
-                        <span class="chip bg-color">Deploy</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Docker/">
-                        <span class="chip bg-color">Docker</span>
+                    <a href="/tags/Shell/">
+                        <span class="chip bg-color">Shell</span>
                     </a>
                     
-                    <a href="/tags/Container/">
-                        <span class="chip bg-color">Container</span>
+                    <a href="/tags/Kubernetes/">
+                        <span class="chip bg-color">Kubernetes</span>
                     </a>
                     
                 </div>
@@ -1090,7 +1084,7 @@ Getting CA Private Key<span aria-hidden="true" class="line-numbers-rows"><span><
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             

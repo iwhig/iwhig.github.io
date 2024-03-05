@@ -344,6 +344,10 @@ Kubernetes这个名字源于希">
                                 <span class="chip bg-color">Linux</span>
                             </a>
                         
+                            <a href="/tags/Container/">
+                                <span class="chip bg-color">Container</span>
+                            </a>
+                        
                             <a href="/tags/Ubuntu/">
                                 <span class="chip bg-color">Ubuntu</span>
                             </a>
@@ -354,10 +358,6 @@ Kubernetes这个名字源于希">
                         
                             <a href="/tags/Kubernetes/">
                                 <span class="chip bg-color">Kubernetes</span>
-                            </a>
-                        
-                            <a href="/tags/Containerd/">
-                                <span class="chip bg-color">Containerd</span>
                             </a>
                         
                     </div>
@@ -388,7 +388,7 @@ Kubernetes这个名字源于希">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-01-15
+                    2024-03-05
                 </div>
                 
 
@@ -477,57 +477,57 @@ Kubernetes这个名字源于希">
 <td align="center">1.6.21</td>
 </tr>
 </tbody></table>
-<h2 id="一、搭建前准备"><a href="#一、搭建前准备" class="headerlink" title="一、搭建前准备"></a>一、搭建前准备</h2><h5 id="关闭swap分区"><a href="#关闭swap分区" class="headerlink" title="关闭swap分区"></a>关闭swap分区</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@k8s:~<span class="token comment"># swapoff  -a</span>
+<h2 id="一、搭建前准备"><a href="#一、搭建前准备" class="headerlink" title="一、搭建前准备"></a>一、搭建前准备</h2><h5 id="关闭swap分区"><a href="#关闭swap分区" class="headerlink" title="关闭swap分区"></a>关闭swap分区</h5><pre class="language-bash" data-language="bash"><code class="language-bash">root@k8s:~<span class="token comment"># swapoff  -a</span>
 root@k8s:~<span class="token comment"># sed -ri 's/.*swap.*/#&amp;/' /etc/fstab</span>
 root@k8s:~<span class="token comment"># mount -a</span>
 root@k8s:~<span class="token comment"># free -h</span>
               total        used        <span class="token function">free</span>      shared  buff/cache   available
 Mem:          <span class="token number">3</span>.8Gi       <span class="token number">1</span>.2Gi       100Mi       <span class="token number">8</span>.0Mi       <span class="token number">2</span>.5Gi       <span class="token number">2</span>.3Gi
-Swap:            0B          0B          0B<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Swap:            0B          0B          0B</code></pre>
 
-<h5 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">root@k8s:~<span class="token comment"># systemctl disable ufw --now</span>
+<h5 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h5><pre class="language-bash" data-language="bash"><code class="language-bash">root@k8s:~<span class="token comment"># systemctl disable ufw --now</span>
 Synchronizing state of ufw.service with SysV <span class="token function">service</span> script with /lib/systemd/systemd-sysv-install.
-Executing: /lib/systemd/systemd-sysv-install disable ufw<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+Executing: /lib/systemd/systemd-sysv-install disable ufw</code></pre>
 
-<h5 id="安装辅助软件"><a href="#安装辅助软件" class="headerlink" title="安装辅助软件"></a>安装辅助软件</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> apt-transport-https ca-certificates <span class="token function">curl</span> software-properties-common <span class="token function">wget</span> net-tools<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="安装辅助软件"><a href="#安装辅助软件" class="headerlink" title="安装辅助软件"></a>安装辅助软件</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> apt-transport-https ca-certificates <span class="token function">curl</span> software-properties-common <span class="token function">wget</span> net-tools</code></pre>
 
-<h5 id="升级所有已安装软件包"><a href="#升级所有已安装软件包" class="headerlink" title="升级所有已安装软件包"></a>升级所有已安装软件包</h5><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> upgrade <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="升级所有已安装软件包"><a href="#升级所有已安装软件包" class="headerlink" title="升级所有已安装软件包"></a>升级所有已安装软件包</h5><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> upgrade <span class="token parameter variable">-y</span></code></pre>
 
 
 
-<h2 id="二、安装containerd"><a href="#二、安装containerd" class="headerlink" title="二、安装containerd"></a>二、安装containerd</h2><h4 id="1、安装前的基础配置"><a href="#1、安装前的基础配置" class="headerlink" title="1、安装前的基础配置"></a>1、安装前的基础配置</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/modules-load.d/containerd.conf</span>
+<h2 id="二、安装containerd"><a href="#二、安装containerd" class="headerlink" title="二、安装containerd"></a>二、安装containerd</h2><h4 id="1、安装前的基础配置"><a href="#1、安装前的基础配置" class="headerlink" title="1、安装前的基础配置"></a>1、安装前的基础配置</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/modules-load.d/containerd.conf</span>
 overlay
 br_netfilter
 EOF</span>
 
 <span class="token function">sudo</span> modprobe overlay
-<span class="token function">sudo</span> modprobe br_netfilter<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">sudo</span> modprobe br_netfilter</code></pre>
 
-<h4 id="2、设置必要的系统参数"><a href="#2、设置必要的系统参数" class="headerlink" title="2、设置必要的系统参数"></a>2、设置必要的系统参数</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/sysctl.d/99-kubernetes-cri.conf</span>
+<h4 id="2、设置必要的系统参数"><a href="#2、设置必要的系统参数" class="headerlink" title="2、设置必要的系统参数"></a>2、设置必要的系统参数</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/sysctl.d/99-kubernetes-cri.conf</span>
 net.bridge.bridge-nf-call-iptables  = 1
 net.ipv4.ip_forward                 = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 EOF</span>
 
 <span class="token comment"># 应用 sysctl 参数无需重新启动,并查看参数是否生效</span>
-<span class="token function">sudo</span> <span class="token function">sysctl</span> <span class="token parameter variable">--system</span> <span class="token operator">|</span> <span class="token function">grep</span> net.bridge. <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">sudo</span> <span class="token function">sysctl</span> <span class="token parameter variable">--system</span> <span class="token operator">|</span> <span class="token function">grep</span> net.bridge. </code></pre>
 
-<h4 id="3、安装containerd"><a href="#3、安装containerd" class="headerlink" title="3、安装containerd"></a>3、安装containerd</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -
+<h4 id="3、安装containerd"><a href="#3、安装containerd" class="headerlink" title="3、安装containerd"></a>3、安装containerd</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -
 <span class="token function">sudo</span> add-apt-repository <span class="token string">"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="token variable"><span class="token variable">$(</span>lsb_release <span class="token parameter variable">-cs</span><span class="token variable">)</span></span> stable"</span>
 <span class="token function">apt-get</span> update 
-<span class="token function">apt-get</span> <span class="token function">install</span> containerd.io <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">apt-get</span> <span class="token function">install</span> containerd.io <span class="token parameter variable">-y</span></code></pre>
 
 <h4 id="4、配置containerd"><a href="#4、配置containerd" class="headerlink" title="4、配置containerd"></a>4、配置containerd</h4><p>用containerd生成默认配置文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">containerd config default <span class="token operator">&gt;</span> /etc/containerd/config.toml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">containerd config default <span class="token operator">&gt;</span> /etc/containerd/config.toml</code></pre>
 
 <p>修改配置文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/containerd/config.toml
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/containerd/config.toml
 <span class="token comment">#默认镜像用的是k8s官方的，需使用科学上网，这里改为国内阿里云镜像仓库。</span>
 sandbox_image <span class="token operator">=</span> <span class="token string">"registry.k8s.io/pause:3.6"</span>
 改为
-sandbox_image <span class="token operator">=</span> <span class="token string">"registry.aliyuncs.com/google_containers/pause:3.7"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+sandbox_image <span class="token operator">=</span> <span class="token string">"registry.aliyuncs.com/google_containers/pause:3.7"</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>plugins.<span class="token string">"io.containerd.grpc.v1.cri"</span>.containerd.runtimes.runc.options<span class="token punctuation">]</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>plugins.<span class="token string">"io.containerd.grpc.v1.cri"</span>.containerd.runtimes.runc.options<span class="token punctuation">]</span>
             BinaryName <span class="token operator">=</span> <span class="token string">""</span>
             CriuImagePath <span class="token operator">=</span> <span class="token string">""</span>
             CriuPath <span class="token operator">=</span> <span class="token string">""</span>
@@ -540,38 +540,38 @@ sandbox_image <span class="token operator">=</span> <span class="token string">"
             ShimCgroup <span class="token operator">=</span> <span class="token string">""</span>
 <span class="token comment">#            SystemdCgroup = false</span>
 <span class="token comment">#这里将SystemdCgroup = false改为True</span>
-			SystemdCgroup <span class="token operator">=</span> True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+			SystemdCgroup <span class="token operator">=</span> True</code></pre>
 
 <p>到这里重启containerd即可</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">systemctl restart containerd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl restart containerd</code></pre>
 
 <p>这里会遇到一个错误使用ctictl 命令会报错（具体报错如下）,需配置unix套件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">WARN<span class="token punctuation">[</span>0000<span class="token punctuation">]</span> image connect using default endpoints: <span class="token punctuation">[</span>unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock<span class="token punctuation">]</span>. As the default settings are now deprecated, you should <span class="token builtin class-name">set</span> the endpoint instead. 
-ERRO<span class="token punctuation">[</span>0002<span class="token punctuation">]</span> connect endpoint <span class="token string">'unix:///var/run/dockershim.sock'</span>, <span class="token function">make</span> sure you are running as root and the endpoint has been started: context deadline exceeded<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">WARN<span class="token punctuation">[</span>0000<span class="token punctuation">]</span> image connect using default endpoints: <span class="token punctuation">[</span>unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock<span class="token punctuation">]</span>. As the default settings are now deprecated, you should <span class="token builtin class-name">set</span> the endpoint instead. 
+ERRO<span class="token punctuation">[</span>0002<span class="token punctuation">]</span> connect endpoint <span class="token string">'unix:///var/run/dockershim.sock'</span>, <span class="token function">make</span> sure you are running as root and the endpoint has been started: context deadline exceeded</code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#配置unix套件</span>
-crictl config runtime-endpoint unix:///run/containerd/containerd.sock<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#配置unix套件</span>
+crictl config runtime-endpoint unix:///run/containerd/containerd.sock</code></pre>
 
 
 
-<h2 id="三、安装kubernetes"><a href="#三、安装kubernetes" class="headerlink" title="三、安装kubernetes"></a>三、安装kubernetes</h2><h4 id="1、添加国内kubernetes源"><a href="#1、添加国内kubernetes源" class="headerlink" title="1、添加国内kubernetes源"></a>1、添加国内kubernetes源</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg <span class="token operator">|</span> apt-key <span class="token function">add</span> -
+<h2 id="三、安装kubernetes"><a href="#三、安装kubernetes" class="headerlink" title="三、安装kubernetes"></a>三、安装kubernetes</h2><h4 id="1、添加国内kubernetes源"><a href="#1、添加国内kubernetes源" class="headerlink" title="1、添加国内kubernetes源"></a>1、添加国内kubernetes源</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg <span class="token operator">|</span> apt-key <span class="token function">add</span> -
 <span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">&gt;</span>/etc/apt/sources.list.d/kubernetes.list</span>
 deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
 EOF</span>
-<span class="token function">apt-get</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">apt-get</span> update</code></pre>
 
-<h4 id="2、安装kubelet、kubeadm、kubectl"><a href="#2、安装kubelet、kubeadm、kubectl" class="headerlink" title="2、安装kubelet、kubeadm、kubectl"></a>2、安装kubelet、kubeadm、kubectl</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看软件有哪些版本并确定安装版本</span>
+<h4 id="2、安装kubelet、kubeadm、kubectl"><a href="#2、安装kubelet、kubeadm、kubectl" class="headerlink" title="2、安装kubelet、kubeadm、kubectl"></a>2、安装kubelet、kubeadm、kubectl</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看软件有哪些版本并确定安装版本</span>
 <span class="token function">apt-cache</span> madison kubelet
 <span class="token function">apt-cache</span> madison kubeadm
 <span class="token function">apt-cache</span> madison kubectl
 <span class="token comment">#这里集群安装1.25.2版本所以三个组件都安装1.25.2-00版本</span>
-<span class="token function">apt-get</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> <span class="token assign-left variable">kubelet</span><span class="token operator">=</span><span class="token number">1.25</span>.2-00 <span class="token assign-left variable">kubeadm</span><span class="token operator">=</span><span class="token number">1.25</span>.2-00 <span class="token assign-left variable">kubectl</span><span class="token operator">=</span><span class="token number">1.25</span>.2-00<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">apt-get</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> <span class="token assign-left variable">kubelet</span><span class="token operator">=</span><span class="token number">1.25</span>.2-00 <span class="token assign-left variable">kubeadm</span><span class="token operator">=</span><span class="token number">1.25</span>.2-00 <span class="token assign-left variable">kubectl</span><span class="token operator">=</span><span class="token number">1.25</span>.2-00</code></pre>
 
 
 
-<h2 id="四、集群初始化"><a href="#四、集群初始化" class="headerlink" title="四、集群初始化"></a>四、集群初始化</h2><h4 id="1、打印初始化yaml文件"><a href="#1、打印初始化yaml文件" class="headerlink" title="1、打印初始化yaml文件"></a>1、打印初始化yaml文件</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm config print init-defaults <span class="token operator">&gt;</span> kubeadm-init.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="四、集群初始化"><a href="#四、集群初始化" class="headerlink" title="四、集群初始化"></a>四、集群初始化</h2><h4 id="1、打印初始化yaml文件"><a href="#1、打印初始化yaml文件" class="headerlink" title="1、打印初始化yaml文件"></a>1、打印初始化yaml文件</h4><pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm config print init-defaults <span class="token operator">&gt;</span> kubeadm-init.yaml</code></pre>
 
-<h4 id="2、修改yaml文件"><a href="#2、修改yaml文件" class="headerlink" title="2、修改yaml文件"></a>2、修改yaml文件</h4><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">vim kubeadm<span class="token punctuation">-</span>init.yaml
+<h4 id="2、修改yaml文件"><a href="#2、修改yaml文件" class="headerlink" title="2、修改yaml文件"></a>2、修改yaml文件</h4><pre class="language-yaml" data-language="yaml"><code class="language-yaml">vim kubeadm<span class="token punctuation">-</span>init.yaml
 
 
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kubeadm.k8s.io/v1beta3
@@ -610,12 +610,12 @@ EOF</span>
   <span class="token key atrule">dnsDomain</span><span class="token punctuation">:</span> cluster.local
   <span class="token key atrule">serviceSubnet</span><span class="token punctuation">:</span> 10.96.0.0/12
   <span class="token key atrule">podSubnet</span><span class="token punctuation">:</span> 10.244.0.0/16
-<span class="token key atrule">scheduler</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token key atrule">scheduler</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
 
-<h4 id="3、初始化"><a href="#3、初始化" class="headerlink" title="3、初始化"></a>3、初始化</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm init <span class="token parameter variable">--config</span> kubeadm-init.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="3、初始化"><a href="#3、初始化" class="headerlink" title="3、初始化"></a>3、初始化</h4><pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm init <span class="token parameter variable">--config</span> kubeadm-init.yaml</code></pre>
 
 <p>看到以下提示表示master节点初始化成功</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Your Kubernetes control-plane has initialized successfully<span class="token operator">!</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash">Your Kubernetes control-plane has initialized successfully<span class="token operator">!</span>
 
 To start using your cluster, you need to run the following as a regular user:
 
@@ -630,17 +630,17 @@ Run <span class="token string">"kubectl apply -f [podnetwork].yaml"</span> with 
 <span class="token comment"># Then you can join any number of worker nodes by running the following on each as root:</span>
 
 kubeadm <span class="token function">join</span> <span class="token number">192.168</span>.31.128:6443 <span class="token parameter variable">--token</span> 4m78tv.xjhrpamweyda7ya0 <span class="token punctuation">\</span>
-    --discovery-token-ca-cert-hash sha256:c05ae406919442d23c14a5a3f4c5ebe530bde038e7939e6e495e13eecb596051 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    --discovery-token-ca-cert-hash sha256:c05ae406919442d23c14a5a3f4c5ebe530bde038e7939e6e495e13eecb596051 </code></pre>
 
-<h4 id="4、按照提示cp文件到用户家目录下，并做配置"><a href="#4、按照提示cp文件到用户家目录下，并做配置" class="headerlink" title="4、按照提示cp文件到用户家目录下，并做配置"></a>4、按照提示cp文件到用户家目录下，并做配置</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token environment constant">$HOME</span>/.kube
+<h4 id="4、按照提示cp文件到用户家目录下，并做配置"><a href="#4、按照提示cp文件到用户家目录下，并做配置" class="headerlink" title="4、按照提示cp文件到用户家目录下，并做配置"></a>4、按照提示cp文件到用户家目录下，并做配置</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token environment constant">$HOME</span>/.kube
 <span class="token function">sudo</span> <span class="token function">cp</span> <span class="token parameter variable">-i</span> /etc/kubernetes/admin.conf <span class="token environment constant">$HOME</span>/.kube/config
 <span class="token function">sudo</span> <span class="token function">chown</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">id</span> <span class="token parameter variable">-u</span><span class="token variable">)</span></span><span class="token builtin class-name">:</span><span class="token variable"><span class="token variable">$(</span><span class="token function">id</span> <span class="token parameter variable">-g</span><span class="token variable">)</span></span> <span class="token environment constant">$HOME</span>/.kube/config
 <span class="token comment">#添加kubectl命令补全</span>
 root@k8s:~<span class="token comment"># vim .bashrc</span>
 <span class="token builtin class-name">source</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span>kubectl completion <span class="token function">bash</span><span class="token punctuation">)</span>
-root@k8s:~<span class="token comment"># source .bashrc</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+root@k8s:~<span class="token comment"># source .bashrc</span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl get <span class="token function">node</span> 
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubectl get <span class="token function">node</span> 
 NAME        STATUS   ROLES           AGE    VERSION
 k8s         NotReady    control-plane   3d3h   v1.25.2
 <span class="token comment">#现在节点状态是NotReady，因为缺少网络组件</span>
@@ -655,14 +655,14 @@ kube-system    kube-proxy-lp9p7                  <span class="token number">1</s
 kube-system    kube-proxy-pnpvc                  <span class="token number">1</span>/1     Running   <span class="token number">3</span> <span class="token punctuation">(</span>23h ago<span class="token punctuation">)</span>    3d3h
 kube-system    kube-proxy-vxgmm                  <span class="token number">1</span>/1     Running   <span class="token number">1</span>              9h
 kube-system    kube-scheduler-k8s                <span class="token number">1</span>/1     Running   <span class="token number">4</span> <span class="token punctuation">(</span>23h ago<span class="token punctuation">)</span>    3d3h
-<span class="token comment">#可以看到没有网络组件，两个coredns的pod也是pending状态</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#可以看到没有网络组件，两个coredns的pod也是pending状态</span></code></pre>
 
 
 
-<h4 id="5、部署cni网络组件flannel"><a href="#5、部署cni网络组件flannel" class="headerlink" title="5、部署cni网络组件flannel"></a>5、部署cni网络组件flannel</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#下载flannel的yaml文件</span>
-<span class="token function">wget</span> https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="5、部署cni网络组件flannel"><a href="#5、部署cni网络组件flannel" class="headerlink" title="5、部署cni网络组件flannel"></a>5、部署cni网络组件flannel</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#下载flannel的yaml文件</span>
+<span class="token function">wget</span> https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml</code></pre>
 
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#修改yaml文件</span>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#修改yaml文件</span>
 vim kube<span class="token punctuation">-</span>flannel.yaml
 
   <span class="token key atrule">net-conf.json</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
@@ -671,10 +671,10 @@ vim kube<span class="token punctuation">-</span>flannel.yaml
       "Backend": {
         "Type": "vxlan"
       }
-    }</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    }</span></code></pre>
 
 <p>应用yaml文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubectl apply <span class="token parameter variable">-f</span> kube-flannel.yml 
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubectl apply <span class="token parameter variable">-f</span> kube-flannel.yml 
 <span class="token comment">#等待片刻</span>
 kubectl get pods <span class="token parameter variable">-A</span>
 NAMESPACE      NAME                              READY   STATUS    RESTARTS       AGE
@@ -690,23 +690,23 @@ kube-system    kube-proxy-lp9p7                  <span class="token number">1</s
 kube-system    kube-proxy-pnpvc                  <span class="token number">1</span>/1     Running   <span class="token number">3</span> <span class="token punctuation">(</span>23h ago<span class="token punctuation">)</span>    3d3h
 kube-system    kube-proxy-vxgmm                  <span class="token number">1</span>/1     Running   <span class="token number">1</span>              9h
 kube-system    kube-scheduler-k8s                <span class="token number">1</span>/1     Running   <span class="token number">4</span> <span class="token punctuation">(</span>23h ago<span class="token punctuation">)</span>    3d3h
-<span class="token comment">#集群可正常使用，节点状态也变为Ready</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#集群可正常使用，节点状态也变为Ready</span></code></pre>
 
 
 
-<h2 id="五、创建加入token"><a href="#五、创建加入token" class="headerlink" title="五、创建加入token"></a>五、创建加入token</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm token create<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="五、创建加入token"><a href="#五、创建加入token" class="headerlink" title="五、创建加入token"></a>五、创建加入token</h2><pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm token create</code></pre>
 
-<h4 id="1、查ca证书she256编码hash值"><a href="#1、查ca证书she256编码hash值" class="headerlink" title="1、查ca证书she256编码hash值"></a>1、查ca证书she256编码hash值</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">openssl x509 <span class="token parameter variable">-pubkey</span> <span class="token parameter variable">-in</span> /etc/kubernetes/pki/ca.crt <span class="token operator">|</span> openssl rsa <span class="token parameter variable">-pubin</span> <span class="token parameter variable">-outform</span> der <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> <span class="token parameter variable">-hex</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/^.* //'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1、查ca证书she256编码hash值"><a href="#1、查ca证书she256编码hash值" class="headerlink" title="1、查ca证书she256编码hash值"></a>1、查ca证书she256编码hash值</h4><pre class="language-bash" data-language="bash"><code class="language-bash">openssl x509 <span class="token parameter variable">-pubkey</span> <span class="token parameter variable">-in</span> /etc/kubernetes/pki/ca.crt <span class="token operator">|</span> openssl rsa <span class="token parameter variable">-pubin</span> <span class="token parameter variable">-outform</span> der <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> <span class="token parameter variable">-hex</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/^.* //'</span></code></pre>
 
-<h4 id="2、控制节点加入集群"><a href="#2、控制节点加入集群" class="headerlink" title="2、控制节点加入集群"></a>2、控制节点加入集群</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm token create --print-join-command --certificate-key <span class="token variable"><span class="token variable">`</span>openssl x509 <span class="token parameter variable">-pubkey</span> <span class="token parameter variable">-in</span> /etc/kubernetes/pki/ca.crt <span class="token operator">|</span> openssl rsa <span class="token parameter variable">-pubin</span> <span class="token parameter variable">-outform</span> der <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> <span class="token parameter variable">-hex</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/^.* //'</span><span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="2、控制节点加入集群"><a href="#2、控制节点加入集群" class="headerlink" title="2、控制节点加入集群"></a>2、控制节点加入集群</h4><pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm token create --print-join-command --certificate-key <span class="token variable"><span class="token variable">`</span>openssl x509 <span class="token parameter variable">-pubkey</span> <span class="token parameter variable">-in</span> /etc/kubernetes/pki/ca.crt <span class="token operator">|</span> openssl rsa <span class="token parameter variable">-pubin</span> <span class="token parameter variable">-outform</span> der <span class="token operator"><span class="token file-descriptor important">2</span>&gt;</span>/dev/null <span class="token operator">|</span> openssl dgst <span class="token parameter variable">-sha256</span> <span class="token parameter variable">-hex</span> <span class="token operator">|</span> <span class="token function">sed</span> <span class="token string">'s/^.* //'</span><span class="token variable">`</span></span></code></pre>
 
-<h4 id="3、节点加入集群"><a href="#3、节点加入集群" class="headerlink" title="3、节点加入集群"></a>3、节点加入集群</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">kubeadm <span class="token function">join</span> <span class="token number">192.168</span>.31.127:6443 <span class="token parameter variable">--token</span> <span class="token punctuation">..</span>. --discovery-token-ca-cert-hash <span class="token punctuation">..</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="3、节点加入集群"><a href="#3、节点加入集群" class="headerlink" title="3、节点加入集群"></a>3、节点加入集群</h4><pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm <span class="token function">join</span> <span class="token number">192.168</span>.31.127:6443 <span class="token parameter variable">--token</span> <span class="token punctuation">..</span>. --discovery-token-ca-cert-hash <span class="token punctuation">..</span>.</code></pre>
 
-<h4 id="4、kubectl命令补全"><a href="#4、kubectl命令补全" class="headerlink" title="4、kubectl命令补全"></a>4、kubectl命令补全</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
+<h4 id="4、kubectl命令补全"><a href="#4、kubectl命令补全" class="headerlink" title="4、kubectl命令补全"></a>4、kubectl命令补全</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/profile
 
 <span class="token builtin class-name">source</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span>kubectl completion <span class="token function">bash</span><span class="token punctuation">)</span>
 <span class="token builtin class-name">alias</span> <span class="token assign-left variable">k</span><span class="token operator">=</span><span class="token string">'kubectl'</span>
-complete <span class="token parameter variable">-F</span> __start_kubectl k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+complete <span class="token parameter variable">-F</span> __start_kubectl k</code></pre>
 
 
                 
@@ -780,6 +780,10 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
                                     <span class="chip bg-color">Linux</span>
                                 </a>
                             
+                                <a href="/tags/Container/">
+                                    <span class="chip bg-color">Container</span>
+                                </a>
+                            
                                 <a href="/tags/Ubuntu/">
                                     <span class="chip bg-color">Ubuntu</span>
                                 </a>
@@ -790,10 +794,6 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
                             
                                 <a href="/tags/Kubernetes/">
                                     <span class="chip bg-color">Kubernetes</span>
-                                </a>
-                            
-                                <a href="/tags/Containerd/">
-                                    <span class="chip bg-color">Containerd</span>
                                 </a>
                             
                         </div>
@@ -877,12 +877,12 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Docker/">
-                        <span class="chip bg-color">Docker</span>
-                    </a>
-                    
                     <a href="/tags/Mysql/">
                         <span class="chip bg-color">Mysql</span>
+                    </a>
+                    
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
                     </a>
                     
                 </div>
@@ -1131,7 +1131,7 @@ complete <span class="token parameter variable">-F</span> __start_kubectl k<span
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">41.5k</span>
+                        class="white-color">43.7k</span>
             
             
             
