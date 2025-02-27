@@ -375,21 +375,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-06
+                    2024-03-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.9k
+                    7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    32 分
+                    33 分
                 </div>
                 
 
@@ -419,11 +419,17 @@
             <div id="articleContent">
                 <h2 id="kubernetes"><a href="#kubernetes" class="headerlink" title="kubernetes"></a>kubernetes</h2><h3 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h3><pre class="language-none"><code class="language-none">missing缺少 invalid无限的 scheduler调度器 unauthenticated未认证 exist存在 already已经 weight权重 match匹配 limit限制 resource资源 ratio比率 duplicate重复 rule规则 role角色 policy策略 support支持 got获取，得到 expect期望 parameters参数 provisioner提供者  annotation 注释 unknow未知 forbidden禁止 storage存储 quota限额 available可用的 guaranteed保障 Qos服务质量</code></pre>
 
-<h4 id="命名空间删除"><a href="#命名空间删除" class="headerlink" title="命名空间删除"></a>命名空间删除</h4><p><strong>删除命名空间时命名空间状态一直为Terminating，加上–force也删除不了</strong></p>
+<h4 id="命名空间删除"><a href="#命名空间删除" class="headerlink" title="命名空间删除"></a>命名空间删除</h4><h5 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h5><p><strong>删除命名空间时命名空间状态一直为Terminating，加上–force也删除不了</strong></p>
 <pre class="language-bash" data-language="bash"><code class="language-bash">kubectl get ns logging <span class="token parameter variable">-o</span> json <span class="token operator">&gt;</span> tmp.json
 kubectl proxy
 新打开一个终端,进入到tmp.json文件所在目录
 <span class="token function">curl</span> <span class="token parameter variable">-k</span> <span class="token parameter variable">-H</span> <span class="token string">"Content-Type: application/json"</span> <span class="token parameter variable">-X</span> PUT --data-binary @tmp.json http://127.0.0.1:8001/api/v1/namespaces/logging/finalize</code></pre>
+
+<h5 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h5><pre class="language-bash" data-language="bash"><code class="language-bash">kubectl get ns <span class="token comment">#查看命名空间</span>
+kubectl get ns logging <span class="token parameter variable">-o</span> json <span class="token operator">&gt;</span> tmp.json
+<span class="token function">cat</span> ./tmp.json <span class="token operator">|</span> jq <span class="token string">'del(.spec.finalizers[])'</span> <span class="token operator">&gt;</span> modify.json
+kubectl replace <span class="token parameter variable">--raw</span> <span class="token string">"/api/v1/namespaces/logging/finalize"</span> <span class="token parameter variable">-f</span> ./modify.json
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> tmp.json modify.json</code></pre>
 
 
 
@@ -2330,7 +2336,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">43.8k</span>
+                        class="white-color">45.9k</span>
             
             
             

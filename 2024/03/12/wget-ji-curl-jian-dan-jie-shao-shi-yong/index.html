@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux系统句柄优化, IW&#39;S BLOG">
-    <meta name="description" content="Linux系统优化">
+    <meta name="keywords" content="wget、curl简单介绍使用, IW&#39;S BLOG">
+    <meta name="description" content="wget及curl工具介绍及使用方法介绍">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Linux系统句柄优化 | IW&#39;S BLOG</title>
+    <title>wget、curl简单介绍使用 | IW&#39;S BLOG</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -306,12 +306,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux系统句柄优化</h1>
+                    <h1 class="description center-align post-title">wget、curl简单介绍使用</h1>
                 </div>
             </div>
         </div>
@@ -344,6 +344,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Linux/" class="post-category">
+                                Linux
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -351,28 +360,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-03-10
+                    2024-03-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-08
+                    2024-03-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    488
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -400,32 +409,83 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Linux系统句柄优化"><a href="#Linux系统句柄优化" class="headerlink" title="Linux系统句柄优化"></a>Linux系统句柄优化</h3><h4 id="（1）查看当前的句柄数"><a href="#（1）查看当前的句柄数" class="headerlink" title="（1）查看当前的句柄数"></a>（1）查看当前的句柄数</h4><p>使用CRT等远程连接工具，连接至192.168.200.21，查看当前系统默认的文件句柄数量，命令如下：</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
-<span class="token number">1024</span></code></pre>
+                <h2 id="一、wget的用法"><a href="#一、wget的用法" class="headerlink" title="一、wget的用法"></a>一、wget的用法</h2><p>wget是一款广泛应用于类Unix系统和Linux系统的网络下载工具，其不仅能够方便地下载HTTP、HTTPS和FTP等多种协议的网络资源，还具备断点续传、递归下载和自动重试等功能特性，表现出高度的稳定性和灵活性。</p>
+<h3 id="1、基本语法"><a href="#1、基本语法" class="headerlink" title="1、基本语法"></a>1、基本语法</h3><pre class="language-none"><code class="language-none">wget [option]... [URL]...</code></pre>
 
-<p>可以看到当前的系统默认限制是1024。</p>
-<h4 id="（2）修改句柄数"><a href="#（2）修改句柄数" class="headerlink" title="（2）修改句柄数."></a>（2）修改句柄数.</h4><p>修改Linux系统的句柄数限制有两种方法，一种是使用ulimit命令临时生效，另外一种是修改配置文件，永久生效。此处使用修改配置文件的方式。</p>
-<p><strong>注意：</strong>如果使用命令临时生效句柄限制，root用户可以调大或者调小句柄的限制，而非root用户一旦设定了值，就只能调小这个限制，不能调大，不然会报“bash: ulimit: open files: cannot modify limit: Operation not permitted”的错误。</p>
-<p>修改配置文件调整句柄限制为65535，命令如下：</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* soft nofile 65535"  &gt;&gt; /etc/security/limits.conf</span>
-<span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># echo "* hard nofile 65535"  &gt;&gt; /etc/security/limits.conf</span></code></pre>
+<h3 id="2、常用选项"><a href="#2、常用选项" class="headerlink" title="2、常用选项"></a>2、常用选项</h3><p>-b：后台执行。如果没有通过-o指定输出文件，则输出将重定向到wget日志。</p>
+<p>-o logfile：将所有消息记录到日志文件中。消息通常报告为标准错误。</p>
+<p>-a logfile：消息追加到日志文件中。</p>
+<p>-q：静默模式，不显示下载信息。</p>
+<p>-c：断点续传。如果目标文件已经存在并且是一个不完整的下载，wget将从中断的地方继续下载，而不是重新开始。</p>
+<p>-O file：将下载的内容保存为指定的文件名，而非URL中包含的文件名。</p>
+<p>-r：启用递归检索，默认递归深度为5。</p>
+<p>-l depth：指定递归最大深度。</p>
+<p>-t number：指定重试次数，指定0或inf以进行无限重试。默认20次。但“连接被拒绝”或“找不到”（404）等致命错误除外，这些错误不会重试。</p>
+<p>-T seconds：设置网络超时时间。这相当于同时指定–dns-timeout、–connect-timeout和–read-timeout。</p>
+<p>-m：打开适合镜像的选项。此选项打开递归和时间戳，设置无限递归深度并保留FTP目录列表。它目前相当于-r -N -l inf –no-remove-listing。</p>
+<p>–no-remove-listing：不要删除FTP检索生成的临时.listing文件。通常，这些文件包含从FTP服务器接收的原始目录列表。不删除它们可能有助于调试，或者当您希望能够轻松检查远程服务器目录的内容时（例如，验证您正在运行的镜像是否完整）。</p>
+<p>-k：下载完成后，转换文档中的链接，使其适合本地查看。</p>
+<p>示例：如果下载的文件/share/doc.html链接到/test/img.gif（或../test/img.gif），则doc.html中的链接将被修改为指向<a target="_blank" rel="noopener" href="http://hostname/test/img.gif%E3%80%82">http://hostname/test/img.gif。</a></p>
+<p>-p：下载正确显示给定HTML页面所需的所有文件。这包括诸如内联图像、声音和引用的样式表之类的东西。</p>
+<p>-np：当递归检索时，永远不要上升到父目录。这是一个有用的选项，因为它保证只下载特定层次结构以下的文件。</p>
+<p>–proxy-user=user –proxy-password=password：指定用于在代理服务器上进行身份验证的用户名和密码。</p>
+<h2 id="二、wget下载文件"><a href="#二、wget下载文件" class="headerlink" title="二、wget下载文件"></a>二、wget下载文件</h2><p>使用wget命令，我们可以轻松地下载各种网络资源。无论是单个文件还是整个网站的内容，只需在命令行中输入相应的wget命令即可。</p>
+<p>例如，要下载一个软件安装包，可以执行如下命令：</p>
+<pre class="language-none"><code class="language-none">wget http://example.com/software.tar.gz</code></pre>
 
-<p>添加配置的解释如下：</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">*       <span class="token comment">#代表所有用户</span>
-soft    <span class="token comment">#超过文件句柄数时，仅提示</span>
-hard    <span class="token comment">#超过文件句柄数时，直接限制</span></code></pre>
+<p>这将会将名为software.tar.gz的软件安装包下载到当前目录下。</p>
+<p>如果安装包较大，在下载过程中遇到网络中断或其他问题导致下载失败，可以使用-c选项继续之前的下载：</p>
+<pre class="language-none"><code class="language-none">wget -c http://example.com/software.tar.gz</code></pre>
 
-<p>修改完之后，不需要重启系统即会生效，但是需要重新登录。退出重新登录该云主机，查看当前的句柄限制，命令如下：</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># logout</span>
+<p>如果需要下载整个网站的内容，可以使用递归下载选项：</p>
+<pre class="language-none"><code class="language-none">wget -r http://example.com/</code></pre>
 
-Connection closed.
-Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="token number">2022</span> from <span class="token number">192.168</span>.0.70
-<span class="token punctuation">[</span>root@test ~<span class="token punctuation">]</span><span class="token comment"># ulimit -n</span>
-<span class="token number">65535</span></code></pre>
+<p>或者下载某个目录：</p>
+<pre class="language-none"><code class="language-none">wget -r -np http://example.com/dir1/</code></pre>
 
-<p>可以看到当前的限制为65535。</p>
-<p>至此，Linux系统文件句柄优化配置结束。在生产环境中，系统默认的1024远远不够，会导致系统报“too many open files”的错误。所以优化句柄数量限制是很有必要的。此案例默认使用的root用户进行修改，如果使用非root用户，在修改句柄限制的时候，会有比较多的限制，感兴趣的读者，可以自行查找资料学习。</p>
+<h2 id="三、curl的用法"><a href="#三、curl的用法" class="headerlink" title="三、curl的用法"></a>三、curl的用法</h2><p>curl是一种使用支持的协议（DICT、FILE、FTP、FTPS、GOPHER、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、POP3、POP3S、RTMP、RTSP、SCP、SFTP、SMB、SMBS、SMTP、SMTPS、TELNET和TFTP）从服务器传输数据或向服务器传输数据的工具。该命令被设计为在没有用户交互的情况下工作。</p>
+<p>curl提供了大量有用的技巧，如代理支持、用户身份验证、FTP上传、HTTP post、SSL连接、cookie、文件传输恢复、Metalink等。</p>
+<p><strong>curl命令用法</strong></p>
+<h3 id="1、-基本语法"><a href="#1、-基本语法" class="headerlink" title="1、 基本语法"></a>1、 基本语法</h3><p>curl命令的基本语法是：</p>
+<pre class="language-none"><code class="language-none">curl [options] [URL...]</code></pre>
+
+<p>其中，options是可选的参数，用于定制curl的行为；URL是要访问的网址，可以通过在大括号中写入元素集合，或通过中括号获得字母数字序列，来指定多个URL或URL的一部分，如：</p>
+<pre class="language-none"><code class="language-none">http://example.com/vol[1-4]/part{a,b,c}.html</code></pre>
+
+<h3 id="2、常用选项-1"><a href="#2、常用选项-1" class="headerlink" title="2、常用选项"></a>2、常用选项</h3><p>curl提供了大量的选项，以下是一些常用的选项：</p>
+<p>-X, –request <command>指定HTTP请求方法，如GET、POST等。</command></p>
+<p>-H, –header <line>添加自定义的请求头。</line></p>
+<p>-d, –data <data>发送POST请求的数据体。</data></p>
+<p>-o, –output <file>将输出保存到文件，而不是标准输出。</file></p>
+<p>-s, –silent静默模式，不显示进度和错误消息。</p>
+<p>-u, –user <a href="user:password">user:password</a> 指定HTTP认证的用户名和密码。</p>
+<p>-U, –proxy-user <a href="user:password">user:password</a>：指定用于代理身份验证的用户名和密码。</p>
+<p>-v, –verbose显示详细的调试信息。</p>
+<p>-k, –insecure允许连接到SSL证书不受信任的服务器。</p>
+<p>-I, –head：（I是字母i大写）仅显示请求头/文档信息。在FTP或FILE文件上使用时，curl仅显示文件大小和上次修改时间。</p>
+<p>-L, –location：自动跟踪重定向。当使用身份验证时，curl只将其凭据发送到初始主机。</p>
+<p>-h, –help：用法帮助。列出所有当前的命令行选项，并附有简短的说明。</p>
+<p><strong>日常使用示例</strong></p>
+<h3 id="1、-发送GET请求"><a href="#1、-发送GET请求" class="headerlink" title="1、 发送GET请求"></a>1、 发送GET请求</h3><pre class="language-none"><code class="language-none">curl https://www.example.com</code></pre>
+
+<h3 id="2、-发送POST请求，通过请求头设置post内容为json："><a href="#2、-发送POST请求，通过请求头设置post内容为json：" class="headerlink" title="2、 发送POST请求，通过请求头设置post内容为json："></a>2、 发送POST请求，通过请求头设置post内容为json：</h3><pre class="language-none"><code class="language-none">curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' https://www.example.com/api</code></pre>
+
+<h3 id="3、下载文件并保存到本地"><a href="#3、下载文件并保存到本地" class="headerlink" title="3、下载文件并保存到本地"></a>3、下载文件并保存到本地</h3><pre class="language-none"><code class="language-none">curl -o output.txt https://www.example.com/file.txt</code></pre>
+
+<h3 id="4、-使用HTTP认证"><a href="#4、-使用HTTP认证" class="headerlink" title="4、 使用HTTP认证"></a>4、 使用HTTP认证</h3><pre class="language-none"><code class="language-none">curl -u username:password https://www.example.com/protected</code></pre>
+
+
+<p><strong>实战案例</strong>：借助curl为Spring Cloud Config编写配置加密与解密脚本</p>
+<p>在微服务架构中，Spring Cloud Config作为一个配置中心，提供了对敏感信息的安全管理功能。通过curl命令，我们能够编写简洁高效的Shell脚本来远程调用Config Server的加密与解密API，从而保障配置数据的安全性和灵活性。</p>
+<p>加密脚本示例：</p>
+<pre class="language-none"><code class="language-none">#!/bin/bashcurl -X POST -H "Content-Type:text/plain" -u $SPRING_SECURITY_USER_NAME:$SPRING_SECURITY_USER_PASSWORD http://127.0.0.1:8888/encrypt -d $1</code></pre>
+
+<p>该脚本接收一个参数，参数值为待加密的文本。</p>
+<p>解密脚本示例：</p>
+<pre class="language-none"><code class="language-none">#!/bin/bashcurl -X POST -H "Content-Type: text/plain" -u $SPRING_SECURITY_USER_NAME:$SPRING_SECURITY_USER_PASSWORD http://127.0.0.1:8888/decrypt -d $1</code></pre>
+
+<p>该脚本接收一个参数，参数值为待解密的文本。</p>
+<p>其中，SPRING_SECURITY_USER_NAME和SPRING_SECURITY_USER_PASSWORD是Spring Cloud Config Server中用于配置安全认证的用户名和密码的环境变量，这两个环境变量定义了访问Config Server时所需的基本认证凭据。当Config Server收到一个请求时，它会检查请求头中是否包含正确的认证信息，只有提供有效的认证信息才允许访问。</p>
 
                 
             </div>
@@ -452,7 +512,7 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://iwhig.github.io/2023/03/10/linux-xi-tong-ju-bing-you-hua/">https://iwhig.github.io/2023/03/10/linux-xi-tong-ju-bing-you-hua/</a>
+                    <a href="https://iwhig.github.io/2024/03/12/wget-ji-curl-jian-dan-jie-shao-shi-yong/">https://iwhig.github.io/2024/03/12/wget-ji-curl-jian-dan-jie-shao-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -537,37 +597,43 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/03/10/io-diao-du-ce-lue-xiu-gai/">
+                <a href="/2024/03/12/wget-ji-curl-jian-dan-jie-shao-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="I/O调度策略修改">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="wget、curl简单介绍使用">
                         
-                        <span class="card-title">I/O调度策略修改</span>
+                        <span class="card-title">wget、curl简单介绍使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            I/O调度策略修改
+                            wget及curl工具介绍及使用方法介绍
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-12
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            IW
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -586,29 +652,33 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/03/10/openstack-help/">
+                <a href="/2024/03/11/awk-ru-men-dao-fang-qi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="OpenStack Help">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Awk入门到放弃">
                         
-                        <span class="card-title">OpenStack Help</span>
+                        <span class="card-title">Awk入门到放弃</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            OpenStack Help
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-11
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            IW
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deploy/" class="post-category">
+                                    deploy
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -618,10 +688,6 @@ Last login: Tue Feb  <span class="token number">8</span> 01:58:31 <span class="t
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/OpenStack/">
-                        <span class="chip bg-color">OpenStack</span>
                     </a>
                     
                 </div>
