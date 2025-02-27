@@ -4,8 +4,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Awk入门到放弃, IW&#39;S BLOG">
-    <meta name="description" content="​	awk是一个报告生成器，它拥有强大的文本格式化的能力，这就是专业的说法。​	你可能不理解所谓的报告生成器中的”报告”是什么，你可以把”报告”理解为”报表”或者”表格”,也就是说，我们可以利用awk命令，将一些文本整理成我们想要的样子，比">
+    <meta name="keywords" content="HELM命令详解, IW&#39;S BLOG">
+    <meta name="description" content="1、Helm的命令详解查看helm的命令帮助
+[root@k8s-master01 ~]# helm --help
+Usage:
+  helm [command]
+
+Available Commands:
+  completion  gen">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +23,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Awk入门到放弃 | IW&#39;S BLOG</title>
+    <title>HELM命令详解 | IW&#39;S BLOG</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -306,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Awk入门到放弃</h1>
+                    <h1 class="description center-align post-title">HELM命令详解</h1>
                 </div>
             </div>
         </div>
@@ -339,6 +345,22 @@
                                 <span class="chip bg-color">Linux</span>
                             </a>
                         
+                            <a href="/tags/Container/">
+                                <span class="chip bg-color">Container</span>
+                            </a>
+                        
+                            <a href="/tags/Kubernetes/">
+                                <span class="chip bg-color">Kubernetes</span>
+                            </a>
+                        
+                            <a href="/tags/Shell/">
+                                <span class="chip bg-color">Shell</span>
+                            </a>
+                        
+                            <a href="/tags/Kylin/">
+                                <span class="chip bg-color">Kylin</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -347,8 +369,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/deploy/" class="post-category">
-                                deploy
+                            <a href="/categories/K8s/" class="post-category">
+                                K8s
                             </a>
                         
                     </div>
@@ -360,28 +382,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-11
+                    2025-02-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-12
+                    2025-02-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    395
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -409,13 +431,145 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>​	awk是一个报告生成器，它拥有强大的文本格式化的能力，这就是专业的说法。<br>​	你可能不理解所谓的报告生成器中的”报告”是什么，你可以把”报告”理解为”报表”或者”表格”,也就是说，我们可以利用awk命令，将一些文本整理成我们想要的样子，比如把一些文本整理成”表”的样子，然后再展示出来，刚才概念中提到的”文本格式化的能力”，也就是这个意思，其实这样说可能还是不太容易理解，不用着急，当你看到后面的”示例”时，自然会明白awk所擅长的”文本格式化”能力是什么。<br>​	awk是由Alfred Aho 、Peter Weinberger 和 Brian Kernighan这三个人创造的，awk由这个三个人的姓氏的首个字母组成。<br>​	awk早期是在unix上实现的，所以，我们现在在linux的所使用的awk其实是gawk，也就是GNU awk，简称为gawk，awk还有一个版本，New awk，简称为nawk，但是linux中最常用的还是gawk。</p>
-<p>​	awk其实是一门编程语言，它支持条件判断、数组、循环等功能。所以，我们也可以把awk理解成一个脚本语言解释器。</p>
-<p>grep 、sed、awk被称为linux中的”三剑客”。</p>
-<p>我们总结一下这三个”剑客”的特长。</p>
-<p>grep 更适合单纯的查找或匹配文本</p>
-<p>sed  更适合编辑匹配到的文本</p>
-<p>awk  更适合格式化文本，对文本进行较复杂格式处理</p>
+                <h4 id="1、Helm的命令详解"><a href="#1、Helm的命令详解" class="headerlink" title="1、Helm的命令详解"></a>1、Helm的命令详解</h4><p><strong>查看helm的命令帮助</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 ~<span class="token punctuation">]</span><span class="token comment"># helm --help</span>
+Usage:
+  helm <span class="token punctuation">[</span>command<span class="token punctuation">]</span>
+
+Available Commands:
+  completion  generate autocompletions script <span class="token keyword">for</span> the specified shell
+  create      create a new chart with the given name
+  dependency  manage a chart's dependencies
+  <span class="token function">env</span>         helm client environment information
+  get         download extended information of a named release
+  <span class="token builtin class-name">help</span>        Help about any <span class="token builtin class-name">command</span>
+  <span class="token function">history</span>     fetch release <span class="token function">history</span>
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+
+Flags:
+      --add-dir-header                   If true, adds the <span class="token function">file</span> directory to the header
+      <span class="token parameter variable">--alsologtostderr</span>                  log to standard error as well as files
+      <span class="token parameter variable">--debug</span>                            <span class="token builtin class-name">enable</span> verbose output
+  -h, <span class="token parameter variable">--help</span>                             <span class="token builtin class-name">help</span> <span class="token keyword">for</span> helm
+      --kube-apiserver string            the address and the port <span class="token keyword">for</span> the Kubernetes API server
+      --kube-context string              name of the kubeconfig context to use
+      --kube-token string                bearer token used <span class="token keyword">for</span> authentication
+      <span class="token parameter variable">--kubeconfig</span> string                path to the kubeconfig <span class="token function">file</span>
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+Use <span class="token string">"helm [command] --help"</span> <span class="token keyword">for</span> <span class="token function">more</span> information about a command.</code></pre>
+
+
+<p>从上面可以看到Helm的命令有三类，分别对应<strong>repo、Chart、release</strong>。</p>
+<pre class="language-helm" data-language="helm"><code class="language-helm">repo:
+
+helm repo list 列举出添加的repository仓库
+helm repo add [RepoName] [RepoUrl] 添加仓库
+helm repo update 更新仓库
+
+Chart:
+
+helm search 查找可用的Chart模板
+helm pull, fetch [chart URL | repo/chartname] 下载指定的Chart包到本地
+helm install 根据指定的Chart 部署一个Release到K8s
+helm create 创建自己的Chart模板
+helm lint PATH 检查自定义的Chart模板是否正确
+helm package 打包Chart，一般是一个压缩包文件
+helm show, inspect [command] 查看关于chart的信息，如定义信息、README和values.yaml文件内容 [command]包含all、chart、readme、values等资源
+
+release: release基于namespace进行隔离
+
+helm list, ls 列出已经部署的Release
+helm delete [RELEASE] 删除一个Release。
+helm status [RELEASE] 查看指定的Release信息。
+helm upgrade 升级某个Release。
+helm rollback [RELEASE] [REVISION] 回滚Release到指定发布版本。
+helm get values [RELEASE] 查看Release的配置文件值。
+helm history [RELEASE] 查看某个release的升级记录</code></pre>
+
+
+
+
+
+
+
+<h4 id="2-、使用Helm部署常见的应用"><a href="#2-、使用Helm部署常见的应用" class="headerlink" title="2 、使用Helm部署常见的应用"></a>2 、使用Helm部署常见的应用</h4><h5 id="2-1-部署、测试nfs-client-provisioner"><a href="#2-1-部署、测试nfs-client-provisioner" class="headerlink" title="2.1 部署、测试nfs-client-provisioner"></a>2.1 部署、测试nfs-client-provisioner</h5><p>之前创建的PV都是静态PV，是提前创建好的PV，可供PVC进行绑定。如果每次都要手动创建PV，那样太麻烦了。<br>我们可以创建一个StorageClass，然后在定义PVC时，声明使用自定义的StorageClass，然后根据PVC动态地创建PV。PVC然后去绑定PV，这样就省去了每次需要手工创建PV的麻烦。</p>
+<h5 id="2-1-1-安装NFS服务器"><a href="#2-1-1-安装NFS服务器" class="headerlink" title="2.1.1 安装NFS服务器"></a>2.1.1 安装NFS服务器</h5><p>在k8s-master01上安装nfs服务器</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在k8s-master01节点安装NFS服务器</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># yum install -y nfs-common nfs-utils  rpcbind</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># mkdir /data &amp;&amp; chmod 777 /data</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># chown nfsnobody /nfs</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># cat &gt; /etc/exports &lt;&lt; EOF</span>
+/data *<span class="token punctuation">(</span>rw,no_root_squash,no_all_squash,sync<span class="token punctuation">)</span>
+EOF
+<span class="token comment">#启动nfs</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># systemctl start rpcbind &amp;&amp; systemctl start nfs-server</span>
+<span class="token comment">#设置开启自启</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># systemctl enable rpcbind &amp;&amp; systemctl enable nfs-server</span>
+在k8s-node01、k8s-node02安装客户端工具
+
+<span class="token punctuation">[</span>root@k8s-node01 helm<span class="token punctuation">]</span><span class="token comment"># yum install -y nfs-utils</span>
+<span class="token punctuation">[</span>root@k8s-node01 helm<span class="token punctuation">]</span><span class="token comment"># systemctl start nfs-utils &amp;&amp; systemctl enable nfs-utils</span></code></pre>
+
+<h5 id="2-1-2-部署nfs-client-provisioner动态创建PV"><a href="#2-1-2-部署nfs-client-provisioner动态创建PV" class="headerlink" title="2.1.2 部署nfs-client-provisioner动态创建PV"></a>2.1.2 部署nfs-client-provisioner动态创建PV</h5><p>在日常学习kubernetes时，经常需要使用把一些数据（例如：数据库、日志等）存储起来，不随着容器的删除而丢失，也就是说一些pod需要持久化存储。对于需要持久化的工作负载可以声明一个pvc，然后需要有合适的pv可供绑定。现在可以使用helm部署nfs-client-provisioner，可以根据pvc（在资源清单中需要<strong>storeageClass</strong>定义为<strong>nfs-client-provisioner</strong>）动态地创建pv。存储卷的实现有很多种，此处选择比较容易实现的NFS作为存储。</p>
+<p>可以访问 nfs-client-provisioner地址里面有关于配置的详细说明。</p>
+<p>安装nfs-client-provisioner</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># helm install nfs-client-provisioner stable/nfs-client-provisioner --set nfs.server=x.x.x.x --set nfs.path=/xxxx --set storageClass.defaultClass=true</span></code></pre>
+
+
+<p>上面的命令创建一个release实例、配置nfs-server地址、挂载的路径、设置为默认的class</p>
+<p>查看创建的nfs-client-provisioner</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 nfs-client-provisioner<span class="token punctuation">]</span><span class="token comment"># helm list</span>
+NAME                  	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART                       	APP VERSION
+nfs-client-provisioner	default  	<span class="token number">1</span>       	<span class="token number">2020</span>-09-23 <span class="token number">15</span>:04:48.690645046 +0800 CST	deployed	nfs-client-provisioner-1.2.9	<span class="token number">3.1</span>.0
+</code></pre>
+
+<p>查看<strong>storageclass</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 nfs<span class="token punctuation">]</span><span class="token comment"># kubectl get sc</span>
+NAME                   PROVISIONER                            AGE
+nfs-client <span class="token punctuation">(</span>default<span class="token punctuation">)</span>   cluster.local/nfs-client-provisioner   63m
+</code></pre>
+
+<p>这里default的含义是当定义pvc时，不声明storageClassName时，就会使用默认的default。</p>
+<p>查看nfs-client-provisioner对应的Pod</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 nfs-client-provisioner<span class="token punctuation">]</span><span class="token comment"># kubectl get pod</span>
+NAME                                      READY   STATUS    RESTARTS   AGE
+nfs-client-provisioner-6999f4847d-ck52d   <span class="token number">1</span>/1     Running   <span class="token number">0</span>          34m
+
+</code></pre>
+
+<h5 id="2-1-3-测试能否根据pvc动态创建pv"><a href="#2-1-3-测试能否根据pvc动态创建pv" class="headerlink" title="2.1.3 测试能否根据pvc动态创建pv"></a>2.1.3 测试能否根据pvc动态创建pv</h5><p>创建一个pvc检测能否动态创建pv，并且绑定到pv中</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token punctuation">[</span>root@k8s<span class="token punctuation">-</span>master01 nfs<span class="token punctuation">]</span><span class="token comment"># cat &gt; test-pvc.yaml &lt;&lt; EOF</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> PersistentVolumeClaim
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> test<span class="token punctuation">-</span>nfs<span class="token punctuation">-</span>pvc
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">accessModes</span><span class="token punctuation">:</span>
+
+  <span class="token punctuation">-</span> ReadWriteMany
+    <span class="token key atrule">storageClassName</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client
+      <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+    <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+      <span class="token key atrule">storage</span><span class="token punctuation">:</span> 1Gi
+    EOF
+    <span class="token key atrule">storageClassName</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client <span class="token comment">#需要定义为刚刚创建的nfs-client。这里不写也可以，因为已经将default设置为了nfs-client。</span></code></pre>
+
+<p>创建pvc，查看能否动态创建pv，pvc能够绑定到对应的pv上。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 nfs<span class="token punctuation">]</span><span class="token comment"># kubectl apply -f test-pvc.yaml </span>
+persistentvolumeclaim/test-nfs-pvc created
+<span class="token punctuation">[</span>root@k8s-master01 nfs<span class="token punctuation">]</span><span class="token comment"># kubectl get pv,pvc</span>
+NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                  STORAGECLASS   REASON   AGE
+persistentvolume/pvc-f5207723-c172-4076-bedb-f603115230eb   1Gi        RWX            Delete           Bound    default/test-nfs-pvc   nfs-client              6s
+
+NAME                                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/test-nfs-pvc   Bound    pvc-f5207723-c172-4076-bedb-f603115230eb   1Gi        RWX            nfs-client     6s</code></pre>
+
+<p>这里动态创建了一个pv，可以看到PVC处于Bound的状态。<br>查看/nfs文件夹下的内容。这里的/nfs为使用helm创建nfs-client的release实例时设置的nfs.path的值</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">[</span>root@k8s-master01 nfs<span class="token punctuation">]</span><span class="token comment"># ls -l /data</span>
+总用量 <span class="token number">0</span>
+drwxrwxrwx <span class="token number">2</span> root root <span class="token number">6</span> <span class="token number">9</span>月  <span class="token number">23</span> <span class="token number">16</span>:03 default-test-nfs-pvc-pvc-f5207723-c172-4076-bedb-f603115230eb</code></pre>
+
+<p>文件夹的格式为<namespace-name>-<pvc-name>-<pv-name>-<uuid></uuid></pv-name></pvc-name></namespace-name></p>
 
                 
             </div>
@@ -442,7 +596,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://iwhig.github.io/2024/03/11/awk-ru-men-dao-fang-qi/">https://iwhig.github.io/2024/03/11/awk-ru-men-dao-fang-qi/</a>
+                    <a href="https://iwhig.github.io/2025/02/18/helm/">https://iwhig.github.io/2025/02/18/helm/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -482,6 +636,22 @@
                             
                                 <a href="/tags/Linux/">
                                     <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/Container/">
+                                    <span class="chip bg-color">Container</span>
+                                </a>
+                            
+                                <a href="/tags/Kubernetes/">
+                                    <span class="chip bg-color">Kubernetes</span>
+                                </a>
+                            
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
+                                </a>
+                            
+                                <a href="/tags/Kylin/">
+                                    <span class="chip bg-color">Kylin</span>
                                 </a>
                             
                         </div>
@@ -527,9 +697,76 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2025/02/18/helm/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="HELM命令详解">
+                        
+                        <span class="card-title">HELM命令详解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/K8s/" class="post-category">
+                                    K8s
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Container/">
+                        <span class="chip bg-color">Container</span>
+                    </a>
+                    
+                    <a href="/tags/Kubernetes/">
+                        <span class="chip bg-color">Kubernetes</span>
+                    </a>
+                    
+                    <a href="/tags/Shell/">
+                        <span class="chip bg-color">Shell</span>
+                    </a>
+                    
+                    <a href="/tags/Kylin/">
+                        <span class="chip bg-color">Kylin</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2024/03/12/wget-ji-curl-jian-dan-jie-shao-shi-yong/">
                     <div class="card-image">
@@ -547,9 +784,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -567,63 +804,6 @@
                     
                     <a href="/tags/Linux/">
                         <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2024/03/05/k8s-pei-zhi-guan-li-configmap-he-sercret/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="K8S配置管理 ConfigMap和Sercret">
-                        
-                        <span class="card-title">K8S配置管理 ConfigMap和Sercret</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            K8S配置管理 ConfigMap和Sercret，两种资源的简单介绍及使用
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-05
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/K8s/" class="post-category">
-                                    K8s
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/Kubernetes/">
-                        <span class="chip bg-color">Kubernetes</span>
-                    </a>
-                    
-                    <a href="/tags/Shell/">
-                        <span class="chip bg-color">Shell</span>
                     </a>
                     
                 </div>

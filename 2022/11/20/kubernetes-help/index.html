@@ -339,12 +339,12 @@
                                 <span class="chip bg-color">Linux</span>
                             </a>
                         
-                            <a href="/tags/Shell/">
-                                <span class="chip bg-color">Shell</span>
-                            </a>
-                        
                             <a href="/tags/Kubernetes/">
                                 <span class="chip bg-color">Kubernetes</span>
+                            </a>
+                        
+                            <a href="/tags/Shell/">
+                                <span class="chip bg-color">Shell</span>
                             </a>
                         
                     </div>
@@ -375,14 +375,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-07
+                    2025-02-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7k
+                    7.1k
                 </div>
                 
 
@@ -431,8 +431,12 @@ kubectl get ns logging <span class="token parameter variable">-o</span> json <sp
 kubectl replace <span class="token parameter variable">--raw</span> <span class="token string">"/api/v1/namespaces/logging/finalize"</span> <span class="token parameter variable">-f</span> ./modify.json
 <span class="token function">rm</span> <span class="token parameter variable">-rf</span> tmp.json modify.json</code></pre>
 
+<h2 id="K8s-CRD资源一直Terminating删除不掉"><a href="#K8s-CRD资源一直Terminating删除不掉" class="headerlink" title="K8s CRD资源一直Terminating删除不掉"></a>K8s CRD资源一直Terminating删除不掉</h2><p><strong>一种方案（推荐）</strong></p>
+<p>如果之前因为某些原因使得CRD资源一直Terminating，再用kubectl delete crd也显示XXX deleted，然后就卡住了，也删不掉，用如下命令更新该资源的配置：</p>
+<pre class="language-cpp" data-language="cpp"><code class="language-cpp">kubectl patch crd<span class="token operator">/</span>installations<span class="token punctuation">.</span><span class="token keyword">operator</span><span class="token punctuation">.</span>tigera<span class="token punctuation">.</span>io <span class="token operator">-</span>p <span class="token char">'{"metadata":{"finalizers":[]}}'</span> <span class="token operator">--</span>type<span class="token operator">=</span>merge</code></pre>
 
-
+<p>其实就是修改其metaddata下finalizers的值为空就可以了。</p>
+<p>类似的，如果不是CRD，是其他资源类型，如pod、deploy、namespaces等，都可以把其finalizers的值改成空的就可以了。</p>
 <h3 id="kubectl命令行操作"><a href="#kubectl命令行操作" class="headerlink" title="kubectl命令行操作"></a>kubectl命令行操作</h3> <pre class="language-bash" data-language="bash"><code class="language-bash">kubectl explain pod <span class="token comment">#查看pod的yaml文件具体参数示例</span>
 kubectl <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token operator">&lt;</span>pod<span class="token operator">&gt;</span> <span class="token function">bash</span> <span class="token comment">#以bash命令行登录到某pod</span>
 kubectl label nodes k8s-master-node1 <span class="token assign-left variable">exam</span><span class="token operator">=</span>chinaskill <span class="token comment">#给k8s-master-node1节点打上exam=chinaskill的标签</span>
@@ -1984,12 +1988,12 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
                                     <span class="chip bg-color">Linux</span>
                                 </a>
                             
-                                <a href="/tags/Shell/">
-                                    <span class="chip bg-color">Shell</span>
-                                </a>
-                            
                                 <a href="/tags/Kubernetes/">
                                     <span class="chip bg-color">Kubernetes</span>
+                                </a>
+                            
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
                                 </a>
                             
                         </div>
@@ -2131,12 +2135,12 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
                         <span class="chip bg-color">Linux</span>
                     </a>
                     
-                    <a href="/tags/Shell/">
-                        <span class="chip bg-color">Shell</span>
-                    </a>
-                    
                     <a href="/tags/Kubernetes/">
                         <span class="chip bg-color">Kubernetes</span>
+                    </a>
+                    
+                    <a href="/tags/Shell/">
+                        <span class="chip bg-color">Shell</span>
                     </a>
                     
                 </div>
@@ -2325,7 +2329,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023-2024</span>
+                <span id="year">2023-2025</span>
             
             <a href="/about" target="_blank">I W</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
@@ -2336,7 +2340,7 @@ kubectl taint <span class="token function">node</span> k8s-master-node1 node-rol
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">45.9k</span>
+                        class="white-color">47.4k</span>
             
             
             
