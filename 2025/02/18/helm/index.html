@@ -389,21 +389,21 @@ Available Commands:
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-27
+                    2025-03-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    8 分
                 </div>
                 
 
@@ -497,7 +497,7 @@ helm history [RELEASE] 查看某个release的升级记录</code></pre>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#在k8s-master01节点安装NFS服务器</span>
 <span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># yum install -y nfs-common nfs-utils  rpcbind</span>
 <span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># mkdir /data &amp;&amp; chmod 777 /data</span>
-<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># chown nfsnobody /nfs</span>
+<span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># chown nfsnobody /data</span>
 <span class="token punctuation">[</span>root@k8s-master01 helm<span class="token punctuation">]</span><span class="token comment"># cat &gt; /etc/exports &lt;&lt; EOF</span>
 /data *<span class="token punctuation">(</span>rw,no_root_squash,no_all_squash,sync<span class="token punctuation">)</span>
 EOF
@@ -569,7 +569,30 @@ persistentvolumeclaim/test-nfs-pvc   Bound    pvc-f5207723-c172-4076-bedb-f60311
 总用量 <span class="token number">0</span>
 drwxrwxrwx <span class="token number">2</span> root root <span class="token number">6</span> <span class="token number">9</span>月  <span class="token number">23</span> <span class="token number">16</span>:03 default-test-nfs-pvc-pvc-f5207723-c172-4076-bedb-f603115230eb</code></pre>
 
-<p>文件夹的格式为<namespace-name>-<pvc-name>-<pv-name>-<uuid></uuid></pv-name></pvc-name></namespace-name></p>
+<p>文件夹的格式为</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>namespace-name<span class="token operator">&gt;</span>-<span class="token operator">&lt;</span>pvc-name<span class="token operator">&gt;</span>-<span class="token operator">&lt;</span>pv-name<span class="token operator">&gt;</span>-<span class="token operator">&lt;</span>uuid<span class="token operator">&gt;</span></code></pre>
+<h4 id="3、关于StorageClass回收策略对数据的影响"><a href="#3、关于StorageClass回收策略对数据的影响" class="headerlink" title="3、关于StorageClass回收策略对数据的影响"></a>3、关于StorageClass回收策略对数据的影响</h4><h6 id="3-1第一种配置"><a href="#3-1第一种配置" class="headerlink" title="3.1第一种配置"></a>3.1第一种配置</h6><pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">archiveOnDelete</span><span class="token punctuation">:</span> <span class="token string">"false"</span>  
+<span class="token key atrule">reclaimPolicy</span><span class="token punctuation">:</span> Delete   <span class="token comment">#默认没有配置,默认值为Delete</span></code></pre>
+
+
+<p>测试结果</p>
+<p><strong>1.pod删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>2.sc删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>3.删除PVC后,PV被删除且NFS Server对应数据被删除</strong></p>
+<h6 id="3-2第二种配置"><a href="#3-2第二种配置" class="headerlink" title="3.2第二种配置"></a>3.2第二种配置</h6> <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">archiveOnDelete</span><span class="token punctuation">:</span> <span class="token string">"false"</span>  
+<span class="token key atrule">reclaimPolicy</span><span class="token punctuation">:</span> Retain  </code></pre>
+
+<p>测试结果</p>
+<p><strong>1.pod删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>2.sc删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>3.删除PVC后,PV不会别删除,且状态由Bound变为Released,NFS Server对应数据被保留</strong><br><strong>4.重建sc后,新建PVC会绑定新的pv,旧数据可以通过拷贝到新的PV中</strong></p>
+<h6 id="3-3第三种配置"><a href="#3-3第三种配置" class="headerlink" title="3.3第三种配置"></a>3.3第三种配置</h6>   <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">archiveOnDelete</span><span class="token punctuation">:</span> <span class="token string">"ture"</span>  
+<span class="token key atrule">reclaimPolicy</span><span class="token punctuation">:</span> Retain  </code></pre>
+
+<p>测试结果</p>
+<p><strong>1.pod删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>2.sc删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>3.删除PVC后,PV不会别删除,且状态由Bound变为Released,NFS Server对应数据被保留</strong><br><strong>4.重建sc后,新建PVC会绑定新的pv,旧数据可以通过拷贝到新的PV中</strong></p>
+<h6 id="3-4第四种配置"><a href="#3-4第四种配置" class="headerlink" title="3.4第四种配置"></a>3.4第四种配置</h6> <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">archiveOnDelete</span><span class="token punctuation">:</span> <span class="token string">"ture"</span>  
+<span class="token key atrule">reclaimPolicy</span><span class="token punctuation">:</span> Delete </code></pre>
+
+
+<p>测试结果</p>
+<p><strong>1.pod删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>2.sc删除重建后数据依然存在,旧pod名称及数据依然保留给新pod使用</strong><br><strong>3.删除PVC后,PV不会别删除,且状态由Bound变为Released,NFS Server对应数据被保留</strong><br><strong>4.重建sc后,新建PVC会绑定新的pv,旧数据可以通过拷贝到新的PV中</strong><br><strong>总结:除以第一种配置外,其他三种配置在PV/PVC被删除后数据依然保留</strong></p>
 
                 
             </div>
@@ -1003,7 +1026,7 @@ drwxrwxrwx <span class="token number">2</span> root root <span class="token numb
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">47.4k</span>
+                        class="white-color">47.9k</span>
             
             
             
