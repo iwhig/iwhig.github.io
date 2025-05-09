@@ -1,0 +1,2430 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Kubernetes_1.32.4高可用集群部署, IW&#39;S BLOG">
+    <meta name="description" content="安装一些必备工具apt update &amp;amp;&amp;amp; apt upgrade -y &amp;amp;&amp;amp; apt install -y wget psmisc vim net-tools telnet lvm2 tar curl ip">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Kubernetes_1.32.4高可用集群部署 | IW&#39;S BLOG</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">IW&#39;S BLOG</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="https://iwhig.github.io/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://cloudzzjm-my.sharepoint.com/" class="waves-effect waves-light">
+      
+      <i class="far fa-hdd" style="zoom: 0.6;"></i>
+      
+      <span>Cloud</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">IW&#39;S BLOG</div>
+        <div class="logo-desc">
+            
+            当你的能力还驾驭不了你的目标时，就应该沉下心来，历练
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="https://iwhig.github.io/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://cloudzzjm-my.sharepoint.com/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw far fa-hdd"></i>
+			
+			Cloud
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Kubernetes_1.32.4高可用集群部署</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                            <a href="/tags/Ubuntu/">
+                                <span class="chip bg-color">Ubuntu</span>
+                            </a>
+                        
+                            <a href="/tags/Shell/">
+                                <span class="chip bg-color">Shell</span>
+                            </a>
+                        
+                            <a href="/tags/Kubernetes/">
+                                <span class="chip bg-color">Kubernetes</span>
+                            </a>
+                        
+                            <a href="/tags/Keepalived/">
+                                <span class="chip bg-color">Keepalived</span>
+                            </a>
+                        
+                            <a href="/tags/HAproxy/">
+                                <span class="chip bg-color">HAproxy</span>
+                            </a>
+                        
+                            <a href="/tags/Containerd/">
+                                <span class="chip bg-color">Containerd</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/deploy/" class="post-category">
+                                deploy
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-05-07
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-05-08
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    9.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    43 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="安装一些必备工具"><a href="#安装一些必备工具" class="headerlink" title="安装一些必备工具"></a>安装一些必备工具</h1><pre class="language-SHELL" data-language="SHELL"><code class="language-SHELL">apt update &amp;&amp; apt upgrade -y &amp;&amp; apt install -y wget psmisc vim net-tools telnet lvm2 tar curl ipvsadm</code></pre>
+
+<h2 id="关闭交换分区-防护墙"><a href="#关闭交换分区-防护墙" class="headerlink" title="关闭交换分区&amp;防护墙"></a>关闭交换分区&amp;防护墙</h2><pre class="language-BASH" data-language="BASH"><code class="language-BASH">sed -ri 's/.*swap.*/#&amp;/' /etc/fstab
+swapoff -a &amp;&amp; sysctl -w vm.swappiness=0
+cat /etc/fstab
+systemctl disable ufw --now &amp;&amp; systemctl stop ufw </code></pre>
+
+<h2 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 服务端</span>
+<span class="token comment"># yum install chrony -y</span>
+<span class="token function">apt</span> <span class="token function">install</span> chrony <span class="token parameter variable">-y</span>
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/chrony.conf <span class="token operator">&lt;&lt;</span> <span class="token string">EOF 
+pool ntp.aliyun.com iburst
+driftfile /var/lib/chrony/drift
+makestep 1.0 3
+rtcsync
+allow 192.168.1.0/24
+local stratum 10
+keyfile /etc/chrony.keys
+leapsectz right/UTC
+logdir /var/log/chrony
+EOF</span>
+
+systemctl restart chronyd <span class="token punctuation">;</span> systemctl <span class="token builtin class-name">enable</span> chronyd <span class="token parameter variable">--now</span>
+
+<span class="token comment"># 客户端</span>
+<span class="token comment"># yum install chrony -y</span>
+<span class="token function">apt</span> <span class="token function">install</span> chrony <span class="token parameter variable">-y</span>
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/chrony.conf <span class="token operator">&lt;&lt;</span> <span class="token string">EOF 
+pool 192.168.1.21 iburst
+driftfile /var/lib/chrony/drift
+makestep 1.0 3
+rtcsync
+keyfile /etc/chrony.keys
+leapsectz right/UTC
+logdir /var/log/chrony
+EOF</span>
+
+systemctl restart chronyd <span class="token punctuation">;</span> systemctl <span class="token builtin class-name">enable</span> chronyd <span class="token parameter variable">--now</span>
+
+<span class="token comment">#使用客户端进行验证</span>
+chronyc sources <span class="token parameter variable">-v</span>
+</code></pre>
+
+<p>参数解释</p>
+<ol>
+<li><p><code>pool ntp.aliyun.com iburst</code></p>
+<p>#指定使用ntp.aliyun.com作为时间服务器池，iburst选项表示在初始同步时会发送多个请求以加快同步速度。</p>
+</li>
+<li><p><code>driftfile /var/lib/chrony/drift</code></p>
+<p>#指定用于保存时钟漂移信息的文件路径。</p>
+</li>
+<li><p><code>makestep 1.0 3</code></p>
+<p>#设置当系统时间与服务器时间偏差大于1秒时，会以1秒的步长进行调整。如果偏差超过3秒，则立即进行时间调整。</p>
+</li>
+<li><p><code>rtcsync</code></p>
+<p>#启用硬件时钟同步功能，可以提高时钟的准确性。</p>
+</li>
+<li><p><code>allow 192.168.0.0/24</code></p>
+<p>#允许192.168.0.0/24网段范围内的主机与chrony进行时间同步。</p>
+</li>
+<li><p><code>local stratum 10</code></p>
+<p>#将本地时钟设为stratum 10，stratum值表示时钟的准确度，值越小表示准确度越高。</p>
+</li>
+<li><p><code>keyfile /etc/chrony.keys</code></p>
+<p>#指定使用的密钥文件路径，用于对时间同步进行身份验证。</p>
+</li>
+<li><p><code>leapsectz right/UTC</code></p>
+<p>#指定时区为UTC。</p>
+</li>
+<li><p><code>logdir /var/log/chrony</code></p>
+<p>#指定日志文件存放目录。</p>
+</li>
+</ol>
+<h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#yum install -y sshpass</span>
+<span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> sshpass
+ssh-keygen <span class="token parameter variable">-f</span> /root/.ssh/id_rsa <span class="token parameter variable">-P</span> <span class="token string">''</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">IP</span><span class="token operator">=</span><span class="token string">"192.168.1.21 192.168.1.22 192.168.1.23 192.168.1.24 192.168.1.25"</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SSHPASS</span><span class="token operator">=</span><span class="token number">123123</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">HOST</span> <span class="token keyword">in</span> <span class="token variable">$IP</span><span class="token punctuation">;</span><span class="token keyword">do</span>
+  sshpass <span class="token parameter variable">-e</span> ssh-copy-id <span class="token parameter variable">-o</span> <span class="token assign-left variable">StrictHostKeyChecking</span><span class="token operator">=</span>no <span class="token variable">$HOST</span>
+<span class="token keyword">done</span></code></pre>
+
+<p>这段脚本的作用是在一台机器上安装sshpass工具，并通过sshpass自动将本机的SSH公钥复制到多个远程主机上，以实现无需手动输入密码的SSH登录。<br>具体解释如下：</p>
+<ol>
+<li><code>apt install -y sshpass</code> 或 <code>yum install -y sshpass</code>：通过包管理器（apt或yum）安装sshpass工具，使得后续可以使用sshpass命令。</li>
+<li><code>ssh-keygen -f /root/.ssh/id_rsa -P ''</code>：生成SSH密钥对。该命令会在/root/.ssh目录下生成私钥文件id_rsa和公钥文件id_rsa.pub，同时不设置密码（即-P参数后面为空），方便后续通过ssh-copy-id命令自动复制公钥。</li>
+<li><code>export IP="192.168.1.21 192.168.1.22 192.168.1.23 192.168.1.24 192.168.1.25"</code>：设置一个包含多个远程主机IP地址的环境变量IP，用空格分隔开，表示要将SSH公钥复制到这些远程主机上。</li>
+<li><code>export SSHPASS=123123</code>：设置环境变量SSHPASS，将sshpass所需的SSH密码（在这里是”123123”）赋值给它，这样sshpass命令可以自动使用这个密码进行登录。</li>
+<li><code>for HOST in$IP;do</code>：遍历环境变量IP中的每个IP地址，并将当前IP地址赋值给变量HOST。</li>
+<li><code>sshpass -e ssh-copy-id -o StrictHostKeyChecking=no $HOST</code>：使用sshpass工具复制本机的SSH公钥到远程主机。其中，-e选项表示使用环境变量中的密码（即SSHPASS）进行登录，-o StrictHostKeyChecking=no 选项表示连接时不检查远程主机的公钥，以避免交互式确认。</li>
+<li>通过这段脚本，可以方便地将本机的SSH公钥复制到多个远程主机上，实现无需手动输入密码的SSH登录。</li>
+</ol>
+<h2 id="配置ulimit"><a href="#配置ulimit" class="headerlink" title="配置ulimit"></a>配置ulimit</h2><pre class="language-BASH" data-language="BASH"><code class="language-BASH">ulimit -SHn 65535
+cat &gt;&gt; /etc/security/limits.conf &lt;&lt;EOF
+soft nofile 655360
+hard nofile 131072
+soft nproc 655350
+hard nproc 655350
+seft memlock unlimited
+hard memlock unlimitedd
+EOF</code></pre>
+
+<h1 id="所有节点hosts配置"><a href="#所有节点hosts配置" class="headerlink" title="所有节点hosts配置"></a>所有节点hosts配置</h1><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/hosts <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.1.21 k8s-master01
+192.168.1.22 k8s-master02
+192.168.1.23 k8s-master03
+192.168.1.24 k8s-node01
+192.168.1.25 k8s-node02
+192.168.1.36 lb-vip
+
+EOF</span></code></pre>
+
+
+
+<h1 id="安装ipvsadm"><a href="#安装ipvsadm" class="headerlink" title="安装ipvsadm"></a>安装ipvsadm</h1><pre class="language-BASH" data-language="BASH"><code class="language-BASH">apt install ipvsadm ipset sysstat conntrack -y
+cat &gt;&gt; /etc/modules-load.d/ipvs.conf &lt;&lt;EOF
+ip_vs
+ip_vs_rr
+ip_vs_wrr
+ip_vs_sh
+nf_conntrack
+ip_tables
+ip_set
+xt_set
+ipt_set
+ipt_rpfilter
+ipt_REJECT
+ipip
+EOF
+
+systemctl restart systemd-modules-load.service
+lsmod | grep -e ip_vs -e nf_conntrack</code></pre>
+
+<p>参数解释</p>
+<ul>
+<li><code>ip_vs</code><ul>
+<li>IPVS 是 Linux 内核中的一个模块，用于实现负载均衡和高可用性。它通过在前端代理服务器上分发传入请求到后端实际服务器上，提供了高性能和可扩展的网络服务。</li>
+</ul>
+</li>
+<li><code>ip_vs_rr</code><ul>
+<li>IPVS 的一种调度算法之一，使用轮询方式分发请求到后端服务器，每个请求按顺序依次分发。</li>
+</ul>
+</li>
+<li><code>ip_vs_wrr</code><ul>
+<li>IPVS 的一种调度算法之一，使用加权轮询方式分发请求到后端服务器，每个请求按照指定的权重比例分发。</li>
+</ul>
+</li>
+<li><code>ip_vs_sh</code><ul>
+<li>IPVS 的一种调度算法之一，使用哈希方式根据源 IP 地址和目标 IP 地址来分发请求。</li>
+</ul>
+</li>
+<li><code>nf_conntrack</code><ul>
+<li>这是一个内核模块，用于跟踪和管理网络连接，包括 TCP、UDP 和 ICMP 等协议。它是实现防火墙状态跟踪的基础。</li>
+</ul>
+</li>
+<li><code>ip_tables</code><ul>
+<li>这是一个内核模块，提供了对 Linux 系统 IP 数据包过滤和网络地址转换（NAT）功能的支持。</li>
+</ul>
+</li>
+<li><code>ip_set</code><ul>
+<li>这是一个内核模块，扩展了 iptables 的功能，支持更高效的 IP 地址集合操作。</li>
+</ul>
+</li>
+<li><code>xt_set</code><ul>
+<li>这是一个内核模块，扩展了 iptables 的功能，支持更高效的数据包匹配和操作。</li>
+</ul>
+</li>
+<li><code>ipt_set</code><ul>
+<li>这是一个用户空间工具，用于配置和管理 xt_set 内核模块。</li>
+</ul>
+</li>
+<li><code>ipt_rpfilter</code><ul>
+<li>这是一个内核模块，用于实现反向路径过滤，用于防止 IP 欺骗和 DDoS 攻击。</li>
+</ul>
+</li>
+<li><code>ipt_REJECT</code><ul>
+<li>这是一个 iptables 目标，用于拒绝 IP 数据包，并向发送方发送响应，指示数据包被拒绝。</li>
+</ul>
+</li>
+<li><code>ipip</code><ul>
+<li>这是一个内核模块，用于实现 IP 封装在 IP（IP-over-IP）的隧道功能。它可以在不同网络之间创建虚拟隧道来传输 IP 数据包。</li>
+</ul>
+</li>
+</ul>
+<h1 id="修改内核参数"><a href="#修改内核参数" class="headerlink" title="修改内核参数"></a>修改内核参数</h1><pre class="language-BASH" data-language="BASH"><code class="language-BASH">cat &lt;&lt;EOF &gt; /etc/sysctl.d/k8s.conf
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-iptables = 1
+fs.may_detach_mounts = 1
+vm.overcommit_memory=1
+vm.panic_on_oom=0
+fs.inotify.max_user_watches=89100
+fs.file-max=52706963
+fs.nr_open=52706963
+net.netfilter.nf_conntrack_max=2310720
+
+net.ipv4.tcp_keepalive_time = 600
+net.ipv4.tcp_keepalive_probes = 3
+net.ipv4.tcp_keepalive_intvl =15
+net.ipv4.tcp_max_tw_buckets = 36000
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_max_orphans = 327680
+net.ipv4.tcp_orphan_retries = 3
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 16384
+net.ipv4.ip_conntrack_max = 65536
+net.ipv4.tcp_max_syn_backlog = 16384
+net.ipv4.tcp_timestamps = 0
+net.core.somaxconn = 16384
+
+net.ipv6.conf.all.disable_ipv6 = 0
+net.ipv6.conf.default.disable_ipv6 = 0
+net.ipv6.conf.lo.disable_ipv6 = 0
+net.ipv6.conf.all.forwarding = 1
+EOF
+
+sysctl --system</code></pre>
+
+<p>这些是Linux系统的一些参数设置，用于配置和优化网络、文件系统和虚拟内存等方面的功能。以下是每个参数的详细解释：</p>
+<ol>
+<li>net.ipv4.ip_forward = 1</li>
+</ol>
+<ul>
+<li><strong>这个参数启用了IPv4的IP转发功能，允许服务器作为网络路由器转发数据包。</strong></li>
+</ul>
+<ol start="2">
+<li>net.bridge.bridge-nf-call-iptables = 1</li>
+</ol>
+<ul>
+<li><strong>当使用网络桥接技术时，将数据包传递到iptables进行处理。</strong></li>
+</ul>
+<ol start="3">
+<li>fs.may_detach_mounts = 1</li>
+</ol>
+<ul>
+<li><strong>允许在挂载文件系统时，允许被其他进程使用。</strong></li>
+</ul>
+<ol start="4">
+<li>vm.overcommit_memory=1</li>
+</ol>
+<ul>
+<li><strong>该设置允许原始的内存过量分配策略，当系统的内存已经被完全使用时，系统仍然会分配额外的内存。</strong></li>
+</ul>
+<ol start="5">
+<li>vm.panic_on_oom=0</li>
+</ol>
+<ul>
+<li><strong>当系统内存不足（OOM）时，禁用系统崩溃和重启。</strong></li>
+</ul>
+<ol start="6">
+<li>fs.inotify.max_user_watches=89100</li>
+</ol>
+<ul>
+<li><strong>设置系统允许一个用户的inotify实例可以监控的文件数目的上限。</strong></li>
+</ul>
+<ol start="7">
+<li>fs.file-max=52706963</li>
+</ol>
+<ul>
+<li><strong>设置系统同时打开的文件数的上限。</strong></li>
+</ul>
+<ol start="8">
+<li>fs.nr_open=52706963</li>
+</ol>
+<ul>
+<li><strong>设置系统同时打开的文件描述符数的上限。</strong></li>
+</ul>
+<ol start="9">
+<li>net.netfilter.nf_conntrack_max=2310720</li>
+</ol>
+<ul>
+<li><strong>设置系统可以创建的网络连接跟踪表项的最大数量。</strong></li>
+</ul>
+<ol start="10">
+<li>net.ipv4.tcp_keepalive_time = 600</li>
+</ol>
+<ul>
+<li><strong>设置TCP套接字的空闲超时时间（秒），超过该时间没有活动数据时，内核会发送心跳包。</strong></li>
+</ul>
+<ol start="11">
+<li>net.ipv4.tcp_keepalive_probes = 3</li>
+</ol>
+<ul>
+<li><strong>设置未收到响应的TCP心跳探测次数。</strong></li>
+</ul>
+<ol start="12">
+<li>net.ipv4.tcp_keepalive_intvl = 15</li>
+</ol>
+<ul>
+<li><strong>设置TCP心跳探测的时间间隔（秒）。</strong></li>
+</ul>
+<ol start="13">
+<li>net.ipv4.tcp_max_tw_buckets = 36000</li>
+</ol>
+<ul>
+<li><strong>设置系统可以使用的TIME_WAIT套接字的最大数量。</strong></li>
+</ul>
+<ol start="14">
+<li>net.ipv4.tcp_tw_reuse = 1</li>
+</ol>
+<ul>
+<li><strong>启用TIME_WAIT套接字的重新利用，允许新的套接字使用旧的TIME_WAIT套接字。</strong></li>
+</ul>
+<ol start="15">
+<li>net.ipv4.tcp_max_orphans = 327680</li>
+</ol>
+<ul>
+<li><strong>设置系统可以同时存在的TCP套接字垃圾回收包裹数的最大数量。</strong></li>
+</ul>
+<ol start="16">
+<li>net.ipv4.tcp_orphan_retries = 3</li>
+</ol>
+<ul>
+<li><strong>设置系统对于孤立的TCP套接字的重试次数。</strong></li>
+</ul>
+<ol start="17">
+<li>net.ipv4.tcp_syncookies = 1</li>
+</ol>
+<ul>
+<li><strong>启用TCP SYN cookies保护，用于防止SYN洪泛攻击。</strong></li>
+</ul>
+<ol start="18">
+<li>net.ipv4.tcp_max_syn_backlog = 16384</li>
+</ol>
+<ul>
+<li><strong>设置新的TCP连接的半连接数（半连接队列）的最大长度。</strong></li>
+</ul>
+<ol start="19">
+<li>net.ipv4.ip_conntrack_max = 65536</li>
+</ol>
+<ul>
+<li><strong>设置系统可以创建的网络连接跟踪表项的最大数量。</strong></li>
+</ul>
+<ol start="20">
+<li>net.ipv4.tcp_timestamps = 0</li>
+</ol>
+<ul>
+<li><strong>关闭TCP时间戳功能，用于提供更好的安全性。</strong></li>
+</ul>
+<ol start="21">
+<li>net.core.somaxconn = 16384</li>
+</ol>
+<ul>
+<li><strong>设置系统核心层的连接队列的最大值。</strong></li>
+</ul>
+<ol start="22">
+<li>net.ipv6.conf.all.disable_ipv6 = 0</li>
+</ol>
+<ul>
+<li><strong>启用IPv6协议。</strong></li>
+</ul>
+<ol start="23">
+<li>net.ipv6.conf.default.disable_ipv6 = 0</li>
+</ol>
+<ul>
+<li><strong>启用IPv6协议。</strong></li>
+</ul>
+<ol start="24">
+<li>net.ipv6.conf.lo.disable_ipv6 = 0</li>
+</ol>
+<ul>
+<li><strong>启用IPv6协议。</strong></li>
+</ul>
+<ol start="25">
+<li>net.ipv6.conf.all.forwarding = 1</li>
+</ol>
+<ul>
+<li><strong>允许IPv6数据包转发。</strong></li>
+</ul>
+<h1 id="配置kubernetes安装源Debian-Ubuntu在配置中添加镜像（注意修改为自己需要的版本号）："><a href="#配置kubernetes安装源Debian-Ubuntu在配置中添加镜像（注意修改为自己需要的版本号）：" class="headerlink" title="配置kubernetes安装源Debian / Ubuntu在配置中添加镜像（注意修改为自己需要的版本号）："></a>配置kubernetes安装源Debian / Ubuntu在配置中添加镜像（注意修改为自己需要的版本号）：</h1><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg</span>
+<span class="token comment">#cat &lt;&lt;EOF | tee /etc/apt/sources.list.d/kubernetes.list</span>
+<span class="token comment">#deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/kubernetes/core:/stable:/v1.33/deb/ /</span>
+<span class="token comment">##deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/kubernetes/addons:/cri-o:/stable:/v1.33/deb/ /</span>
+<span class="token comment">#EOF</span>
+<span class="token comment">#安装必要应用：</span>
+<span class="token comment">#apt-get update</span>
+<span class="token comment">#apt-get install -y kubelet kubeadm kubectl</span>
+<span class="token comment">#systemctl enable kubelet &amp;&amp; systemctl start kubelet</span>
+<span class="token comment">#如安装指定版本</span>
+<span class="token comment">#apt install kubelet=1.33.0-1.1 kubeadm=1.33.0-1.1 kubectl=1.33.0-1.1</span>
+
+<span class="token comment">#阿里源</span>
+<span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> apt-transport-https
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.32/deb/Release.key <span class="token operator">|</span>  gpg <span class="token parameter variable">--dearmor</span> <span class="token parameter variable">-o</span> /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+<span class="token builtin class-name">echo</span> <span class="token string">"deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.32/deb/ /"</span> <span class="token operator">|</span>
+    <span class="token function">tee</span> /etc/apt/sources.list.d/kubernetes.list
+
+<span class="token comment">#如安装指定版本</span>
+<span class="token function">apt-get</span> update
+<span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token assign-left variable">kubelet</span><span class="token operator">=</span><span class="token number">1.32</span>.4-1.1  <span class="token assign-left variable">kubeadm</span><span class="token operator">=</span><span class="token number">1.32</span>.4-1.1  <span class="token assign-left variable">kubectl</span><span class="token operator">=</span><span class="token number">1.32</span>.4-1.1 
+systemctl <span class="token builtin class-name">enable</span> kubelet <span class="token operator">&amp;&amp;</span> systemctl start kubelet</code></pre>
+
+<h1 id="安装Containerd作为Runtime"><a href="#安装Containerd作为Runtime" class="headerlink" title="安装Containerd作为Runtime"></a>安装Containerd作为Runtime</h1><p><del>#<a target="_blank" rel="noopener" href="https://github.com/containernetworking/plugins/releases/">https://github.com/containernetworking/plugins/releases/</a><br>wget <a target="_blank" rel="noopener" href="https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-amd64-v1.7.1.tgz">https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-amd64-v1.7.1.tgz</a><br>#创建cni插件所需目录<br>mkdir -p /etc/cni/net.d /opt/cni/bin<br>#解压cni二进制包<br>tar -xvf cni-plugins-linux-amd64-v*.tgz -C /opt/cni/bin/</del></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#https://github.com/containerd/containerd/releases/</span>
+<span class="token function">wget</span> https://github.com/containerd/containerd/releases/download/v2.0.0/containerd-2.0.0-linux-amd64.tar.gz
+
+<span class="token comment">#解压</span>
+<span class="token function">tar</span> <span class="token parameter variable">-xzf</span> containerd-*-linux-amd64.tar.gz <span class="token parameter variable">-C</span> /usr/local/</code></pre>
+
+<h4 id="创建服务启动文件"><a href="#创建服务启动文件" class="headerlink" title="创建服务启动文件"></a>创建服务启动文件</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/systemd/system/containerd.service <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+[Unit]
+Description=containerd container runtime
+Documentation=https://containerd.io
+After=network.target local-fs.target
+
+[Service]
+ExecStartPre=-/sbin/modprobe overlay
+ExecStart=/usr/local/bin/containerd
+Type=notify
+Delegate=yes
+KillMode=process
+Restart=always
+RestartSec=5
+LimitNPROC=infinity
+LimitCORE=infinity
+LimitNOFILE=infinity
+TasksMax=infinity
+OOMScoreAdjust=-999
+
+[Install]
+WantedBy=multi-user.target
+EOF</span></code></pre>
+
+<p>参数解释：<br>#这是一个用于启动containerd容器运行时的systemd unit文件。下面是对该文件不同部分的详细解释：<br>#[Unit]<br>#Description=containerd container runtime<br>#描述该unit的作用是作为containerd容器运行时。<br>#Documentation=<a target="_blank" rel="noopener" href="https://containerd.io/">https://containerd.io</a><br>#指向容器运行时的文档的URL。<br>#After=network.targetlocal-fs.target<br>#定义了在哪些依赖项之后该unit应该被启动。在网络和本地文件系统加载完成后启动，确保了容器运行时在这些依赖项可用时才会启动。<br>#[Service]<br>#ExecStartPre=-/sbin/modprobe overlay<br>#在启动containerd之前执行的命令。这里的命令是尝试加载内核的overlay模块，如果失败则忽略错误继续执行下面的命令。<br>#ExecStart=/usr/local/bin/containerd<br>#实际执行的命令，用于启动containerd容器运行时。<br>#Type=notify<br>#指定服务的通知类型。这里使用notify类型，表示当服务就绪时会通过通知的方式告知systemd。<br>#Delegate=yes<br>#允许systemd对此服务进行重启和停止操作。<br>#KillMode=process<br>#在终止容器运行时时使用的kill模式。这里使用process模式，表示通过终止进程来停止容器运行时。<br>#Restart=always<br>#定义了当容器运行时终止后的重启策略。这里设置为always，表示无论何时终止容器运行时，都会自动重新启动。<br>#RestartSec=5<br>#在容器运行时终止后重新启动之前等待的秒数。<br>#LimitNPROC=infinity<br>#指定容器运行时可以使用的最大进程数量。这里设置为无限制。<br>#LimitCORE=infinity<br>#指定容器运行时可以使用的最大CPU核心数量。这里设置为无限制。<br>#LimitNOFILE=infinity<br>#指定容器运行时可以打开的最大文件数。这里设置为无限制。<br>#TasksMax=infinity<br>#指定容器运行时可以创建的最大任务数。这里设置为无限制。<br>#OOMScoreAdjust=-999<br>#指定容器运行时的OOM（Out-Of-Memory）分数调整值。负数值表示容器运行时的优先级较高。<br>#[Install]<br>#WantedBy=multi-user.target<br>#定义了服务的安装位置。这里指定为multi-user.target，表示将服务安装为多用户模式下的启动项。</p>
+<h4 id="配置Containerd所需的模块"><a href="#配置Containerd所需的模块" class="headerlink" title="配置Containerd所需的模块"></a>配置Containerd所需的模块</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/modules-load.d/containerd.conf</span>
+overlay
+br_netfilter
+EOF</span></code></pre>
+
+<p>参数解释：</p>
+<ul>
+<li>containerd是一个容器运行时，用于管理和运行容器。它支持多种不同的参数配置来自定义容器运行时的行为和功能。</li>
+</ul>
+<ol>
+<li><p>overlay：overlay是容器默认使用的存储驱动，它提供了一种轻量级的、可堆叠的、逐层增量的文件系统。它通过在现有文件系统上叠加文件系统层来创建容器的文件系统视图。每个容器可以有自己的一组文件系统层，这些层可以共享基础镜像中的文件，并在容器内部进行修改。使用overlay可以有效地使用磁盘空间，并使容器更加轻量级。</p>
+</li>
+<li><p>br_netfilter：br_netfilter是Linux内核提供的一个网络过滤器模块，用于在容器网络中进行网络过滤和NAT转发。当容器和主机之间的网络通信需要进行DNAT或者SNAT时，br_netfilter模块可以将IP地址进行转换。它还可以提供基于iptables规则的网络过滤功能，用于限制容器之间或容器与外部网络之间的通信。</p>
+</li>
+</ol>
+<p>这些参数可以在containerd的配置文件或者命令行中指定。例如，可以通过设置–storage-driver参数来选择使用overlay作为存储驱动，通过设置–iptables参数来启用或禁用br_netfilter模块。具体的使用方法和配置细节可以参考containerd的官方文档。</p>
+<h4 id="加载模块"><a href="#加载模块" class="headerlink" title="加载模块"></a>加载模块</h4><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl restart systemd-modules-load.service</code></pre>
+
+<p>参数解释：</p>
+<ul>
+<li><code>systemctl</code>: 是Linux系统管理服务的命令行工具，可以管理systemd init系统。</li>
+<li><code>restart</code>: 是systemctl命令的一个选项，用于重新启动服务。</li>
+<li><code>systemd-modules-load.service</code>: 是一个系统服务，用于加载内核模块。</li>
+</ul>
+<p>将上述参数结合在一起来解释<code>systemctl restart systemd-modules-load.service</code>的含义：<br>这个命令用于重新启动系统服务<code>systemd-modules-load.service</code>，它是负责加载内核模块的服务。在重新启动该服务后，系统会重新加载所有的内核模块。</p>
+<h4 id="配置Containerd所需的内核"><a href="#配置Containerd所需的内核" class="headerlink" title="配置Containerd所需的内核"></a>配置Containerd所需的内核</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/sysctl.d/99-kubernetes-cri.conf</span>
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF</span>
+
+<span class="token comment">#加载内核</span>
+<span class="token function">sysctl</span> <span class="token parameter variable">--system</span></code></pre>
+
+<p>参数解释：<br>这些参数是Linux操作系统中用于网络和网络桥接设置的参数。</p>
+<ul>
+<li><p>net.bridge.bridge-nf-call-iptables：这个参数控制网络桥接设备是否调用iptables规则处理网络数据包。当该参数设置为1时，网络数据包将被传递到iptables进行处理；当该参数设置为0时，网络数据包将绕过iptables直接传递。默认情况下，这个参数的值是1，即启用iptables规则处理网络数据包。</p>
+</li>
+<li><p>net.ipv4.ip_forward：这个参数用于控制是否启用IP转发功能。IP转发使得操作系统可以将接收到的数据包从一个网络接口转发到另一个网络接口。当该参数设置为1时，启用IP转发功能；当该参数设置为0时，禁用IP转发功能。在网络环境中，通常需要启用IP转发功能来实现不同网络之间的通信。默认情况下，这个参数的值是0，即禁用IP转发功能。</p>
+</li>
+<li><p>net.bridge.bridge-nf-call-ip6tables：这个参数与net.bridge.bridge-nf-call-iptables类似，但是它用于IPv6数据包的处理。当该参数设置为1时，IPv6数据包将被传递到ip6tables进行处理；当该参数设置为0时，IPv6数据包将绕过ip6tables直接传递。默认情况下，这个参数的值是1，即启用ip6tables规则处理IPv6数据包。</p>
+</li>
+</ul>
+<p>这些参数的值可以通过修改操作系统的配置文件（通常是’/etc/sysctl.conf’）来进行设置。修改完成后，需要使用’sysctl -p’命令重载配置文件使参数生效。</p>
+<p>参数解释：<br>这段代码是用于修改并配置containerd的参数。</p>
+<ol>
+<li>首先使用命令<code>mkdir -p /etc/containerd</code>创建/etc/containerd目录，如果该目录已存在，则不进行任何操作。</li>
+<li>使用命令<code>containerd config default | tee /etc/containerd/config.toml</code>创建默认配置文件，并将输出同时传递给/etc/containerd/config.toml文件。</li>
+<li>使用sed命令修改/etc/containerd/config.toml文件，将SystemdCgroup参数的值从false改为true。-i参数表示直接在原文件中进行编辑。</li>
+<li>使用cat命令结合grep命令查看/etc/containerd/config.toml文件中SystemdCgroup参数的值是否已修改为true。</li>
+<li>使用sed命令修改/etc/containerd/config.toml文件，将registry.k8s.io的地址替换为m.daocloud.io/registry.k8s.io。-i参数表示直接在原文件中进行编辑。</li>
+<li>使用cat命令结合grep命令查看/etc/containerd/config.toml文件中sandbox_image参数的值是否已修改为m.daocloud.io/registry.k8s.io。</li>
+<li>使用sed命令修改/etc/containerd/config.toml文件，将config_path参数的值从””改为”/etc/containerd/certs.d”。-i参数表示直接在原文件中进行编辑。</li>
+<li>使用cat命令结合grep命令查看/etc/containerd/config.toml文件中certs.d参数的值是否已修改为/etc/containerd/certs.d。</li>
+<li>使用mkdir命令创建/etc/containerd/certs.d/docker.io目录，如果目录已存在，则不进行任何操作。-p参数表示创建目录时，如果父级目录不存在，则自动创建父级目录。</li>
+<li>最后，使用cat重定向操作符将内容写入/etc/containerd/certs.d/docker.io/hosts.toml文件。该文件会配置加速器，其中server参数设置为”<a target="_blank" rel="noopener" href="https://docker.io" ,host参数设置为"https="" hub-mirror.c.163.com%22%ef%bc%8c%e5%b9%b6%e6%b7%bb%e5%8a%a0capabilities%e5%8f%82%e6%95%b0%e3%80%82"="">https://docker.io"，host参数设置为"https://hub-mirror.c.163.com"，并添加capabilities参数。</a></li>
+</ol>
+<p><del>#创建cni插件所需目录<br>mkdir -p /etc/cni/net.d /opt/cni/bin<br>#解压cni二进制包<br>tar xf cni-plugins-linux-amd64-v*.tgz -C /opt/cni/bin/<br>mkdir -p /etc/containerd</del></p>
+<h4 id="创建Containerd的配置文件"><a href="#创建Containerd的配置文件" class="headerlink" title="创建Containerd的配置文件"></a>创建Containerd的配置文件</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#创建默认配置文件</span>
+containerd config default <span class="token operator">|</span> <span class="token function">tee</span> /etc/containerd/config.toml
+
+<span class="token comment">#修改Containerd的配置文件</span>
+
+<span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token parameter variable">-e</span> <span class="token string">"s#SystemdCgroup\ \=\ false#SystemdCgroup\ \=\ true#g"</span> /etc/containerd/config.toml
+<span class="token function">cat</span> /etc/containerd/config.toml <span class="token operator">|</span> <span class="token function">grep</span> SystemdCgroup
+
+<span class="token comment">#沙箱pause镜像</span>
+<span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#registry.k8s.io#registry.aliyuncs.com/google_containers#g"</span> /etc/containerd/config.toml
+<span class="token function">cat</span> /etc/containerd/config.toml <span class="token operator">|</span> <span class="token function">grep</span> sandbox</code></pre>
+
+
+
+<h4 id="配置加速器"><a href="#配置加速器" class="headerlink" title="配置加速器"></a>配置加速器</h4><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> /etc/containerd/config.toml <span class="token operator">|</span> <span class="token function">grep</span> certs.d <span class="token parameter variable">-C</span> <span class="token number">5</span>
+
+  <span class="token punctuation">[</span>plugins.<span class="token string">'io.containerd.cri.v1.images'</span>.pinned_images<span class="token punctuation">]</span>
+   sandbox <span class="token operator">=</span> <span class="token string">'registry.aliyuncs.com/chenby/pause:3.10'</span>
+
+  <span class="token punctuation">[</span>plugins.<span class="token string">'io.containerd.cri.v1.images'</span>.registry<span class="token punctuation">]</span>
+   config_path <span class="token operator">=</span> <span class="token string">'/etc/containerd/certs.d'</span>
+
+  <span class="token punctuation">[</span>plugins.<span class="token string">'io.containerd.cri.v1.images'</span>.image_decryption<span class="token punctuation">]</span>
+   key_model <span class="token operator">=</span> <span class="token string">'node'</span>
+
+ <span class="token punctuation">[</span>plugins.<span class="token string">'io.containerd.cri.v1.runtime'</span><span class="token punctuation">]</span></code></pre>
+
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> /etc/containerd/certs.d/docker.io <span class="token parameter variable">-pv</span>
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/containerd/certs.d/docker.io/hosts.toml <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+server = "https://docker.io"
+
+[host."https://docker.1ms.run"]
+  capabilities = ["pull", "resolve"]
+[host."https://dockerproxy.com/"]
+  capabilities = ["pull", "resolve"]
+EOF</span></code></pre>
+
+
+
+<ul>
+<li>SystemdCgroup参数是containerd中的一个配置参数，用于设置containerd在运行过程中使用的Cgroup（控制组）路径。Containerd使用SystemdCgroup参数来指定应该使用哪个Cgroup来跟踪和管理容器的资源使用。</li>
+<li>Cgroup是Linux内核提供的一种资源隔离和管理机制，可以用于限制、分配和监控进程组的资源使用。使用Cgroup，可以将容器的资源限制和隔离，以防止容器之间的资源争用和不公平的竞争。</li>
+<li>通过设置SystemdCgroup参数，可以确保containerd能够找到正确的Cgroup路径，并正确地限制和隔离容器的资源使用，确保容器可以按照预期的方式运行。如果未正确设置SystemdCgroup参数，可能会导致容器无法正确地使用资源，或者无法保证资源的公平分配和隔离。</li>
+</ul>
+<p>SystemdCgroup参数的作用是为了确保containerd能够正确地管理容器的资源使用，以实现资源的限制、隔离和公平分配。</p>
+<p>启动并设置为开机启动</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">systemctl daemon-reload
+<span class="token comment">#用于重新加载systemd管理的单位文件。当你新增或修改了某个单位文件（如.service文件、.socket文件等），需要运行该命令来刷新systemd对该文件的配置。</span>
+systemctl <span class="token builtin class-name">enable</span> <span class="token parameter variable">--now</span> containerd.service
+<span class="token comment">#启用并立即启动docker.service单元。docker.service是Docker守护进程的systemd服务单元。</span>
+
+systemctl stop containerd.service
+<span class="token comment">#停止运行中的docker.service单元，即停止Docker守护进程。</span>
+
+systemctl start containerd.service
+<span class="token comment">#启动docker.service单元，即启动Docker守护进程。</span>
+
+systemctl restart containerd.service
+<span class="token comment">#重启docker.service单元，即重新启动Docker守护进程。</span>
+
+systemctl status containerd.service
+<span class="token comment">#显示docker.service单元的当前状态，包括运行状态、是否启用等信息。</span></code></pre>
+
+
+
+<p>配置crictl客户端连接的运行时位置<br>#<a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/cri-tools/releases/">https://github.com/kubernetes-sigs/cri-tools/releases/</a><br>wget <a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.33.0/crictl-v1.33.0-linux-amd64.tar.gz">https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.33.0/crictl-v1.33.0-linux-amd64.tar.gz</a></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#解压</span>
+<span class="token function">tar</span> xf crictl-v*-linux-amd64.tar.gz <span class="token parameter variable">-C</span> /usr/bin/
+<span class="token comment">#生成配置文件</span>
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/crictl.yaml <span class="token operator">&lt;&lt;</span><span class="token string">EOF
+runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 10
+debug: false
+EOF</span>
+
+<span class="token comment">#测试</span>
+systemctl restart containerd
+crictl info</code></pre>
+
+
+<p>#下面是参数<code>crictl</code>的详细解释<br>#<code>crictl</code>是一个用于与容器运行时通信的命令行工具。它是容器运行时接口（CRI）工具的一个实现，可以对容器运行时进行管理和操作。</p>
+<ol>
+<li><p><code>runtime-endpoint: unix:///run/containerd/containerd.sock</code><br>#指定容器运行时的终端套接字地址。在这个例子中，指定的地址是<code>unix:///run/containerd/containerd.sock</code>，这是一个Unix域套接字地址。</p>
+</li>
+<li><p><code>image-endpoint: unix:///run/containerd/containerd.sock</code><br>#指定容器镜像服务的终端套接字地址。在这个例子中，指定的地址是<code>unix:///run/containerd/containerd.sock</code>，这是一个Unix域套接字地址。</p>
+</li>
+<li><p><code>timeout: 10</code><br>#设置与容器运行时通信的超时时间，单位是秒。在这个例子中，超时时间被设置为10秒。</p>
+</li>
+<li><p><code>debug:false</code><br>#指定是否开启调式模式。在这个例子中，调式模式被设置为关闭，即<code>false</code>。如果设置为<code>true</code>，则会输出更详细的调试信息。</p>
+</li>
+</ol>
+<p>#这些参数可以根据需要进行修改，以便与容器运行时进行有效的通信和管理。</p>
+<h1 id="高可用配置keepalive和haproxy"><a href="#高可用配置keepalive和haproxy" class="headerlink" title="高可用配置keepalive和haproxy"></a>高可用配置keepalive和haproxy</h1><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> keepalived haproxy</code></pre>
+
+<h2 id="修改haproxy配置文件"><a href="#修改haproxy配置文件" class="headerlink" title="修改haproxy配置文件"></a>修改haproxy配置文件</h2><p>（配置文件一样）</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span>/etc/haproxy/haproxy.cfg<span class="token operator">&lt;&lt;</span><span class="token string">"EOF"
+global
+  maxconn 2000
+  ulimit-n 16384
+  log 127.0.0.1 local0 err
+  stats timeout 30s
+
+defaults
+  log global
+  mode http
+  option httplog
+  timeout connect 5000
+  timeout client 50000
+  timeout server 50000
+  timeout http-request 15s
+  timeout http-keep-alive 15s
+
+
+frontend monitor-in
+  bind *:33305
+  mode http
+  option httplog
+  monitor-uri /monitor
+
+frontend k8s-master
+  bind 0.0.0.0:9443
+  bind 127.0.0.1:9443
+  mode tcp
+  option tcplog
+  tcp-request inspect-delay 5s
+  default_backend k8s-master
+
+
+backend k8s-master
+  mode tcp
+  option tcplog
+  option tcp-check
+  balance roundrobin
+    default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
+  server k8s-master01 192.168.1.21:6443 check
+  server k8s-master02 192.168.1.22:6443 check
+  server k8s-master03 192.168.1.23:6443 check
+EOF</span></code></pre>
+
+<p>参数<br>这段配置代码是指定了一个HAProxy负载均衡器的配置。下面对各部分进行详细解释：</p>
+<ol>
+<li><code>global</code>:</li>
+</ol>
+<ul>
+<li>maxconn 2000: 设置每个进程的最大连接数为2000。</li>
+<li>ulimit-n 16384: 设置每个进程的最大文件描述符数为16384。</li>
+<li>log 127.0.0.1 local0 err: 指定日志的输出地址为本地主机的127.0.0.1，并且只记录错误级别的日志。</li>
+<li>stats timeout 30s: 设置查看负载均衡器统计信息的超时时间为30秒。</li>
+</ul>
+<ol start="2">
+<li><code>defaults</code>:</li>
+</ol>
+<ul>
+<li>log global: 使默认日志与global部分相同。</li>
+<li>mode http: 设定负载均衡器的工作模式为HTTP模式。</li>
+<li>option httplog: 使负载均衡器记录HTTP协议的日志。</li>
+<li>timeout connect 5000: 设置与后端服务器建立连接的超时时间为5秒。</li>
+<li>timeout client 50000: 设置与客户端的连接超时时间为50秒。</li>
+<li>timeout server 50000: 设置与后端服务器连接的超时时间为50秒。</li>
+<li>timeout http-request 15s: 设置处理HTTP请求的超时时间为15秒。</li>
+<li>timeout http-keep-alive 15s: 设置保持HTTP连接的超时时间为15秒。</li>
+</ul>
+<ol start="3">
+<li><code>frontend monitor-in</code>:</li>
+</ol>
+<ul>
+<li>bind *:33305: 监听所有IP地址的33305端口。</li>
+<li>mode http: 设定frontend的工作模式为HTTP模式。</li>
+<li>option httplog: 记录HTTP协议的日志。</li>
+<li>monitor-uri /monitor: 设置监控URI为/monitor。</li>
+</ul>
+<ol start="4">
+<li><code>frontend k8s-master</code>:</li>
+</ol>
+<ul>
+<li>bind 0.0.0.0:9443: 监听所有IP地址的9443端口。</li>
+<li>bind 127.0.0.1:9443: 监听本地主机的9443端口。</li>
+<li>mode tcp: 设定frontend的工作模式为TCP模式。</li>
+<li>option tcplog: 记录TCP协议的日志。</li>
+<li>tcp-request inspect-delay 5s: 设置在接收到请求后延迟5秒进行检查。</li>
+<li>default_backend k8s-master: 设置默认的后端服务器组为k8s-master。</li>
+</ul>
+<ol start="5">
+<li><code>backend k8s-master</code>:</li>
+</ol>
+<ul>
+<li>mode tcp: 设定backend的工作模式为TCP模式。</li>
+<li>option tcplog: 记录TCP协议的日志。</li>
+<li>option tcp-check: 启用TCP检查功能。</li>
+<li>balance roundrobin: 使用轮询算法进行负载均衡。</li>
+<li>default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100: 设置默认的服务器参数。</li>
+<li>server k8s-master01 192.168.1.21:6443 check: 增加一个名为k8s-master01的服务器，IP地址为192.168.1.21，端口号为6443，并对其进行健康检查。</li>
+<li>server k8s-master02 192.168.1.22:6443 check: 增加一个名为k8s-master02的服务器，IP地址为192.168.1.22，端口号为6443，并对其进行健康检查。</li>
+<li>server k8s-master03 192.168.1.23:6443 check: 增加一个名为k8s-master03的服务器，IP地址为192.168.1.23，端口号为6443，并对其进行健康检查。</li>
+</ul>
+<p>以上就是这段配置代码的详细解释。它主要定义了全局配置、默认配置、前端监听和后端服务器组的相关参数和设置。通过这些配置，可以实现负载均衡和监控功能。</p>
+<h2 id="Master01配置keepalived-master节点"><a href="#Master01配置keepalived-master节点" class="headerlink" title="Master01配置keepalived master节点"></a>Master01配置keepalived master节点</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#cp /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.bak</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/keepalived/keepalived.conf <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+! Configuration File for keepalived
+
+global_defs {
+ router_id LVS_DEVEL
+}
+vrrp_script chk_apiserver {
+ script "/etc/keepalived/check_apiserver.sh"
+ interval 5
+ weight -5
+ fall 2
+ rise 1
+}
+vrrp_instance VI_1 {
+ state MASTER
+ # 注意网卡名
+ interface ens160
+ mcast_src_ip 192.168.1.21
+ virtual_router_id 51
+ priority 100
+ nopreempt
+ advert_int 2
+ authentication {
+  auth_type PASS
+  auth_pass K8SHA_KA_AUTH
+ }
+ virtual_ipaddress {
+  192.168.1.36
+ }
+ track_script {
+  chk_apiserver
+} }
+
+EOF</span>
+
+</code></pre>
+
+<p>参数<br>这是一个用于配置keepalived的配置文件。下面是对每个部分的详细解释：</p>
+<ul>
+<li><code>global_defs</code>部分定义了全局参数。</li>
+<li><code>router_id</code>参数指定了当前路由器的标识，这里设置为”LVS_DEVEL”。</li>
+<li><code>vrrp_script</code>部分定义了一个VRRP脚本。<code>chk_apiserver</code>是脚本的名称，</li>
+<li><code>script</code>参数指定了脚本的路径。该脚本每5秒执行一次，返回值为0表示服务正常，返回值为1表示服务异常。</li>
+<li><code>weight</code>参数指定了根据脚本返回的值来调整优先级，这里设置为-5。</li>
+<li><code>fall</code>参数指定了失败阈值，当连续2次脚本返回值为1时认为服务异常。</li>
+<li><code>rise</code>参数指定了恢复阈值，当连续1次脚本返回值为0时认为服务恢复正常。</li>
+<li><code>vrrp_instance</code>部分定义了一个VRRP实例。<code>VI_1</code>是实例的名称。</li>
+<li><code>state</code>参数指定了当前实例的状态，这里设置为MASTER表示当前实例是主节点。</li>
+<li><code>interface</code>参数指定了要监听的网卡，这里设置为ens160。</li>
+<li><code>mcast_src_ip</code>参数指定了VRRP报文的源IP地址，这里设置为192.168.1.21。</li>
+<li><code>virtual_router_id</code>参数指定了虚拟路由器的ID，这里设置为51。</li>
+<li><code>priority</code>参数指定了实例的优先级，优先级越高（数值越大）越有可能被选为主节点。</li>
+<li><code>nopreempt</code>参数指定了当主节点失效后不要抢占身份，即不要自动切换为主节点。</li>
+<li><code>advert_int</code>参数指定了发送广播的间隔时间，这里设置为2秒。</li>
+<li><code>authentication</code>部分指定了认证参数</li>
+<li><code>auth_type</code>参数指定了认证类型，这里设置为PASS表示使用密码认证，</li>
+<li><code>auth_pass</code>参数指定了认证密码，这里设置为K8SHA_KA_AUTH。</li>
+<li><code>virtual_ipaddress</code>部分指定了虚拟IP地址，这里设置为192.168.1.36。</li>
+<li><code>track_script</code>部分指定了要跟踪的脚本，这里跟踪了chk_apiserver脚本。</li>
+</ul>
+<h2 id="Master02配置keepalived-backup节点"><a href="#Master02配置keepalived-backup节点" class="headerlink" title="Master02配置keepalived backup节点"></a>Master02配置keepalived backup节点</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># cp /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.bak</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/keepalived/keepalived.conf <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+! Configuration File for keepalived
+
+global_defs {
+    router_id LVS_DEVEL
+}
+vrrp_script chk_apiserver {
+    script "/etc/keepalived/check_apiserver.sh"
+    interval 5 
+    weight -5
+    fall 2
+    rise 1
+
+}
+vrrp_instance VI_1 {
+    state BACKUP
+    # 注意网卡名
+    interface ens160
+    mcast_src_ip 192.168.1.22
+    virtual_router_id 51
+    priority 80
+    nopreempt
+    advert_int 2
+    authentication {
+        auth_type PASS
+        auth_pass K8SHA_KA_AUTH
+    }
+    virtual_ipaddress {
+        192.168.1.36
+    }
+    track_script {
+      chk_apiserver 
+} }
+
+EOF</span></code></pre>
+
+<h2 id="Master03配置keepalived-backup节点"><a href="#Master03配置keepalived-backup节点" class="headerlink" title="Master03配置keepalived backup节点"></a>Master03配置keepalived backup节点</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># cp /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.bak</span>
+
+<span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/keepalived/keepalived.conf <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+! Configuration File for keepalived
+
+global_defs {
+    router_id LVS_DEVEL
+}
+vrrp_script chk_apiserver {
+    script "/etc/keepalived/check_apiserver.sh"
+    interval 5 
+    weight -5
+    fall 2
+    rise 1
+
+}
+vrrp_instance VI_1 {
+    state BACKUP
+    # 注意网卡名
+    interface ens160
+    mcast_src_ip 192.168.1.23
+    virtual_router_id 51
+    priority 50
+    nopreempt
+    advert_int 2
+    authentication {
+        auth_type PASS
+        auth_pass K8SHA_KA_AUTH
+    }
+    virtual_ipaddress {
+        192.168.1.36
+    }
+    track_script {
+      chk_apiserver 
+} }
+
+EOF</span></code></pre>
+
+<p>参数</p>
+<p>这是一个用于配置keepalived的配置文件。下面是对每个部分的详细解释：</p>
+<ul>
+<li><p><code>global_defs</code>部分定义了全局参数。</p>
+</li>
+<li><p><code>router_id</code>参数指定了当前路由器的标识，这里设置为”LVS_DEVEL”。</p>
+</li>
+<li><p><code>vrrp_script</code>部分定义了一个VRRP脚本。<code>chk_apiserver</code>是脚本的名称，</p>
+</li>
+<li><p><code>script</code>参数指定了脚本的路径。该脚本每5秒执行一次，返回值为0表示服务正常，返回值为1表示服务异常。</p>
+</li>
+<li><p><code>weight</code>参数指定了根据脚本返回的值来调整优先级，这里设置为-5。</p>
+</li>
+<li><p><code>fall</code>参数指定了失败阈值，当连续2次脚本返回值为1时认为服务异常。</p>
+</li>
+<li><p><code>rise</code>参数指定了恢复阈值，当连续1次脚本返回值为0时认为服务恢复正常。</p>
+</li>
+<li><p><code>vrrp_instance</code>部分定义了一个VRRP实例。<code>VI_1</code>是实例的名称。</p>
+<ul>
+<li><p><code>state</code>参数指定了当前实例的状态，这里设置为MASTER表示当前实例是主节点。</p>
+</li>
+<li><p><code>interface</code>参数指定了要监听的网卡，这里设置为ens160。</p>
+</li>
+<li><p><code>mcast_src_ip</code>参数指定了VRRP报文的源IP地址，这里设置为192.168.1.21。</p>
+</li>
+<li><p><code>virtual_router_id</code>参数指定了虚拟路由器的ID，这里设置为51。</p>
+</li>
+<li><p><code> priority</code>参数指定了实例的优先级，优先级越高（数值越大）越有可能被选为主节点。</p>
+</li>
+<li><p><code>nopreempt</code>参数指定了当主节点失效后不要抢占身份，即不要自动切换为主节点。</p>
+</li>
+<li><p><code>advert_int</code>参数指定了发送广播的间隔时间，这里设置为2秒。</p>
+</li>
+<li><p><code>authentication</code>部分指定了认证参数</p>
+<ul>
+<li><code>auth_type</code>参数指定了认证类型，这里设置为PASS表示使用密码认证，</li>
+<li><code>auth_pass</code>参数指定了认证密码，这里设置为K8SHA_KA_AUTH。</li>
+</ul>
+</li>
+<li><p><code>virtual_ipaddress</code>部分指定了虚拟IP地址，这里设置为192.168.1.36。</p>
+</li>
+<li><p><code>track_script</code>部分指定了要跟踪的脚本，这里跟踪了chk_apiserver脚本。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="健康检查脚本配置（lb主机）"><a href="#健康检查脚本配置（lb主机）" class="headerlink" title="健康检查脚本配置（lb主机）"></a>健康检查脚本配置（lb主机）</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">&gt;</span> /etc/keepalived/check_apiserver.sh <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+#!/bin/bash
+
+err=0
+for k in \<span class="token variable"><span class="token variable">$(</span><span class="token function">seq</span> <span class="token number">1</span> <span class="token number">3</span><span class="token variable">)</span></span>
+do
+ check_code=\<span class="token variable"><span class="token variable">$(</span>pgrep haproxy<span class="token variable">)</span></span>
+ if [[ \<span class="token variable">$check_code</span> == "" ]]; then
+  err=\<span class="token variable"><span class="token variable">$(</span><span class="token function">expr</span> <span class="token punctuation">\</span>$err + <span class="token number">1</span><span class="token variable">)</span></span>
+  sleep 1
+  continue
+ else
+  err=0
+  break
+ fi
+done
+
+if [[ \<span class="token variable">$err</span> != "0" ]]; then
+ echo "systemctl stop keepalived"
+ /usr/bin/systemctl stop keepalived
+ exit 1
+else
+ exit 0
+fi
+EOF</span>
+
+<span class="token comment">#给脚本授权</span>
+
+<span class="token function">chmod</span> +x /etc/keepalived/check_apiserver.sh</code></pre>
+
+<p>#这段脚本是一个简单的bash脚本，主要用来检查是否有名为haproxy的进程正在运行。<br>#脚本的主要逻辑如下：</p>
+<ol>
+<li><p>首先设置一个变量err为0，用来记录错误次数。</p>
+</li>
+<li><p>使用一个循环，在循环内部执行以下操作：</p>
+<ol>
+<li>使用pgrep命令检查是否有名为haproxy的进程在运行。如果不存在该进程，将err加1，并暂停1秒钟，然后继续下一次循环。</li>
+<li>如果存在haproxy进程，将err重置为0，并跳出循环。</li>
+</ol>
+</li>
+<li><p>检查err的值，如果不为0，表示检查失败，输出一条错误信息并执行“systemctl stop keepalived”命令停止keepalived进程，并退出脚本返回1。</p>
+</li>
+<li><p>如果err的值为0，表示检查成功，退出脚本返回0。</p>
+</li>
+<li><p>该脚本的主要作用是检查是否存在运行中的haproxy进程，如果无法检测到haproxy进程，将停止keepalived进程并返回错误状态。如果haproxy进程存在，则返回成功状态。这个脚本可能是作为一个健康检查脚本的一部分，在确保haproxy服务可用的情况下，才继续运行其他操作。</p>
+</li>
+</ol>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><pre class="language-bash" data-language="bash"><code class="language-bash">systemctl daemon-reload
+<span class="token comment">#用于重新加载systemd管理的单位文件。当你新增或修改了某个单位文件（如.service文件、.socket文件等），需要运行该命令来刷新systemd对该文件的配置。</span>
+systemctl <span class="token builtin class-name">enable</span> <span class="token parameter variable">--now</span> haproxy.service
+<span class="token comment">#启用并立即启动haproxy.service单元。haproxy.service是haproxy守护进程的systemd服务单元。</span>
+systemctl <span class="token builtin class-name">enable</span> <span class="token parameter variable">--now</span> keepalived.service
+<span class="token comment">#启用并立即启动keepalived.service单元。keepalived.service是keepalived守护进程的systemd服务单元。</span>
+systemctl status haproxy.service
+<span class="token comment">#haproxy.service单元的当前状态，包括运行状态、是否启用等信息。</span>
+systemctl status keepalived.service
+<span class="token comment">#keepalived.service单元的当前状态，包括运行状态、是否启用等信息。</span></code></pre>
+
+
+
+<hr>
+<h1 id="初始化安装整改镜像"><a href="#初始化安装整改镜像" class="headerlink" title="初始化安装整改镜像"></a>初始化安装整改镜像</h1><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#查看最新版本有那些镜像</span>
+<span class="token punctuation">[</span>root@k8s-master01 ~<span class="token punctuation">]</span><span class="token comment"># kubeadm config images list --image-repository registry.aliyuncs.com/google_containers</span>
+registry.aliyuncs.com/google_containers/kube-apiserver:v1.32.3
+registry.aliyuncs.com/google_containers/kube-controller-manager:v1.32.3
+registry.aliyuncs.com/google_containers/kube-scheduler:v1.32.3
+registry.aliyuncs.com/google_containers/kube-proxy:v1.32.3
+registry.aliyuncs.com/google_containers/coredns:v1.11.3
+registry.aliyuncs.com/google_containers/pause:3.10
+registry.aliyuncs.com/google_containers/etcd:3.5.16-0
+<span class="token punctuation">[</span>root@k8s-master01 ~<span class="token punctuation">]</span><span class="token comment">#</span>
+<span class="token comment">#只有一个CRI的情况下</span>
+kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
+<span class="token comment">#指定CRI拉取镜像</span>
+kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers --cri-socket unix:///var/run/cri-dockerd.sock
+kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers --cri-socket unix:///var/run/containerd/containerd.sock</code></pre>
+
+<h1 id="修改初始化配置创建默认配置"><a href="#修改初始化配置创建默认配置" class="headerlink" title="修改初始化配置创建默认配置"></a>修改初始化配置创建默认配置</h1><pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm config print init-defaults <span class="token operator">&gt;</span> kubeadm-init.yaml</code></pre>
+
+<p>#这是我使用的配置文件</p>
+<h2 id="初始化Master01"><a href="#初始化Master01" class="headerlink" title="初始化Master01"></a>初始化Master01</h2><pre class="language-yaml" data-language="yaml"><code class="language-yaml">cat <span class="token punctuation">&gt;</span> kubeadm.yaml &lt;&lt; EOF
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kubeadm.k8s.io/v1beta4
+<span class="token key atrule">bootstrapTokens</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">groups</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> system<span class="token punctuation">:</span>bootstrappers<span class="token punctuation">:</span>kubeadm<span class="token punctuation">:</span>default<span class="token punctuation">-</span>node<span class="token punctuation">-</span>token
+ <span class="token key atrule">token</span><span class="token punctuation">:</span> abcdef.0123456789abcdef
+ <span class="token key atrule">ttl</span><span class="token punctuation">:</span> 24h0m0s
+ <span class="token key atrule">usages</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> signing
+ <span class="token punctuation">-</span> authentication
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> InitConfiguration
+<span class="token key atrule">localAPIEndpoint</span><span class="token punctuation">:</span>
+ <span class="token key atrule">advertiseAddress</span><span class="token punctuation">:</span> 192.168.1.21
+ <span class="token key atrule">bindPort</span><span class="token punctuation">:</span> <span class="token number">6443</span>
+<span class="token key atrule">nodeRegistration</span><span class="token punctuation">:</span>
+ <span class="token comment">#criSocket: unix:///run/containerd/containerd.sock</span>
+ <span class="token key atrule">criSocket</span><span class="token punctuation">:</span> unix<span class="token punctuation">:</span>///var/run/cri<span class="token punctuation">-</span>dockerd.sock
+ <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
+ <span class="token key atrule">imagePullSerial</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+ <span class="token key atrule">kubeletExtraArgs</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"node-ip"</span>
+ <span class="token key atrule">value</span><span class="token punctuation">:</span> <span class="token string">"192.168.1.21,fc00::21"</span>
+ <span class="token key atrule">name</span><span class="token punctuation">:</span> k8s<span class="token punctuation">-</span>master01
+ <span class="token key atrule">taints</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> <span class="token key atrule">effect</span><span class="token punctuation">:</span> PreferNoSchedule
+ <span class="token key atrule">key</span><span class="token punctuation">:</span> node<span class="token punctuation">-</span>role.kubernetes.io/master
+<span class="token key atrule">timeouts</span><span class="token punctuation">:</span>
+ <span class="token key atrule">controlPlaneComponentHealthCheck</span><span class="token punctuation">:</span> 4m0s
+ <span class="token key atrule">discovery</span><span class="token punctuation">:</span> 5m0s
+ <span class="token key atrule">etcdAPICall</span><span class="token punctuation">:</span> 2m0s
+ <span class="token key atrule">kubeletHealthCheck</span><span class="token punctuation">:</span> 4m0s
+ <span class="token key atrule">kubernetesAPICall</span><span class="token punctuation">:</span> 1m0s
+ <span class="token key atrule">tlsBootstrap</span><span class="token punctuation">:</span> 5m0s
+ <span class="token key atrule">upgradeManifests</span><span class="token punctuation">:</span> 5m0s
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiServer</span><span class="token punctuation">:</span>
+ <span class="token key atrule">certSANs</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> x.oiox.cn
+ <span class="token punctuation">-</span> z.oiox.cn
+ <span class="token punctuation">-</span> k8s<span class="token punctuation">-</span>master01
+ <span class="token punctuation">-</span> k8s<span class="token punctuation">-</span>master02
+ <span class="token punctuation">-</span> k8s<span class="token punctuation">-</span>master03
+ <span class="token punctuation">-</span> 192.168.1.21
+ <span class="token punctuation">-</span> 192.168.1.22
+ <span class="token punctuation">-</span> 192.168.1.23
+ <span class="token punctuation">-</span> 192.168.1.24
+ <span class="token punctuation">-</span> 192.168.1.25
+ <span class="token punctuation">-</span> 192.168.1.26
+ <span class="token punctuation">-</span> 192.168.1.27
+ <span class="token punctuation">-</span> 192.168.1.28
+ <span class="token punctuation">-</span> 192.168.1.29
+ <span class="token punctuation">-</span> 127.0.0.1
+ <span class="token key atrule">timeoutForControlPlane</span><span class="token punctuation">:</span> 4m0s
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kubeadm.k8s.io/v1beta4
+<span class="token key atrule">caCertificateValidityPeriod</span><span class="token punctuation">:</span> 87600h0m0s
+<span class="token key atrule">certificateValidityPeriod</span><span class="token punctuation">:</span> 8760h0m0s
+<span class="token key atrule">certificatesDir</span><span class="token punctuation">:</span> /etc/kubernetes/pki
+<span class="token key atrule">clusterName</span><span class="token punctuation">:</span> kubernetes
+<span class="token key atrule">controllerManager</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">dns</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">encryptionAlgorithm</span><span class="token punctuation">:</span> RSA<span class="token punctuation">-</span><span class="token number">2048</span>
+<span class="token key atrule">etcd</span><span class="token punctuation">:</span>
+ <span class="token key atrule">local</span><span class="token punctuation">:</span>
+ <span class="token key atrule">dataDir</span><span class="token punctuation">:</span> /var/lib/etcd
+<span class="token key atrule">imageRepository</span><span class="token punctuation">:</span> registry.aliyuncs.com/google_containers
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterConfiguration
+<span class="token key atrule">kubernetesVersion</span><span class="token punctuation">:</span> 1.32.3
+<span class="token key atrule">networking</span><span class="token punctuation">:</span>
+ <span class="token key atrule">dnsDomain</span><span class="token punctuation">:</span> cluster.local
+ <span class="token key atrule">podSubnet</span><span class="token punctuation">:</span> 172.16.0.0/12
+ <span class="token key atrule">serviceSubnet</span><span class="token punctuation">:</span> 10.96.0.0/16
+<span class="token key atrule">proxy</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">scheduler</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">controlPlaneEndpoint</span><span class="token punctuation">:</span> <span class="token string">"192.168.1.36:9443"</span>
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kubeproxy.config.k8s.io/v1alpha1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> KubeProxyConfiguration
+<span class="token key atrule">mode</span><span class="token punctuation">:</span> ipvs
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kubelet.config.k8s.io/v1beta1
+<span class="token key atrule">authentication</span><span class="token punctuation">:</span>
+ <span class="token key atrule">anonymous</span><span class="token punctuation">:</span>
+ <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+ <span class="token key atrule">webhook</span><span class="token punctuation">:</span>
+ <span class="token key atrule">cacheTTL</span><span class="token punctuation">:</span> 0s
+ <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+ <span class="token key atrule">x509</span><span class="token punctuation">:</span>
+ <span class="token key atrule">clientCAFile</span><span class="token punctuation">:</span> /etc/kubernetes/pki/ca.crt
+<span class="token key atrule">authorization</span><span class="token punctuation">:</span>
+ <span class="token key atrule">mode</span><span class="token punctuation">:</span> Webhook
+ <span class="token key atrule">webhook</span><span class="token punctuation">:</span>
+ <span class="token key atrule">cacheAuthorizedTTL</span><span class="token punctuation">:</span> 0s
+ <span class="token key atrule">cacheUnauthorizedTTL</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">clusterDNS</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> 10.96.0.10
+<span class="token key atrule">clusterDomain</span><span class="token punctuation">:</span> cluster.local
+<span class="token key atrule">cpuManagerReconcilePeriod</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">evictionPressureTransitionPeriod</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">fileCheckFrequency</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">healthzBindAddress</span><span class="token punctuation">:</span> 127.0.0.1
+<span class="token key atrule">healthzPort</span><span class="token punctuation">:</span> <span class="token number">10248</span>
+<span class="token key atrule">httpCheckFrequency</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">imageMinimumGCAge</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> KubeletConfiguration
+<span class="token key atrule">cgroupDriver</span><span class="token punctuation">:</span> systemd
+<span class="token key atrule">logging</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">memorySwap</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token key atrule">nodeStatusReportFrequency</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">nodeStatusUpdateFrequency</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">rotateCertificates</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">runtimeRequestTimeout</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">shutdownGracePeriod</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">shutdownGracePeriodCriticalPods</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">staticPodPath</span><span class="token punctuation">:</span> /etc/kubernetes/manifests
+<span class="token key atrule">streamingConnectionIdleTimeout</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">syncFrequency</span><span class="token punctuation">:</span> 0s
+<span class="token key atrule">volumeStatsAggPeriod</span><span class="token punctuation">:</span> 0s
+EOF</code></pre>
+
+<p><strong>开始初始化部署</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">kubeadm init <span class="token parameter variable">--config</span> kubeadm.yaml</code></pre>
+
+<h2 id="配置证书"><a href="#配置证书" class="headerlink" title="配置证书"></a>配置证书</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 使用脚本将这如果你睡拷贝到其他maser节点</span>
+<span class="token assign-left variable"><span class="token environment constant">USER</span></span><span class="token operator">=</span>root
+<span class="token assign-left variable">CONTROL_PLANE_IPS</span><span class="token operator">=</span><span class="token string">"192.168.1.22 192.168.1.23"</span>
+<span class="token keyword">for</span> <span class="token for-or-select variable">host</span> <span class="token keyword">in</span> <span class="token variable">${CONTROL_PLANE_IPS}</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/ca.crt <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span><span class="token builtin class-name">:</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/ca.key <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span><span class="token builtin class-name">:</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/sa.key <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span><span class="token builtin class-name">:</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/sa.pub <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span><span class="token builtin class-name">:</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/front-proxy-ca.crt <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span><span class="token builtin class-name">:</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/front-proxy-ca.key <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span><span class="token builtin class-name">:</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/etcd/ca.crt <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span>:etcd-ca.crt
+    <span class="token comment"># 如果你正使用外部 etcd，忽略下一行</span>
+    <span class="token function">scp</span> /etc/kubernetes/pki/etcd/ca.key <span class="token string">"<span class="token variable">${<span class="token environment constant">USER</span>}</span>"</span>@<span class="token variable">$host</span>:etcd-ca.key
+<span class="token keyword">done</span>
+
+<span class="token comment"># 在其他的maser上面执行 ，将证书文件放入所需目录</span>
+<span class="token assign-left variable"><span class="token environment constant">USER</span></span><span class="token operator">=</span>root
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/kubernetes/pki/etcd
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/ca.crt /etc/kubernetes/pki/
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/ca.key /etc/kubernetes/pki/
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/sa.pub /etc/kubernetes/pki/
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/sa.key /etc/kubernetes/pki/
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/front-proxy-ca.crt /etc/kubernetes/pki/
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/front-proxy-ca.key /etc/kubernetes/pki/
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/etcd-ca.crt /etc/kubernetes/pki/etcd/ca.crt
+<span class="token comment"># 如果你正使用外部 etcd，忽略下一行</span>
+<span class="token function">mv</span> /<span class="token variable">${<span class="token environment constant">USER</span>}</span>/etcd-ca.key /etc/kubernetes/pki/etcd/ca.key</code></pre>
+
+<h2 id="初始化Master2"><a href="#初始化Master2" class="headerlink" title="初始化Master2"></a>初始化Master2</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在maser02上执行操作，将加入控制节点</span>
+kubeadm config print join-defaults <span class="token operator">&gt;</span> kubeadm-join-master-02.yaml
+<span class="token function">cat</span> <span class="token operator">&gt;</span> kubeadm-join-master-02.yaml <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+apiVersion: kubeadm.k8s.io/v1beta4
+caCertPath: /etc/kubernetes/pki/ca.crt
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: 192.168.1.36:9443
+    token: abcdef.0123456789abcdef
+    caCertHashes:
+    - "sha256:1a6196cd63edf4e78f39d34d448d6333d25e1ad0ff650839260fc7df25ec8a92"
+    unsafeSkipCAVerification: true
+  tlsBootstrapToken: abcdef.0123456789abcdef
+kind: JoinConfiguration
+controlPlane:
+  localAPIEndpoint:
+    advertiseAddress: "192.168.1.22"
+    bindPort: 6443
+nodeRegistration:
+  # criSocket: unix:///run/containerd/containerd.sock
+  criSocket: unix:///var/run/cri-dockerd.sock
+  imagePullPolicy: IfNotPresent
+  imagePullSerial: true
+  name: k8s-master02
+  taints:
+  - effect: PreferNoSchedule
+    key: node-role.kubernetes.io/master
+  kubeletExtraArgs:
+  - name: "node-ip"
+    value: "192.168.1.22,fc00::22"
+timeouts:
+  controlPlaneComponentHealthCheck: 4m0s
+  discovery: 5m0s
+  etcdAPICall: 2m0s
+  kubeletHealthCheck: 4m0s
+  kubernetesAPICall: 1m0s
+  tlsBootstrap: 5m0s
+  upgradeManifests: 5m0s
+EOF</span>
+
+kubeadm <span class="token function">join</span> <span class="token parameter variable">--config</span><span class="token operator">=</span>kubeadm-join-master-02.yaml</code></pre>
+
+<h2 id="初始化Master3"><a href="#初始化Master3" class="headerlink" title="初始化Master3"></a>初始化Master3</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在maser03上执行操作，将加入控制节点</span>
+kubeadm config print join-defaults <span class="token operator">&gt;</span> kubeadm-join-master-03.yaml
+<span class="token function">cat</span> <span class="token operator">&gt;</span> kubeadm-join-master-03.yaml <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+apiVersion: kubeadm.k8s.io/v1beta4
+caCertPath: /etc/kubernetes/pki/ca.crt
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: 192.168.1.36:9443
+    token: abcdef.0123456789abcdef
+    caCertHashes:
+    - "sha256:1a6196cd63edf4e78f39d34d448d6333d25e1ad0ff650839260fc7df25ec8a92"
+    unsafeSkipCAVerification: true
+  tlsBootstrapToken: abcdef.0123456789abcdef
+kind: JoinConfiguration
+controlPlane:
+  localAPIEndpoint:
+    advertiseAddress: "192.168.1.23"
+    bindPort: 6443
+nodeRegistration:
+  # criSocket: unix:///run/containerd/containerd.sock
+  criSocket: unix:///var/run/cri-dockerd.sock
+  imagePullPolicy: IfNotPresent
+  imagePullSerial: true
+  name: k8s-master03
+  taints:
+  - effect: PreferNoSchedule
+    key: node-role.kubernetes.io/master
+  kubeletExtraArgs:
+  - name: "node-ip"
+    value: "192.168.1.23,fc00::23"
+timeouts:
+  controlPlaneComponentHealthCheck: 4m0s
+  discovery: 5m0s
+  etcdAPICall: 2m0s
+  kubeletHealthCheck: 4m0s
+  kubernetesAPICall: 1m0s
+  tlsBootstrap: 5m0s
+  upgradeManifests: 5m0s
+EOF</span>
+
+kubeadm <span class="token function">join</span> <span class="token parameter variable">--config</span><span class="token operator">=</span>kubeadm-join-master-03.yaml</code></pre>
+
+<h2 id="初始化Node1"><a href="#初始化Node1" class="headerlink" title="初始化Node1"></a>初始化Node1</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在node01上执行操作，将加入工作节点</span>
+kubeadm config print join-defaults <span class="token operator">&gt;</span> kubeadm-join-node-01.yaml
+<span class="token function">cat</span> <span class="token operator">&gt;</span> kubeadm-join-node-01.yaml <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+apiVersion: kubeadm.k8s.io/v1beta4
+caCertPath: /etc/kubernetes/pki/ca.crt
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: 192.168.1.36:9443
+    token: abcdef.0123456789abcdef
+    caCertHashes:
+    - "sha256:1a6196cd63edf4e78f39d34d448d6333d25e1ad0ff650839260fc7df25ec8a92"
+    unsafeSkipCAVerification: true
+  tlsBootstrapToken: abcdef.0123456789abcdef
+kind: JoinConfiguration
+nodeRegistration:
+  # criSocket: unix:///run/containerd/containerd.sock
+  criSocket: unix:///var/run/cri-dockerd.sock
+  imagePullPolicy: IfNotPresent
+  imagePullSerial: true
+  name: k8s-node01
+  taints: null
+  kubeletExtraArgs:
+  - name: "node-ip"
+    value: "192.168.1.24,fc00::24"
+timeouts:
+  controlPlaneComponentHealthCheck: 4m0s
+  discovery: 5m0s
+  etcdAPICall: 2m0s
+  kubeletHealthCheck: 4m0s
+  kubernetesAPICall: 1m0s
+  tlsBootstrap: 5m0s
+  upgradeManifests: 5m0s
+EOF</span>
+
+kubeadm <span class="token function">join</span> <span class="token parameter variable">--config</span><span class="token operator">=</span>kubeadm-join-node-01.yaml</code></pre>
+
+<h2 id="初始化Node2"><a href="#初始化Node2" class="headerlink" title="初始化Node2"></a>初始化Node2</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 在node02上执行操作，将加入工作节点</span>
+kubeadm config print join-defaults <span class="token operator">&gt;</span> kubeadm-join-node-02.yaml
+<span class="token function">cat</span> <span class="token operator">&gt;</span> kubeadm-join-node-02.yaml <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+apiVersion: kubeadm.k8s.io/v1beta4
+caCertPath: /etc/kubernetes/pki/ca.crt
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: 192.168.1.36:9443
+    token: abcdef.0123456789abcdef
+    caCertHashes:
+    - "sha256:1a6196cd63edf4e78f39d34d448d6333d25e1ad0ff650839260fc7df25ec8a92"
+    unsafeSkipCAVerification: true
+  tlsBootstrapToken: abcdef.0123456789abcdef
+kind: JoinConfiguration
+nodeRegistration:
+  # criSocket: unix:///run/containerd/containerd.sock
+  criSocket: unix:///var/run/cri-dockerd.sock
+  imagePullPolicy: IfNotPresent
+  imagePullSerial: true
+  name: k8s-node02
+  taints: null
+  kubeletExtraArgs:
+  - name: "node-ip"
+    value: "192.168.1.25,fc00::25"
+timeouts:
+  controlPlaneComponentHealthCheck: 4m0s
+  discovery: 5m0s
+  etcdAPICall: 2m0s
+  kubeletHealthCheck: 4m0s
+  kubernetesAPICall: 1m0s
+  tlsBootstrap: 5m0s
+  upgradeManifests: 5m0s
+EOF</span>
+
+kubeadm <span class="token function">join</span> <span class="token parameter variable">--config</span><span class="token operator">=</span>kubeadm-join-node-02.yaml</code></pre>
+
+<h3 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h3><pre class="language-bash" data-language="bash"><code class="language-bash">kubectl get no <span class="token parameter variable">-O</span> wide </code></pre>
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">IW</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://iwhig.github.io/2025/05/07/kubernetes-1.32.4-gao-ke-yong-ji-qun-bu-shu/">https://iwhig.github.io/2025/05/07/kubernetes-1.32.4-gao-ke-yong-ji-qun-bu-shu/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">IW</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/Ubuntu/">
+                                    <span class="chip bg-color">Ubuntu</span>
+                                </a>
+                            
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
+                                </a>
+                            
+                                <a href="/tags/Kubernetes/">
+                                    <span class="chip bg-color">Kubernetes</span>
+                                </a>
+                            
+                                <a href="/tags/Keepalived/">
+                                    <span class="chip bg-color">Keepalived</span>
+                                </a>
+                            
+                                <a href="/tags/HAproxy/">
+                                    <span class="chip bg-color">HAproxy</span>
+                                </a>
+                            
+                                <a href="/tags/Containerd/">
+                                    <span class="chip bg-color">Containerd</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2025/05/07/kubernetes-1.32.4-gao-ke-yong-ji-qun-bu-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Kubernetes_1.32.4高可用集群部署">
+                        
+                        <span class="card-title">Kubernetes_1.32.4高可用集群部署</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-05-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/deploy/" class="post-category">
+                                    deploy
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Ubuntu/">
+                        <span class="chip bg-color">Ubuntu</span>
+                    </a>
+                    
+                    <a href="/tags/Shell/">
+                        <span class="chip bg-color">Shell</span>
+                    </a>
+                    
+                    <a href="/tags/Kubernetes/">
+                        <span class="chip bg-color">Kubernetes</span>
+                    </a>
+                    
+                    <a href="/tags/Keepalived/">
+                        <span class="chip bg-color">Keepalived</span>
+                    </a>
+                    
+                    <a href="/tags/HAproxy/">
+                        <span class="chip bg-color">HAproxy</span>
+                    </a>
+                    
+                    <a href="/tags/Containerd/">
+                        <span class="chip bg-color">Containerd</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/02/18/helm/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="HELM命令详解">
+                        
+                        <span class="card-title">HELM命令详解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/K8s/" class="post-category">
+                                    K8s
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Container/">
+                        <span class="chip bg-color">Container</span>
+                    </a>
+                    
+                    <a href="/tags/Shell/">
+                        <span class="chip bg-color">Shell</span>
+                    </a>
+                    
+                    <a href="/tags/Kubernetes/">
+                        <span class="chip bg-color">Kubernetes</span>
+                    </a>
+                    
+                    <a href="/tags/Kylin/">
+                        <span class="chip bg-color">Kylin</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023-2025</span>
+            
+            <a href="/about" target="_blank">I W</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+                <span id="translate">|&nbsp;繁/简：</span><a id="translateLink" href="javascript:translatePage();">繁</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">57.6k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/iwhig" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:zzjmcloud@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2632440423" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2632440423" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+        <script type="text/javascript" src="/js/tw_cn.js"></script>
+        <script type="text/javascript">
+          var defaultEncoding = 2; //网站编写字体是否繁体，1-繁体，2-简体
+          var translateDelay = 0; //延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
+          var cookieDomain = "https://iwhig.github.io"; //Cookie地址, 一定要设定, 通常为你的网址
+          var msgToTraditionalChinese = "繁"; //此处可以更改为你想要显示的文字
+          var msgToSimplifiedChinese = "简"; //同上，但两处均不建议更改
+          var translateButtonId = "translateLink"; //默认互换id
+          translateInitilization();
+        </script>
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
